@@ -1,569 +1,364 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Shade Plug | Premium Distribution</title>
-    <meta name="description" content="Premium bulk distribution - Shade Plug">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root {
-            --bg-primary: #0a0b0f;
-            --bg-secondary: #12141c;
-            --bg-tertiary: #1a1d28;
-            --accent: #00d084;
-            --accent-hover: #00b873;
-            --text-primary: #ffffff;
-            --text-secondary: #94a3b8;
-            --border: rgba(255,255,255,0.08);
-            --shadow: 0 20px 40px rgba(0,0,0,0.4);
-            --gradient: linear-gradient(135deg, #00d084 0%, #00a8e8 100%);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --bg-dark: #0a0b0f;
+            --bg-card: #12141c;
+            --primary-neon: #00ffa3;
+            --secondary-neon: #00b8ff;
+            --accent-purple: #9d4edd;
+            --text-main: #ffffff;
+            --text-hint: #8f9cae;
+            --danger: #ff4757;
+            --warning: #ffa502;
+            --success: #2ed573;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 100px;
             overflow-x: hidden;
         }
 
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10,11,15,0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            padding: 1rem 0;
+        .brand-header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 255, 163, 0.1) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: relative;
         }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        
+        .main-logo-container {
+            width: 90px; 
+            height: 90px; 
+            margin: 0 auto 12px; 
+            border-radius: 50%; 
+            padding: 3px;
+            background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
+            box-shadow: 0 0 30px rgba(0, 255, 163, 0.3); 
+            overflow: hidden; 
             cursor: pointer;
         }
-
-        .logo img {
-            height: 45px;
-            width: auto;
-            border-radius: 8px;
+        
+        .main-logo-container img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 50%; 
         }
-
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: var(--gradient);
+        
+        .brand-header h1 { 
+            font-size: 28px; 
+            font-weight: 800; 
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 0%, var(--primary-neon) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
         }
 
-        .header-actions {
-            display: flex;
+        .top-controls-bar {
+            display: flex; 
+            justify-content: space-between; 
             align-items: center;
-            gap: 1.5rem;
+            padding: 8px 15px; 
+            background: rgba(0,0,0,0.3);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-
-        /* Language Selector */
-        .lang-selector {
-            position: relative;
+        
+        .lang-selector { 
+            display: flex; 
+            gap: 4px; 
         }
-
+        
         .lang-btn {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            transition: all 0.3s;
+            background: #1c1c24; 
+            border: 1px solid #3a3a44; 
+            border-radius: 6px;
+            padding: 6px 10px; 
+            font-size: 11px; 
+            cursor: pointer; 
+            color: white; 
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        
+        .lang-btn.active { 
+            border-color: var(--primary-neon); 
+            background: rgba(0,255,163,0.15);
+            color: var(--primary-neon);
         }
 
-        .lang-btn:hover {
-            border-color: var(--accent);
-        }
-
-        .lang-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 0.5rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
+        .promo-banner {
+            background: linear-gradient(90deg, var(--primary-neon), var(--secondary-neon));
+            margin: 15px; 
+            padding: 12px; 
             border-radius: 12px;
-            padding: 0.5rem;
-            min-width: 150px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s;
-            box-shadow: var(--shadow);
-        }
-
-        .lang-dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .lang-option {
-            padding: 0.6rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: background 0.2s;
-        }
-
-        .lang-option:hover {
-            background: var(--bg-tertiary);
-        }
-
-        /* Cart Button */
-        .cart-btn {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .cart-btn:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .cart-count {
-            background: var(--accent);
+            font-weight: 700; 
+            text-align: center; 
+            font-size: 13px;
             color: #000;
-            font-size: 0.75rem;
-            font-weight: 700;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 255, 163, 0.2);
+        }
+
+        .shipping-banner {
+            background: rgba(0, 184, 255, 0.1);
+            border: 1px solid var(--secondary-neon);
+            margin: 0 15px 15px 15px; 
+            padding: 10px; 
+            border-radius: 12px;
+            display: flex; 
+            align-items: center; 
             justify-content: center;
+            gap: 15px;
+            font-size: 12px;
         }
 
-        /* Hero */
-        .hero {
-            margin-top: 80px;
-            padding: 4rem 2rem;
-            text-align: center;
-            background: radial-gradient(circle at top, rgba(0,208,132,0.1) 0%, transparent 50%);
+        .categories-scroller {
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            background: rgba(10, 11, 15, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: 12px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
-
-        .hero p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-
-        .shipping-badges {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .badge {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Products Grid */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .product-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .product-image {
+        
+        .categories-list {
+            display: flex; 
+            overflow-x: auto; 
+            padding: 0 25px 0 15px; 
+            gap: 8px;
+            scrollbar-width: none; 
             width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-bottom: 1px solid var(--border);
+        }
+        
+        .categories-list::-webkit-scrollbar { 
+            display: none; 
+        }
+        
+        .cat-card {
+            flex-shrink: 0; 
+            padding: 10px 18px; 
+            background: var(--bg-card);
+            border: 1px solid #2c2c35; 
+            border-radius: 20px; 
+            color: var(--text-main);
+            font-size: 13px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+        }
+        
+        .cat-card.active {
+            background: linear-gradient(135deg, var(--primary-neon), #00b344);
+            color: #000; 
+            border-color: var(--primary-neon);
+            box-shadow: 0 4px 12px rgba(0, 255, 163, 0.25);
         }
 
-        .product-info {
-            padding: 1.5rem;
-            flex: 1;
-            display: flex;
+        .app-view { 
+            display: none; 
+            padding: 15px; 
+        }
+        
+        .app-view.active { 
+            display: block; 
+        }
+
+        .products-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; 
+            margin-top: 5px; 
+        }
+        
+        .product-card {
+            background: var(--bg-card); 
+            border-radius: 16px; 
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05); 
+            display: flex; 
             flex-direction: column;
+            transition: transform 0.2s;
         }
-
-        .product-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 0.5rem;
+        
+        .product-card:active { 
+            transform: scale(0.98); 
         }
-
-        .product-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
+        
+        .product-img { 
+            width: 100%; 
+            height: 140px; 
+            object-fit: cover; 
+            background: #1a1d28; 
+            cursor: pointer; 
         }
-
-        .product-category {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent);
+        
+        .product-info { 
+            padding: 12px; 
+            display: flex; 
+            flex-direction: column; 
+            flex-grow: 1; 
+        }
+        
+        .product-name { 
+            font-size: 14px; 
+            font-weight: 700; 
+            margin-bottom: 4px; 
+        }
+        
+        .product-origin {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 6px;
             font-weight: 600;
-        }
-
-        .origin-tag {
-            font-size: 0.7rem;
-            padding: 0.3rem 0.6rem;
-            border-radius: 6px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .origin-it { background: rgba(0,208,132,0.2); color: #00d084; }
-        .origin-cz { background: rgba(255,71,87,0.2); color: #ff4757; }
-        .origin-es { background: rgba(255,165,0,0.2); color: #ffa500; }
-
-        .product-desc {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin: 1rem 0;
-            line-height: 1.5;
-        }
-
-        .variant-selector {
-            margin-top: auto;
-            background: var(--bg-tertiary);
-            border-radius: 10px;
-            padding: 0.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .variant-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
-            display: block;
-            font-weight: 600;
+        }
+        
+        .origin-it { background: rgba(0, 255, 163, 0.15); color: var(--primary-neon); }
+        .origin-cz { background: rgba(255, 71, 87, 0.15); color: var(--danger); }
+        .origin-es { background: rgba(255, 165, 0, 0.15); color: orange; }
+        
+        .product-desc { 
+            font-size: 11px; 
+            color: var(--text-hint); 
+            height: 28px; 
+            overflow: hidden; 
+            line-height: 1.3; 
+            margin-bottom: 8px; 
+        }
+        
+        .gram-selector {
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            background: #1a1d28; 
+            border-radius: 10px; 
+            padding: 4px; 
+            margin-top: auto;
+        }
+        
+        .gram-btn {
+            width: 32px; 
+            height: 32px; 
+            background: #2a2d3a; 
+            border: none;
+            color: white; 
+            border-radius: 8px; 
+            font-size: 18px; 
+            font-weight: 700; 
+            cursor: pointer;
+        }
+        
+        .gram-btn:active { 
+            background: #3a3d4a; 
+        }
+        
+        .gram-value { 
+            font-weight: 700; 
+            font-size: 13px; 
+            color: var(--primary-neon); 
         }
 
-        select {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
+        .checkout-form { 
+            background: var(--bg-card); 
+            padding: 15px; 
+            border-radius: 16px; 
+            margin-top: 20px; 
+            border: 1px solid #2c2c35; 
+        }
+        
+        .form-group { 
+            margin-bottom: 12px; 
+        }
+        
+        .form-group label { 
+            display: block; 
+            font-size: 12px; 
+            color: var(--text-hint); 
+            margin-bottom: 4px; 
+            font-weight: 600; 
+        }
+        
+        .form-group input, .form-group select { 
+            width: 100%; 
+            padding: 12px; 
+            background: #1a1d28; 
+            border: 1px solid #2c2c35; 
+            border-radius: 10px; 
+            color: white; 
+            font-size: 14px; 
             outline: none;
         }
-
-        select option {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
+        
+        .form-group input:focus { 
+            border-color: var(--primary-neon); 
         }
 
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
+        .shipping-options {
+            margin-bottom: 15px;
         }
-
-        .price-main {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--accent);
-        }
-
-        .price-unit {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .add-cart-btn {
-            width: 100%;
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 0.9rem;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .add-cart-btn:hover {
-            background: var(--accent-hover);
-            transform: scale(1.02);
-        }
-
-        /* Cart Sidebar */
-        .cart-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-
-        .cart-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .cart-sidebar {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            max-width: 500px;
-            height: 100%;
-            background: var(--bg-secondary);
-            border-left: 1px solid var(--border);
-            z-index: 2001;
-            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .cart-overlay.active + .cart-sidebar {
-            right: 0;
-        }
-
-        .cart-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cart-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .close-cart {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .close-cart:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        .cart-items {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
-
-        .cart-empty {
-            text-align: center;
-            color: var(--text-secondary);
-            padding: 3rem 0;
-        }
-
-        .cart-item {
-            background: var(--bg-tertiary);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cart-item-info h4 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .cart-item-info p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .cart-item-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .cart-item-price {
-            font-weight: 700;
-            color: var(--accent);
-            font-size: 1.1rem;
-        }
-
-        .remove-item {
-            background: rgba(255,71,87,0.1);
-            border: none;
-            color: #ff4757;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .remove-item:hover {
-            background: rgba(255,71,87,0.2);
-        }
-
-        .cart-footer {
-            padding: 1.5rem;
-            border-top: 1px solid var(--border);
-            background: var(--bg-secondary);
-        }
-
-        .shipping-selector {
-            margin-bottom: 1.5rem;
-        }
-
+        
         .shipping-option {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem;
-            background: var(--bg-tertiary);
+            padding: 12px;
+            background: #1a1d28;
             border: 2px solid transparent;
             border-radius: 10px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
             cursor: pointer;
-            transition: all 0.2s;
         }
-
+        
         .shipping-option.selected {
-            border-color: var(--accent);
-            background: rgba(0,208,132,0.1);
+            border-color: var(--primary-neon);
+            background: rgba(0, 255, 163, 0.05);
         }
-
+        
         .shipping-option-left {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 10px;
         }
-
+        
         .shipping-radio {
             width: 20px;
             height: 20px;
-            border: 2px solid var(--text-secondary);
+            border: 2px solid var(--text-hint);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
+        
         .shipping-option.selected .shipping-radio {
-            border-color: var(--accent);
-            background: var(--accent);
+            border-color: var(--primary-neon);
+            background: var(--primary-neon);
         }
-
+        
         .shipping-option.selected .shipping-radio::after {
             content: '';
             width: 8px;
@@ -571,1130 +366,799 @@
             background: #000;
             border-radius: 50%;
         }
-
+        
         .shipping-name {
             font-weight: 600;
+            font-size: 14px;
         }
-
+        
         .shipping-time {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+            font-size: 11px;
+            color: var(--text-hint);
         }
-
+        
         .shipping-price {
             font-weight: 700;
-            color: var(--accent);
+            color: var(--primary-neon);
         }
 
-        .cart-totals {
-            border-top: 1px solid var(--border);
-            padding-top: 1rem;
-            margin-bottom: 1rem;
+        .pay-option { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 12px; 
+            background: #1a1d28; 
+            border: 2px solid transparent; 
+            border-radius: 10px; 
+            margin-bottom: 8px; 
+            cursor: pointer; 
         }
-
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
+        
+        .pay-option.active { 
+            border-color: var(--secondary-neon); 
+            background: rgba(0,184,255,0.05); 
         }
-
-        .total-row.grand {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            border-top: 1px solid var(--border);
-            padding-top: 0.5rem;
-            margin-top: 0.5rem;
+        
+        .pay-badge { 
+            font-size: 10px; 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-weight: 700; 
         }
-
-        .checkout-btn {
-            width: 100%;
-            background: var(--gradient);
+        
+        .badge-crypto { 
+            background: #f0a500; 
+            color: #000; 
+        }
+        
+        .badge-card { 
+            background: #0052ff; 
+            color: #fff; 
+        }
+        
+        .badge-bank {
+            background: #00d084;
             color: #000;
+        }
+
+        .cart-summary-floating { 
+            background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon)); 
+            color: #000; 
+            font-weight: 800; 
+            padding: 14px; 
+            text-align: center; 
+            border-radius: 12px; 
+            margin-top: 15px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            width: 100%; 
             border: none;
-            padding: 1rem;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 255, 163, 0.3);
         }
 
-        .checkout-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,208,132,0.3);
+        .bottom-nav {
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 100vw;
+            background: rgba(18, 20, 28, 0.98); 
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,0.08); 
+            display: flex; 
+            justify-content: space-around; 
+            padding: 10px 0; 
+            z-index: 999;
+        }
+        
+        .nav-tab {
+            background: none; 
+            border: none; 
+            color: var(--text-hint); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            font-size: 12px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            position: relative; 
+            width: 25%;
+        }
+        
+        .nav-tab .icon { 
+            font-size: 22px; 
+            margin-bottom: 2px; 
+        }
+        
+        .nav-tab.active { 
+            color: var(--primary-neon); 
+        }
+        
+        .badge-cart-count { 
+            position: absolute; 
+            top: -2px; 
+            right: 20px; 
+            background: var(--danger); 
+            color: white; 
+            border-radius: 50%; 
+            width: 18px; 
+            height: 18px; 
+            font-size: 10px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
         }
 
-        /* Payment Modal */
-        .payment-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
-            z-index: 3000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
+        .lightbox-modal {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            background: rgba(0, 0, 0, 0.95); 
+            z-index: 100000;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            opacity: 0; 
+            pointer-events: none; 
+            transition: opacity 0.3s ease;
         }
-
-        .payment-modal.active {
-            display: flex;
+        
+        .lightbox-modal.active { 
+            opacity: 1; 
+            pointer-events: auto; 
         }
-
-        .payment-content {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 2rem;
-            position: relative;
+        
+        .lightbox-content { 
+            max-width: 90%; 
+            max-height: 80%; 
+            border-radius: 12px; 
         }
-
-        .payment-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .payment-methods {
-            display: grid;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .payment-method {
-            background: var(--bg-tertiary);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: all 0.3s;
-        }
-
-        .payment-method:hover {
-            border-color: var(--accent);
-        }
-
-        .payment-method.selected {
-            border-color: var(--accent);
-            background: rgba(0,208,132,0.1);
-        }
-
-        .payment-icon {
-            font-size: 1.5rem;
-        }
-
-        .payment-info h4 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .payment-info p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .order-summary-box {
-            background: var(--bg-tertiary);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            border: 1px dashed var(--accent);
-            display: none;
-        }
-
-        .order-summary-box.show {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .telegram-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #0088cc;
-            color: white;
-            text-decoration: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-top: 1rem;
-            transition: all 0.3s;
-        }
-
-        .telegram-btn:hover {
-            background: #0099e6;
-            transform: translateY(-2px);
+        
+        .lightbox-close { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            font-size: 30px; 
+            color: white; 
+            cursor: pointer; 
         }
 
         .copy-btn {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            transition: all 0.2s;
-        }
-
-        .copy-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        /* Toast */
-        .toast {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--accent);
-            color: #000;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-weight: 600;
-            transform: translateX(400px);
-            transition: transform 0.3s;
-            z-index: 4000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .products-grid { grid-template-columns: 1fr; }
-            .cart-sidebar { max-width: 100%; }
-            .header-content { padding: 0 1rem; }
-        }
-
-        /* Copy Code Section */
-        .copy-code-section {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            z-index: 500;
-        }
-
-        .copy-code-btn {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 0.8rem 1.2rem;
+            bottom: 100px;
+            right: 15px;
+            background: var(--bg-card);
+            border: 1px solid var(--primary-neon);
+            color: var(--primary-neon);
+            padding: 10px 15px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 100;
         }
 
-        .copy-code-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
+        @media (max-width: 380px) {
+            .products-grid { grid-template-columns: 1fr; }
+            .lang-btn { padding: 5px 8px; font-size: 10px; }
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                <img src="https://i.imgur.com/jNug6cl.jpg" alt="Shade Plug Logo">
-                <span class="logo-text">SHADE PLUG</span>
-            </div>
-            
-            <div class="header-actions">
-                <div class="lang-selector">
-                    <button class="lang-btn" onclick="toggleLang()">
-                        <span id="current-lang">🇬🇧 EN</span>
-                        <span>▼</span>
-                    </button>
-                    <div class="lang-dropdown" id="lang-dropdown">
-                        <div class="lang-option" onclick="setLanguage('en')">🇬🇧 English</div>
-                        <div class="lang-option" onclick="setLanguage('fr')">🇫🇷 Français</div>
-                        <div class="lang-option" onclick="setLanguage('es')">🇪🇸 Español</div>
-                        <div class="lang-option" onclick="setLanguage('de')">🇩🇪 Deutsch</div>
-                        <div class="lang-option" onclick="setLanguage('it')">🇮🇹 Italiano</div>
-                        <div class="lang-option" onclick="setLanguage('cz')">🇨🇿 Čeština</div>
-                        <div class="lang-option" onclick="setLanguage('ru')">🇷🇺 Русский</div>
-                    </div>
-                </div>
-                
-                <button class="cart-btn" onclick="openCart()">
-                    <span>🛒</span>
-                    <span data-i18n="cart">Cart</span>
-                    <span class="cart-count" id="cart-count">0</span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero -->
-    <section class="hero">
-        <h1 data-i18n="hero_title">Premium Bulk Distribution</h1>
-        <p data-i18n="hero_desc">Direct from the best European labs. Discrete shipping, lab-tested quality, 24-48h delivery.</p>
-        <div class="shipping-badges">
-            <div class="badge">🇪🇺 Europe 24-48h</div>
-            <div class="badge">🌍 Worldwide 72h</div>
-            <div class="badge">🔒 Stealth Packaging</div>
-            <div class="badge">💎 Premium Quality</div>
-        </div>
-    </section>
-
-    <!-- Products -->
-    <div class="container">
-        <h2 class="section-title" data-i18n="products_title">Our Products</h2>
-        <div class="products-grid" id="products-grid"></div>
+    <div class="lightbox-modal" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" src="" onclick="event.stopPropagation()">
     </div>
 
-    <!-- Cart Sidebar -->
-    <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
-    <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header">
-            <h3 class="cart-title" data-i18n="your_cart">Your Cart</h3>
-            <button class="close-cart" onclick="closeCart()">✕</button>
+    <div class="top-controls-bar">
+        <div class="lang-selector">
+            <button class="lang-btn active" id="lang-btn-en" onclick="setLanguage('en')">EN</button>
+            <button class="lang-btn" id="lang-btn-fr" onclick="setLanguage('fr')">FR</button>
+            <button class="lang-btn" id="lang-btn-es" onclick="setLanguage('es')">ES</button>
+            <button class="lang-btn" id="lang-btn-de" onclick="setLanguage('de')">DE</button>
+            <button class="lang-btn" id="lang-btn-it" onclick="setLanguage('it')">IT</button>
+            <button class="lang-btn" id="lang-btn-cz" onclick="setLanguage('cz')">CZ</button>
+            <button class="lang-btn" id="lang-btn-ru" onclick="setLanguage('ru')">RU</button>
         </div>
-        
-        <div class="cart-items" id="cart-items">
-            <div class="cart-empty" data-i18n="cart_empty">Your cart is empty</div>
+    </div>
+
+    <div class="brand-header">
+        <div class="main-logo-container" onclick="openLightbox('https://i.imgur.com/jNug6cl.jpg')">
+            <img src="https://i.imgur.com/jNug6cl.jpg" alt="Shade Plug Logo">
         </div>
+        <h1>SHADE PLUG</h1>
+        <p id="txt-header-sub">Premium Bulk Distribution • 24-48h Europe • 72h Worldwide</p>
+    </div>
+
+    <div class="promo-banner" id="txt-promo">
+        🔥 Bulk Orders • Crypto Payments • Discrete Shipping
+    </div>
+
+    <div class="shipping-banner">
+        <span>🇪🇺 EU: 24-48h</span>
+        <span style="color: var(--text-hint);">|</span>
+        <span>🌍 WW: 72h</span>
+    </div>
+
+    <div id="view-menu" class="app-view active">
+        <div class="categories-scroller">
+            <div class="categories-list" id="catList"></div>
+        </div>
+        <div id="productsDisplay"></div>
+    </div>
+
+    <div id="view-chat" class="app-view">
+        <h2 id="txt-cart-title" style="margin-bottom:15px;">🛒 Your Cart</h2>
+        <div id="cartItemsContainer"></div>
         
-        <div class="cart-footer">
-            <div class="shipping-selector">
+        <div class="checkout-form" id="checkoutFormBlock" style="display:none;">
+            <h3 style="margin-bottom:15px; color:var(--primary-neon);" id="txt-shipping-title">Shipping Method</h3>
+            
+            <div class="shipping-options">
                 <div class="shipping-option selected" onclick="selectShipping('eu')" id="ship-eu">
                     <div class="shipping-option-left">
                         <div class="shipping-radio"></div>
                         <div>
-                            <div class="shipping-name" data-i18n="shipping_eu">Europe Shipping</div>
-                            <div class="shipping-time" data-i18n="shipping_eu_time">24-48 hours</div>
+                            <div class="shipping-name" id="txt-ship-eu">Europe (EU)</div>
+                            <div class="shipping-time" id="txt-ship-eu-time">24-48 hours • Trackable</div>
                         </div>
                     </div>
-                    <div class="shipping-price" id="shipping-price-eu">€0.00</div>
+                    <div class="shipping-price" id="ship-eu-price">From €10</div>
                 </div>
                 
                 <div class="shipping-option" onclick="selectShipping('extra')" id="ship-extra">
                     <div class="shipping-option-left">
                         <div class="shipping-radio"></div>
                         <div>
-                            <div class="shipping-name" data-i18n="shipping_extra">Worldwide Shipping</div>
-                            <div class="shipping-time" data-i18n="shipping_extra_time">72 hours</div>
+                            <div class="shipping-name" id="txt-ship-extra">Worldwide (Extra-EU)</div>
+                            <div class="shipping-time" id="txt-ship-extra-time">72 hours • Express</div>
                         </div>
                     </div>
-                    <div class="shipping-price" id="shipping-price-extra">€0.00</div>
+                    <div class="shipping-price" id="ship-extra-price">From €25</div>
                 </div>
             </div>
+
+            <h3 style="margin-bottom:15px; color:var(--secondary-neon);" id="txt-pay-title">Payment Method</h3>
             
-            <div class="cart-totals">
-                <div class="total-row">
-                    <span data-i18n="subtotal">Subtotal</span>
-                    <span id="cart-subtotal">€0.00</span>
+            <div class="pay-option active" id="pay-opt-crypto" onclick="setPaymentMethod('crypto')">
+                <div>
+                    <strong style="display:block;">Bitcoin / Crypto</strong>
+                    <small style="color:var(--text-hint);">BTC, USDT, ETH • No fees</small>
                 </div>
-                <div class="total-row">
-                    <span data-i18n="shipping">Shipping</span>
-                    <span id="cart-shipping">€0.00</span>
-                </div>
-                <div class="total-row grand">
-                    <span data-i18n="total">Total</span>
-                    <span id="cart-total">€0.00</span>
-                </div>
+                <span class="pay-badge badge-crypto">CRYPTO</span>
             </div>
-            
-            <button class="checkout-btn" onclick="openPayment()" data-i18n="checkout">Checkout</button>
+
+            <div class="pay-option" id="pay-opt-card" onclick="setPaymentMethod('card')">
+                <div>
+                    <strong style="display:block;">Credit Card</strong>
+                    <small style="color:var(--text-hint);">+5% processing fee</small>
+                </div>
+                <span class="pay-badge badge-card">CARD</span>
+            </div>
+
+            <div class="pay-option" id="pay-opt-bank" onclick="setPaymentMethod('bank')">
+                <div>
+                    <strong style="display:block;">Bank Transfer (SEPA)</strong>
+                    <small style="color:var(--text-hint);">+5% fee • 1-3 days</small>
+                </div>
+                <span class="pay-badge badge-bank">BANK</span>
+            </div>
+
+            <div class="form-group" style="margin-top:20px;">
+                <label id="lbl-telegram">Telegram Username (for tracking)</label>
+                <input type="text" id="input-telegram" placeholder="@username">
+            </div>
+
+            <button class="cart-summary-floating" id="btn-submit-order" onclick="processOrder()">
+                CONFIRM ORDER
+            </button>
         </div>
     </div>
 
-    <!-- Payment Modal -->
-    <div class="payment-modal" id="payment-modal">
-        <div class="payment-content">
-            <button class="close-cart" onclick="closePayment()" style="position: absolute; top: 1rem; right: 1rem;">✕</button>
-            <h3 class="payment-title" data-i18n="select_payment">Select Payment Method</h3>
-            
-            <div class="payment-methods">
-                <div class="payment-method" onclick="selectPayment('btc')">
-                    <div class="payment-icon">₿</div>
-                    <div class="payment-info">
-                        <h4>Bitcoin (BTC)</h4>
-                        <p data-i18n="payment_btc_desc">Fast, secure, no fees</p>
-                    </div>
-                </div>
-                
-                <div class="payment-method" onclick="selectPayment('usdt')">
-                    <div class="payment-icon">💎</div>
-                    <div class="payment-info">
-                        <h4>USDT (TRC20/ERC20)</h4>
-                        <p data-i18n="payment_usdt_desc">Stable coin, no volatility</p>
-                    </div>
-                </div>
-                
-                <div class="payment-method" onclick="selectPayment('card')">
-                    <div class="payment-icon">💳</div>
-                    <div class="payment-info">
-                        <h4 data-i18n="payment_card">Credit Card</h4>
-                        <p data-i18n="payment_card_desc">+5% processing fee</p>
-                    </div>
-                </div>
-                
-                <div class="payment-method" onclick="selectPayment('bank')">
-                    <div class="payment-icon">🏦</div>
-                    <div class="payment-info">
-                        <h4 data-i18n="payment_bank">Bank Transfer (SEPA)</h4>
-                        <p data-i18n="payment_bank_desc">+5% fee, 1-3 days</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="order-summary-box" id="order-summary">
-                <h4 style="color: var(--accent); margin-bottom: 1rem;" data-i18n="order_ready">Order Ready!</h4>
-                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;" data-i18n="order_copied">Order details copied to clipboard. Send it to our Telegram to complete your order.</p>
-                
-                <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap;" id="order-text"></div>
-                
-                <button class="copy-btn" onclick="copyOrderText()" data-i18n="copy_order">Copy Order Text</button>
-                
-                <a href="https://t.me/shadeplug" target="_blank" class="telegram-btn">
-                    <span>📱</span>
-                    <span data-i18n="send_telegram">Send to @shadeplug</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast -->
-    <div class="toast" id="toast">Added to cart</div>
-
-    <!-- Copy Code Button -->
-    <div class="copy-code-section">
-        <button class="copy-code-btn" onclick="copySourceCode()" title="Copy source code for editing">
-            <span>📋</span>
-            <span>Copy Code</span>
+    <div class="bottom-nav">
+        <button class="nav-tab active" id="tab-btn-menu" onclick="switchTab('menu')">
+            <span class="icon">🌿</span>
+            <span id="tab-menu">Products</span>
+        </button>
+        <button class="nav-tab" id="tab-btn-chat" onclick="switchTab('chat')">
+            <span class="icon">🛒</span>
+            <span id="tab-cart">Cart</span>
+            <span class="badge-cart-count" id="cartBadge" style="display:none;">0</span>
         </button>
     </div>
 
+    <button class="copy-btn" onclick="copySourceCode()">📋 Copy Code</button>
+
     <script>
-        // Translations
-        const translations = {
+        const tg = window.Telegram?.WebApp;
+        if (tg) { tg.expand(); tg.ready(); }
+
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        
+        function closeLightbox() { 
+            document.getElementById('lightbox').classList.remove('active'); 
+        }
+
+        const i18n = {
             en: {
-                cart: "Cart",
-                hero_title: "Premium Bulk Distribution",
-                hero_desc: "Direct from the best European labs. Discrete shipping, lab-tested quality, 24-48h delivery.",
-                products_title: "Our Products",
-                your_cart: "Your Cart",
-                cart_empty: "Your cart is empty",
-                shipping_eu: "Europe Shipping",
-                shipping_eu_time: "24-48 hours",
-                shipping_extra: "Worldwide Shipping",
-                shipping_extra_time: "72 hours",
-                subtotal: "Subtotal",
-                shipping: "Shipping",
-                total: "Total",
-                checkout: "Checkout",
-                select_payment: "Select Payment Method",
-                payment_btc_desc: "Fast, secure, no fees",
-                payment_usdt_desc: "Stable coin, no volatility",
-                payment_card: "Credit Card",
-                payment_card_desc: "+5% processing fee",
-                payment_bank: "Bank Transfer (SEPA)",
-                payment_bank_desc: "+5% fee, 1-3 days",
-                order_ready: "Order Ready!",
-                order_copied: "Order details copied to clipboard. Send it to our Telegram to complete your order.",
-                copy_order: "Copy Order Text",
-                send_telegram: "Send to @shadeplug",
-                add_to_cart: "Add to Cart",
-                select_variant: "Select Quantity",
-                price_per_gram: "per gram",
-                shipping_from: "Ships from",
-                order_summary: "ORDER SUMMARY",
-                contact: "Contact",
-                payment_method: "Payment Method"
+                menu: "Products", cart: "Cart", sub: "Premium Bulk Distribution • 24-48h Europe • 72h Worldwide",
+                promo: "🔥 Bulk Orders • Crypto Payments • Discrete Shipping",
+                shipTitle: "Shipping Method", payTitle: "Payment Method",
+                shipEU: "Europe (EU)", shipEUtime: "24-48 hours • Trackable", shipEUprice: "From €10",
+                shipExtra: "Worldwide (Extra-EU)", shipExtratime: "72 hours • Express", shipExtraprice: "From €25",
+                cryptoSub: "BTC, USDT, ETH • No fees", cardSub: "+5% processing fee", bankSub: "+5% fee • 1-3 days",
+                confirm: "CONFIRM ORDER", empty: "Your cart is empty",
+                cartTitle: "🛒 Your Cart", tgLabel: "Telegram Username (for tracking)",
+                cats: { all: "All", weed: "🌿 Weed", hash: "🍫 Hash", mushrooms: "🍄 Mushrooms" },
+                orderPrefix: "🛒 NEW ORDER - SHADE PLUG\n--------------------------------\n",
+                total: "TOTAL", shipping: "SHIPPING", payment: "PAYMENT", method: "Method",
+                contact: "📱 Contact: @shadeplug"
             },
             fr: {
-                cart: "Panier",
-                hero_title: "Distribution Premium en Gros",
-                hero_desc: "Direct des meilleurs laboratoires européens. Expédition discrète, qualité testée en laboratoire, livraison 24-48h.",
-                products_title: "Nos Produits",
-                your_cart: "Votre Panier",
-                cart_empty: "Votre panier est vide",
-                shipping_eu: "Livraison Europe",
-                shipping_eu_time: "24-48 heures",
-                shipping_extra: "Livraison Mondiale",
-                shipping_extra_time: "72 heures",
-                subtotal: "Sous-total",
-                shipping: "Livraison",
-                total: "Total",
-                checkout: "Commander",
-                select_payment: "Choisir le Mode de Paiement",
-                payment_btc_desc: "Rapide, sécurisé, sans frais",
-                payment_usdt_desc: "Stable, sans volatilité",
-                payment_card: "Carte de Crédit",
-                payment_card_desc: "+5% frais de traitement",
-                payment_bank: "Virement Bancaire (SEPA)",
-                payment_bank_desc: "+5% frais, 1-3 jours",
-                order_ready: "Commande Prête!",
-                order_copied: "Détails copiés. Envoyez-les sur Telegram pour finaliser.",
-                copy_order: "Copier la Commande",
-                send_telegram: "Envoyer à @shadeplug",
-                add_to_cart: "Ajouter",
-                select_variant: "Quantité",
-                price_per_gram: "par gramme",
-                shipping_from: "Expédition depuis",
-                order_summary: "RÉCAPITULATIF",
-                contact: "Contact",
-                payment_method: "Mode de Paiement"
+                menu: "Produits", cart: "Panier", sub: "Distribution Premium • 24-48h Europe • 72h Monde",
+                promo: "🔥 Commandes en Gros • Paiement Crypto • Livraison Discrète",
+                shipTitle: "Mode de Livraison", payTitle: "Mode de Paiement",
+                shipEU: "Europe (UE)", shipEUtime: "24-48 heures • Suivi", shipEUprice: "Dès 10€",
+                shipExtra: "Monde (Hors-UE)", shipExtratime: "72 heures • Express", shipExtraprice: "Dès 25€",
+                confirm: "CONFIRMER", empty: "Votre panier est vide",
+                cartTitle: "🛒 Votre Panier", tgLabel: "Pseudo Telegram (pour suivi)",
+                cats: { all: "Tous", weed: "🌿 Weed", hash: "🍫 Hash", mushrooms: "🍄 Champignons" }
             },
             es: {
-                cart: "Carrito",
-                hero_title: "Distribución Premium al Por Mayor",
-                hero_desc: "Directo de los mejores laboratorios europeos. Envío discreto, calidad de laboratorio, entrega 24-48h.",
-                products_title: "Nuestros Productos",
-                your_cart: "Tu Carrito",
-                cart_empty: "Tu carrito está vacío",
-                shipping_eu: "Envío Europa",
-                shipping_eu_time: "24-48 horas",
-                shipping_extra: "Envío Mundial",
-                shipping_extra_time: "72 horas",
-                subtotal: "Subtotal",
-                shipping: "Envío",
-                total: "Total",
-                checkout: "Pagar",
-                select_payment: "Seleccionar Método de Pago",
-                payment_btc_desc: "Rápido, seguro, sin comisiones",
-                payment_usdt_desc: "Moneda estable, sin volatilidad",
-                payment_card: "Tarjeta de Crédito",
-                payment_card_desc: "+5% comisión",
-                payment_bank: "Transferencia Bancaria (SEPA)",
-                payment_bank_desc: "+5% comisión, 1-3 días",
-                order_ready: "¡Pedido Listo!",
-                order_copied: "Detalles copiados. Envíalos por Telegram para completar.",
-                copy_order: "Copiar Pedido",
-                send_telegram: "Enviar a @shadeplug",
-                add_to_cart: "Añadir",
-                select_variant: "Cantidad",
-                price_per_gram: "por gramo",
-                shipping_from: "Envío desde",
-                order_summary: "RESUMEN DEL PEDIDO",
-                contact: "Contacto",
-                payment_method: "Método de Pago"
+                menu: "Productos", cart: "Carrito", sub: "Distribución Premium • 24-48h Europa • 72h Mundo",
+                promo: "🔥 Pedidos al Por Mayor • Crypto • Envío Discreto",
+                shipTitle: "Método de Envío", payTitle: "Método de Pago",
+                shipEU: "Europa (UE)", shipEUtime: "24-48 horas • Rastreable", shipEUprice: "Desde 10€",
+                shipExtra: "Mundial (Extra-UE)", shipExtratime: "72 horas • Express", shipExtraprice: "Desde 25€",
+                confirm: "CONFIRMAR", empty: "Tu carrito está vacío",
+                cartTitle: "🛒 Tu Carrito", tgLabel: "Usuario Telegram (seguimiento)",
+                cats: { all: "Todos", weed: "🌿 Weed", hash: "🍫 Hash", mushrooms: "🍄 Hongos" }
             },
             de: {
-                cart: "Warenkorb",
-                hero_title: "Premium Großhandel",
-                hero_desc: "Direkt aus den besten europäischen Laboren. Diskreter Versand, labortested Qualität, 24-48h Lieferung.",
-                products_title: "Unsere Produkte",
-                your_cart: "Ihr Warenkorb",
-                cart_empty: "Ihr Warenkorb ist leer",
-                shipping_eu: "Europa Versand",
-                shipping_eu_time: "24-48 Stunden",
-                shipping_extra: "Weltweiter Versand",
-                shipping_extra_time: "72 Stunden",
-                subtotal: "Zwischensumme",
-                shipping: "Versand",
-                total: "Gesamt",
-                checkout: "Zur Kasse",
-                select_payment: "Zahlungsmethode Wählen",
-                payment_btc_desc: "Schnell, sicher, gebührenfrei",
-                payment_usdt_desc: "Stabil, keine Volatilität",
-                payment_card: "Kreditkarte",
-                payment_card_desc: "+5% Bearbeitungsgebühr",
-                payment_bank: "Banküberweisung (SEPA)",
-                payment_bank_desc: "+5% Gebühr, 1-3 Tage",
-                order_ready: "Bestellung Bereit!",
-                order_copied: "Details kopiert. Senden Sie sie über Telegram.",
-                copy_order: "Bestellung Kopieren",
-                send_telegram: "An @shadeplug Senden",
-                add_to_cart: "Hinzufügen",
-                select_variant: "Menge",
-                price_per_gram: "pro Gramm",
-                shipping_from: "Versand aus",
-                order_summary: "BESTELLÜBERSICHT",
-                contact: "Kontakt",
-                payment_method: "Zahlungsmethode"
+                menu: "Produkte", cart: "Warenkorb", sub: "Premium Distribution • 24-48h Europa • 72h Weltweit",
+                promo: "🔥 Großhandel • Krypto • Diskreter Versand",
+                shipTitle: "Versandart", payTitle: "Zahlungsmethode",
+                shipEU: "Europa (EU)", shipEUtime: "24-48 Stunden • Tracking", shipEUprice: "Ab 10€",
+                shipExtra: "Weltweit (Non-EU)", shipExtratime: "72 Stunden • Express", shipExtraprice: "Ab 25€",
+                confirm: "BESTÄTIGEN", empty: "Ihr Warenkorb ist leer",
+                cartTitle: "🛒 Warenkorb", tgLabel: "Telegram Username (Tracking)",
+                cats: { all: "Alle", weed: "🌿 Weed", hash: "🍫 Hash", mushrooms: "🍄 Pilze" }
             },
             it: {
-                cart: "Carrello",
-                hero_title: "Distribuzione Premium Bulk",
-                hero_desc: "Direttamente dai migliori laboratori europei. Spedizione discreta, qualità lab-tested, consegna 24-48h.",
-                products_title: "I Nostri Prodotti",
-                your_cart: "Il Tuo Carrello",
-                cart_empty: "Il carrello è vuoto",
-                shipping_eu: "Spedizione Europa",
-                shipping_eu_time: "24-48 ore",
-                shipping_extra: "Spedizione Worldwide",
-                shipping_extra_time: "72 ore",
-                subtotal: "Subtotale",
-                shipping: "Spedizione",
-                total: "Totale",
-                checkout: "Checkout",
-                select_payment: "Seleziona Metodo di Pagamento",
-                payment_btc_desc: "Veloce, sicuro, zero commissioni",
-                payment_usdt_desc: "Stabile, senza volatilità",
-                payment_card: "Carta di Credito",
-                payment_card_desc: "+5% commissione",
-                payment_bank: "Bonifico Bancario (SEPA)",
-                payment_bank_desc: "+5% commissione, 1-3 giorni",
-                order_ready: "Ordine Pronto!",
-                order_copied: "Dettagli copiati. Inviali su Telegram per completare.",
-                copy_order: "Copia Ordine",
-                send_telegram: "Invia a @shadeplug",
-                add_to_cart: "Aggiungi",
-                select_variant: "Seleziona Quantità",
-                price_per_gram: "al grammo",
-                shipping_from: "Spedito da",
-                order_summary: "RIEPILOGO ORDINE",
-                contact: "Contatto",
-                payment_method: "Metodo di Pagamento"
+                menu: "Prodotti", cart: "Carrello", sub: "Distribuzione Premium • 24-48h Europa • 72h Mondo",
+                promo: "🔥 Ordini Ingrosso • Crypto • Spedizione Discreta",
+                shipTitle: "Metodo di Spedizione", payTitle: "Metodo di Pagamento",
+                shipEU: "Europa (UE)", shipEUtime: "24-48 ore • Tracciabile", shipEUprice: "Da 10€",
+                shipExtra: "Mondo (Extra-UE)", shipExtratime: "72 ore • Express", shipExtraprice: "Da 25€",
+                confirm: "CONFERMA", empty: "Il carrello è vuoto",
+                cartTitle: "🛒 Il Tuo Carrello", tgLabel: "Username Telegram (tracking)",
+                cats: { all: "Tutti", weed: "🌿 Weed", hash: "🍫 Hash", mushrooms: "🍄 Funghi" }
             },
             cz: {
-                cart: "Košík",
-                hero_title: "Premium Velkoobchod",
-                hero_desc: "Přímo z nejlepších evropských laboratoří. Diskrétní doprava, laboratorně testovaná kvalita, doručení 24-48h.",
-                products_title: "Naše Produkty",
-                your_cart: "Váš Košík",
-                cart_empty: "Košík je prázdný",
-                shipping_eu: "Doprava Evropa",
-                shipping_eu_time: "24-48 hodin",
-                shipping_extra: "Celosvětová Doprava",
-                shipping_extra_time: "72 hodin",
-                subtotal: "Mezisoučet",
-                shipping: "Doprava",
-                total: "Celkem",
-                checkout: "Objednat",
-                select_payment: "Vyberte Způsob Platby",
-                payment_btc_desc: "Rychlé, bezpečné, bez poplatků",
-                payment_usdt_desc: "Stabilní, bez volatility",
-                payment_card: "Kreditní Karta",
-                payment_card_desc: "+5% poplatek",
-                payment_bank: "Bankovní Převod (SEPA)",
-                payment_bank_desc: "+5% poplatek, 1-3 dny",
-                order_ready: "Objednávka Připravena!",
-                order_copied: "Detaily zkopírovány. Pošlete je na Telegram.",
-                copy_order: "Kopírovat Objednávku",
-                send_telegram: "Poslat @shadeplug",
-                add_to_cart: "Přidat",
-                select_variant: "Množství",
-                price_per_gram: "za gram",
-                shipping_from: "Odesláno z",
-                order_summary: "SOUHRN OBJEDNÁVKY",
-                contact: "Kontakt",
-                payment_method: "Způsob Platby"
+                menu: "Produkty", cart: "Košík", sub: "Premium Distribuce • 24-48h Evropa • 72h Svět",
+                promo: "🔥 Velkoobchod • Krypto • Diskrétní Doprava",
+                shipTitle: "Způsob Dopravy", payTitle: "Způsob Platby",
+                shipEU: "Evropa (EU)", shipEUtime: "24-48 hodin • Sledování", shipEUprice: "Od 10€",
+                shipExtra: "Celosvětově", shipExtratime: "72 hodin • Expres", shipExtraprice: "Od 25€",
+                confirm: "POTVRDIT", empty: "Košík je prázdný",
+                cartTitle: "🛒 Váš Košík", tgLabel: "Telegram Username (sledování)",
+                cats: { all: "Vše", weed: "🌿 Weed", hash: "🍫 Hash", mushrooms: "🍄 Houby" }
             },
             ru: {
-                cart: "Корзина",
-                hero_title: "Премиум Оптовые Поставки",
-                hero_desc: "Напрямую из лучших европейских лабораторий. Дискретная доставка, лабораторное качество, 24-48ч.",
-                products_title: "Наши Продукты",
-                your_cart: "Ваша Корзина",
-                cart_empty: "Корзина пуста",
-                shipping_eu: "Доставка по Европе",
-                shipping_eu_time: "24-48 часов",
-                shipping_extra: "Мировая Доставка",
-                shipping_extra_time: "72 часа",
-                subtotal: "Промежуточный итог",
-                shipping: "Доставка",
-                total: "Итого",
-                checkout: "Оформить",
-                select_payment: "Выберите Способ Оплаты",
-                payment_btc_desc: "Быстро, безопасно, без комиссии",
-                payment_usdt_desc: "Стабильная, без волатильности",
-                payment_card: "Кредитная Карта",
-                payment_card_desc: "+5% комиссия",
-                payment_bank: "Банковский Перевод (SEPA)",
-                payment_bank_desc: "+5% комиссия, 1-3 дня",
-                order_ready: "Заказ Готов!",
-                order_copied: "Детали скопированы. Отправьте в Telegram.",
-                copy_order: "Копировать Заказ",
-                send_telegram: "Отправить @shadeplug",
-                add_to_cart: "Добавить",
-                select_variant: "Количество",
-                price_per_gram: "за грамм",
-                shipping_from: "Отправка из",
-                order_summary: "СВОДКА ЗАКАЗА",
-                contact: "Контакт",
-                payment_method: "Способ Оплаты"
+                menu: "Товары", cart: "Корзина", sub: "Премиум Дистрибуция • 24-48ч Европа • 72ч Мир",
+                promo: "🔥 Оптовые Заказы • Крипта • Дискретная Доставка",
+                shipTitle: "Способ Доставки", payTitle: "Способ Оплаты",
+                shipEU: "Европа (ЕС)", shipEUtime: "24-48 часов • Отслеживание", shipEUprice: "От 10€",
+                shipExtra: "Мир (Вне ЕС)", shipExtratime: "72 часа • Экспресс", shipExtraprice: "От 25€",
+                confirm: "ПОДТВЕРДИТЬ", empty: "Корзина пуста",
+                cartTitle: "🛒 Ваша Корзина", tgLabel: "Telegram Username (отслеживание)",
+                cats: { all: "Все", weed: "🌿 Weed", hash: "🍫 Hash", mushrooms: "🍄 Грибы" }
             }
         };
 
         let currentLang = 'en';
-        let cart = JSON.parse(localStorage.getItem('shadeplug_cart')) || [];
+        let cart = {};
+        let activeCategoryFilter = 'all';
         let currentShipping = 'eu';
+        let currentPayment = 'crypto';
 
-        // Products Database with Imgur Images
-        const products = [
+        // Products with provided Imgur images only
+        const productsData = [
             {
-                id: 'cali-cryo',
-                name: 'Cali Cryo',
-                category: 'Weed',
-                origin: 'CZ',
-                image: 'https://i.imgur.com/XZHzDvT.jpg',
-                desc: 'Premium indoor flowers with intense terpene profile. Cryo-cured for maximum preservation.',
+                id: "cali-cryo",
+                name: "Cali Cryo",
+                category: "weed",
+                origin: "CZ",
+                price: 12,
+                image: "https://i.imgur.com/XZHzDvT.jpg",
+                desc: "Premium Indoor • 27% THC • Cryo Cured",
                 variants: [
-                    { weight: '100g', price: 350, unit: '3.50' },
-                    { weight: '500g', price: 1500, unit: '3.00' },
-                    { weight: '1000g', price: 2600, unit: '2.60' }
-                ],
-                shipping: { eu: 25, extra: 40 }
+                    {g: 25, price: 300},
+                    {g: 100, price: 1100},
+                    {g: 500, price: 5000}
+                ]
             },
             {
-                id: 'dry-frozen-sift',
-                name: 'Dry Frozen Sift Top',
-                category: 'Hash',
-                origin: 'IT',
-                image: 'https://i.imgur.com/rxOoCaf.jpg',
-                desc: 'Premium dry sift extracted at sub-zero temperatures. 120u filtered top quality.',
+                id: "dry-frozen-sift",
+                name: "Dry Frozen Sift Top",
+                category: "hash",
+                origin: "IT",
+                price: 8,
+                image: "https://i.imgur.com/rxOoCaf.jpg",
+                desc: "120u Filtered • Premium Quality • Italy",
                 variants: [
-                    { weight: '50g', price: 350, unit: '7.00' },
-                    { weight: '100g', price: 600, unit: '6.00' },
-                    { weight: '250g', price: 1375, unit: '5.50' },
-                    { weight: '500g', price: 2500, unit: '5.00' }
-                ],
-                shipping: { eu: 10, extra: 25 }
+                    {g: 25, price: 200},
+                    {g: 100, price: 700},
+                    {g: 500, price: 3000}
+                ]
             },
             {
-                id: 'dry-biscotti',
-                name: 'Dry Biscotti Spain',
-                category: 'Hash',
-                origin: 'ES',
-                image: 'https://i.imgur.com/lpcEt39.jpg',
-                desc: 'Spanish import quality. Soft, creamy texture with spicy undertones.',
+                id: "dry-biscotti",
+                name: "Dry Biscotti Spain",
+                category: "hash",
+                origin: "ES",
+                price: 9,
+                image: "https://i.imgur.com/lpcEt39.jpg",
+                desc: "Spanish Import • Soft Texture • High THC",
                 variants: [
-                    { weight: '25g', price: 125, unit: '5.00' },
-                    { weight: '100g', price: 400, unit: '4.00' },
-                    { weight: '500g', price: 1800, unit: '3.60' },
-                    { weight: '1000g', price: 3300, unit: '3.30' }
-                ],
-                shipping: { eu: 15, extra: 30 }
+                    {g: 25, price: 225},
+                    {g: 100, price: 800},
+                    {g: 500, price: 3500}
+                ]
             },
             {
-                id: 'dry-frozen-top',
-                name: 'Dry Frozen Top',
-                category: 'Hash',
-                origin: 'CZ',
-                image: 'https://i.imgur.com/q3bnCcp.jpg',
-                desc: 'Top shelf frozen hash. Constant refrigerated storage maintains premium quality.',
+                id: "dry-frozen-top",
+                name: "Dry Frozen Top",
+                category: "hash",
+                origin: "CZ",
+                price: 10,
+                image: "https://i.imgur.com/q3bnCcp.jpg",
+                desc: "Top Shelf • Frozen Extraction • Czech",
                 variants: [
-                    { weight: '100g', price: 380, unit: '3.80' },
-                    { weight: '500g', price: 1500, unit: '3.00' },
-                    { weight: '1000g', price: 2600, unit: '2.60' }
-                ],
-                shipping: { eu: 20, extra: 35 }
+                    {g: 25, price: 250},
+                    {g: 100, price: 900},
+                    {g: 500, price: 4000}
+                ]
             },
             {
-                id: 'mc-kennai',
-                name: 'MC Kennaiii',
-                category: 'Mushrooms',
-                origin: 'IT',
-                image: 'https://i.imgur.com/fq1uFFm.jpg',
-                desc: 'Premium selected mushrooms. Carefully dried and packed in padded envelopes.',
+                id: "mc-kennai",
+                name: "MC Kennaiii",
+                category: "mushrooms",
+                origin: "IT",
+                price: 15,
+                image: "https://i.imgur.com/fq1uFFm.jpg",
+                desc: "Premium Shrooms • Psilocybin • Italy",
                 variants: [
-                    { weight: '5g', price: 60, unit: '12.00' },
-                    { weight: '10g', price: 90, unit: '9.00' }
-                ],
-                shipping: { eu: 10, extra: 20 }
+                    {g: 5, price: 75},
+                    {g: 10, price: 140},
+                    {g: 25, price: 325}
+                ]
             },
             {
-                id: 'dry-mimosa',
-                name: 'Dry Mimosa Cake',
-                category: 'Hash',
-                origin: 'IT',
-                image: 'https://i.imgur.com/xQoPEbC.jpg',
-                desc: 'Sweet citrusy resin, soft to the touch. Perfect evening smoke made in Italy.',
+                id: "dry-mimosa",
+                name: "Dry Mimosa Cake",
+                category: "hash",
+                origin: "IT",
+                price: 11,
+                image: "https://i.imgur.com/xQoPEbC.jpg",
+                desc: "Citrus Profile • Soft Texture • Top Quality",
                 variants: [
-                    { weight: '25g', price: 150, unit: '6.00' },
-                    { weight: '100g', price: 450, unit: '4.50' },
-                    { weight: '500g', price: 2000, unit: '4.00' },
-                    { weight: '1000g', price: 3800, unit: '3.80' }
-                ],
-                shipping: { eu: 10, extra: 25 }
+                    {g: 25, price: 275},
+                    {g: 100, price: 1000},
+                    {g: 500, price: 4500}
+                ]
             },
             {
-                id: 'dry-space',
-                name: 'Dry Space',
-                category: 'Hash',
-                origin: 'IT',
-                image: 'https://i.imgur.com/ilGU1NS.jpg',
-                desc: 'Wet and sandy resin. Out of this world quality available locally in Italy.',
+                id: "dry-space",
+                name: "Dry Space",
+                category: "hash",
+                origin: "IT",
+                price: 9,
+                image: "https://i.imgur.com/ilGU1NS.jpg",
+                desc: "Sandy Texture • Wet Resin • Local Italian",
                 variants: [
-                    { weight: '25g', price: 113, unit: '4.52' },
-                    { weight: '100g', price: 360, unit: '3.60' },
-                    { weight: '500g', price: 1600, unit: '3.20' },
-                    { weight: '1000g', price: 3000, unit: '3.00' }
-                ],
-                shipping: { eu: 10, extra: 25 }
+                    {g: 25, price: 225},
+                    {g: 100, price: 800},
+                    {g: 500, price: 3500}
+                ]
             },
             {
-                id: 'cali-raspberry',
-                name: 'Cali RaspBerry',
-                category: 'Weed',
-                origin: 'CZ',
-                image: 'https://i.imgur.com/M1hbjTf.jpg',
-                desc: 'Compact raspberry-scented buds. Ideal for large scale resale.',
+                id: "cali-raspberry",
+                name: "Cali RaspBerry",
+                category: "weed",
+                origin: "CZ",
+                price: 11,
+                image: "https://i.imgur.com/M1hbjTf.jpg",
+                desc: "Raspberry Terps • Compact Buds • Bulk",
                 variants: [
-                    { weight: '100g', price: 400, unit: '4.00' },
-                    { weight: '500g', price: 1500, unit: '3.00' },
-                    { weight: '1000g', price: 2000, unit: '2.00' }
-                ],
-                shipping: { eu: 25, extra: 45 }
+                    {g: 25, price: 275},
+                    {g: 100, price: 1000},
+                    {g: 500, price: 4500}
+                ]
             },
             {
-                id: 'strawberry-banana',
-                name: 'Dry Strawberry Banana 2026',
-                category: 'Hash',
-                origin: 'IT',
-                image: 'https://i.imgur.com/z4v3zJ2.jpg',
-                desc: 'Fresh 2026 batch, oily aromatic consistency. Fast shipping.',
+                id: "strawberry-banana",
+                name: "Strawberry Banana 2026",
+                category: "hash",
+                origin: "IT",
+                price: 12,
+                image: "https://i.imgur.com/z4v3zJ2.jpg",
+                desc: "Fresh 2026 Batch • Oily • Aromatic",
                 variants: [
-                    { weight: '25g', price: 150, unit: '6.00' },
-                    { weight: '100g', price: 450, unit: '4.50' },
-                    { weight: '500g', price: 2000, unit: '4.00' },
-                    { weight: '1000g', price: 3800, unit: '3.80' }
-                ],
-                shipping: { eu: 10, extra: 25 }
-            },
-            {
-                id: 'cali-lemon',
-                name: 'Cali Lemon Pop',
-                category: 'Weed',
-                origin: 'IT',
-                image: 'https://i.imgur.com/XZHzDvT.jpg',
-                desc: 'Intense citrus terpenes, solid and bright buds. Shipped directly from Italy.',
-                variants: [
-                    { weight: '25g', price: 125, unit: '5.00' },
-                    { weight: '100g', price: 330, unit: '3.30' },
-                    { weight: '500g', price: 1500, unit: '3.00' },
-                    { weight: '1000g', price: 2800, unit: '2.80' }
-                ],
-                shipping: { eu: 10, extra: 25 }
-            },
-            {
-                id: 'premium-static',
-                name: 'Premium Frozen Static',
-                category: 'Hash',
-                origin: 'IT',
-                image: 'https://i.imgur.com/fxzTmBs.jpg',
-                desc: 'High level static sift for refined palates. Limited Italian availability.',
-                variants: [
-                    { weight: '25g', price: 162, unit: '6.50' },
-                    { weight: '50g', price: 300, unit: '6.00' },
-                    { weight: '100g', price: 550, unit: '5.50' }
-                ],
-                shipping: { eu: 10, extra: 20 }
+                    {g: 25, price: 300},
+                    {g: 100, price: 1100},
+                    {g: 500, price: 5000}
+                ]
             }
         ];
 
-        function t(key) {
-            return translations[currentLang][key] || translations['en'][key] || key;
-        }
-
         function setLanguage(lang) {
             currentLang = lang;
-            document.documentElement.lang = lang;
-            document.getElementById('current-lang').textContent = getLangLabel(lang);
-            document.getElementById('lang-dropdown').classList.remove('active');
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`lang-btn-${lang}`).classList.add('active');
             
-            // Update all i18n elements
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                el.textContent = t(key);
+            const t = i18n[lang];
+            document.getElementById('txt-header-sub').innerText = t.sub;
+            document.getElementById('txt-promo').innerText = t.promo;
+            document.getElementById('tab-menu').innerText = t.menu;
+            document.getElementById('tab-cart').innerText = t.cart;
+            document.getElementById('txt-cart-title').innerText = t.cartTitle;
+            document.getElementById('txt-shipping-title').innerText = t.shipTitle;
+            document.getElementById('txt-pay-title').innerText = t.payTitle;
+            document.getElementById('btn-submit-order').innerText = t.confirm;
+            document.getElementById('lbl-telegram').innerText = t.tgLabel;
+            
+            document.getElementById('txt-ship-eu').innerText = t.shipEU;
+            document.getElementById('txt-ship-eu-time').innerText = t.shipEUtime;
+            document.getElementById('ship-eu-price').innerText = t.shipEUprice;
+            document.getElementById('txt-ship-extra').innerText = t.shipExtra;
+            document.getElementById('txt-ship-extra-time').innerText = t.shipExtratime;
+            document.getElementById('ship-extra-price').innerText = t.shipExtraprice;
+            
+            renderCategories();
+            renderProducts();
+            updateCartUI();
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('catList');
+            container.innerHTML = '';
+            
+            const cats = i18n[currentLang].cats;
+            Object.keys(cats).forEach(key => {
+                const btn = document.createElement('div');
+                btn.className = `cat-card ${key === activeCategoryFilter ? 'active' : ''}`;
+                btn.innerText = cats[key];
+                btn.onclick = () => {
+                    activeCategoryFilter = key;
+                    renderCategories();
+                    renderProducts();
+                };
+                container.appendChild(btn);
             });
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('productsDisplay');
+            container.innerHTML = '<div class="products-grid" id="prodGrid"></div>';
+            const grid = document.getElementById('prodGrid');
+            
+            const filtered = activeCategoryFilter === 'all' 
+                ? productsData 
+                : productsData.filter(p => p.category === activeCategoryFilter);
+            
+            filtered.forEach(p => {
+                const originClass = p.origin === 'IT' ? 'origin-it' : p.origin === 'CZ' ? 'origin-cz' : 'origin-es';
+                const qty = cart[p.id] || 0;
+                
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img class="product-img" src="${p.image}" onclick="openLightbox('${p.image}')" onerror="this.src='https://via.placeholder.com/300x200/1a1d28/00ffa3?text=${p.name}'">
+                    <div class="product-info">
+                        <div class="product-name">${p.name}</div>
+                        <span class="product-origin ${originClass}">${p.origin}</span>
+                        <div class="product-desc">${p.desc}</div>
+                        <div class="gram-selector">
+                            <button class="gram-btn" onclick="modifyCart('${p.id}', -1)">-</button>
+                            <span class="gram-value">${qty}g</span>
+                            <button class="gram-btn" onclick="modifyCart('${p.id}', 1)">+</button>
+                        </div>
+                        <div style="font-size:13px; font-weight:bold; color:var(--primary-neon); margin-top:8px; text-align:center;">
+                            From €${p.price}/g
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function modifyCart(id, delta) {
+            const p = productsData.find(x => x.id === id);
+            let current = cart[id] || 0;
+            current += delta * 5; // Step by 5g
+            
+            if (current <= 0) {
+                delete cart[id];
+                current = 0;
+            } else {
+                cart[id] = current;
+            }
             
             renderProducts();
             updateCartUI();
         }
 
-        function getLangLabel(lang) {
-            const labels = {
-                en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', 
-                de: '🇩🇪 DE', it: '🇮🇹 IT', cz: '🇨🇿 CZ', ru: '🇷🇺 RU'
-            };
-            return labels[lang] || '🇬🇧 EN';
-        }
-
-        function toggleLang() {
-            document.getElementById('lang-dropdown').classList.toggle('active');
-        }
-
-        function renderProducts() {
-            const grid = document.getElementById('products-grid');
-            grid.innerHTML = products.map(p => {
-                const originClass = p.origin === 'IT' ? 'origin-it' : p.origin === 'CZ' ? 'origin-cz' : 'origin-es';
-                const originText = p.origin === 'IT' ? 'Italy' : p.origin === 'CZ' ? 'Czech Republic' : 'Spain';
-                
-                return `
-                    <div class="product-card">
-                        <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://via.placeholder.com/400x300/1a1d28/00d084?text=${encodeURIComponent(p.name)}'">
-                        <div class="product-info">
-                            <div class="product-header">
-                                <div>
-                                    <div class="product-category">${p.category}</div>
-                                    <h3 class="product-title">${p.name}</h3>
-                                </div>
-                                <span class="origin-tag ${originClass}">${p.origin}</span>
-                            </div>
-                            <p class="product-desc">${p.desc}</p>
-                            
-                            <div class="variant-selector">
-                                <label class="variant-label">${t('select_variant')}</label>
-                                <select id="variant-${p.id}" onchange="updatePrice('${p.id}')">
-                                    ${p.variants.map((v, i) => `
-                                        <option value="${i}">${v.weight} - €${v.price} (${v.unit}€/${t('price_per_gram')})</option>
-                                    `).join('')}
-                                </select>
-                            </div>
-                            
-                            <div class="price-row">
-                                <span class="price-main" id="price-${p.id}">€${p.variants[0].price}</span>
-                                <span class="price-unit" id="unit-${p.id}">€${p.variants[0].unit}/${t('price_per_gram')}</span>
-                            </div>
-                            
-                            <button class="add-cart-btn" onclick="addToCart('${p.id}')">
-                                ${t('add_to_cart')}
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function updatePrice(productId) {
-            const product = products.find(p => p.id === productId);
-            const select = document.getElementById(`variant-${productId}`);
-            const variant = product.variants[select.value];
+        function calculateTotals() {
+            let subtotal = 0;
+            let totalGrams = 0;
+            const origins = new Set();
             
-            document.getElementById(`price-${productId}`).textContent = `€${variant.price}`;
-            document.getElementById(`unit-${productId}`).textContent = `€${variant.unit}/${t('price_per_gram')}`;
-        }
-
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            const select = document.getElementById(`variant-${productId}`);
-            const variantIndex = parseInt(select.value);
-            const variant = product.variants[variantIndex];
+            Object.keys(cart).forEach(id => {
+                const p = productsData.find(x => x.id === id);
+                const grams = cart[id];
+                // Find best price tier
+                let pricePerGram = p.price;
+                for (let v of p.variants) {
+                    if (grams >= v.g) {
+                        pricePerGram = v.price / v.g;
+                    }
+                }
+                subtotal += grams * pricePerGram;
+                totalGrams += grams;
+                origins.add(p.origin);
+            });
             
-            const existingItem = cart.find(item => item.productId === productId && item.variantIndex === variantIndex);
+            // Shipping calculation
+            const baseShipping = currentShipping === 'eu' ? 10 : 25;
+            const shipping = origins.size > 0 ? baseShipping + (origins.size - 1) * 5 : 0;
             
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    productId,
-                    variantIndex,
-                    quantity: 1,
-                    ...variant,
-                    productName: product.name,
-                    category: product.category,
-                    origin: product.origin,
-                    shipping: product.shipping
-                });
-            }
+            // Payment fee
+            let fee = 0;
+            if (currentPayment === 'card' || currentPayment === 'bank') fee = subtotal * 0.05;
             
-            saveCart();
-            updateCartUI();
-            showToast(t('add_to_cart') + ' ✓');
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            saveCart();
-            updateCartUI();
-        }
-
-        function saveCart() {
-            localStorage.setItem('shadeplug_cart', JSON.stringify(cart));
+            return { subtotal, shipping, fee, total: subtotal + shipping + fee, grams: totalGrams, origins: origins.size };
         }
 
         function updateCartUI() {
-            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cart-count').textContent = count;
+            const metrics = calculateTotals();
+            const badge = document.getElementById('cartBadge');
             
-            const container = document.getElementById('cart-items');
-            if (cart.length === 0) {
-                container.innerHTML = `<div class="cart-empty">${t('cart_empty')}</div>`;
+            if (metrics.grams > 0) {
+                badge.style.display = 'flex';
+                badge.innerText = Math.floor(metrics.grams);
             } else {
-                container.innerHTML = cart.map((item, index) => `
-                    <div class="cart-item">
-                        <div class="cart-item-info">
-                            <h4>${item.productName}</h4>
-                            <p>${item.weight} × ${item.quantity} | ${t('shipping_from')}: ${item.origin}</p>
+                badge.style.display = 'none';
+            }
+            
+            const container = document.getElementById('cartItemsContainer');
+            const form = document.getElementById('checkoutFormBlock');
+            
+            if (Object.keys(cart).length === 0) {
+                container.innerHTML = `<p style="text-align:center; padding:40px; color:var(--text-hint);">${i18n[currentLang].empty}</p>`;
+                form.style.display = 'none';
+                return;
+            }
+            
+            form.style.display = 'block';
+            let html = '';
+            
+            Object.keys(cart).forEach(id => {
+                const p = productsData.find(x => x.id === id);
+                const g = cart[id];
+                let price = p.price;
+                for (let v of p.variants) {
+                    if (g >= v.g) price = v.price / v.g;
+                }
+                const total = (g * price).toFixed(0);
+                
+                html += `
+                    <div style="background:var(--bg-card); padding:12px; border-radius:10px; margin-bottom:8px; border:1px solid #2c2c35;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <strong>${p.name}</strong>
+                            <span style="color:var(--primary-neon); font-weight:bold;">€${total}</span>
                         </div>
-                        <div class="cart-item-actions">
-                            <span class="cart-item-price">€${item.price * item.quantity}</span>
-                            <button class="remove-item" onclick="removeFromCart(${index})">🗑</button>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                            <span style="font-size:12px; color:var(--text-hint);">${g}g × €${price.toFixed(2)}/g</span>
+                            <div style="display:flex; gap:10px; align-items:center;">
+                                <button onclick="modifyCart('${id}', -1)" style="background:none; border:none; color:var(--danger); font-size:18px; cursor:pointer;">-</button>
+                                <span style="font-weight:bold;">${g}g</span>
+                                <button onclick="modifyCart('${id}', 1)" style="background:none; border:none; color:var(--primary-neon); font-size:18px; cursor:pointer;">+</button>
+                            </div>
                         </div>
                     </div>
-                `).join('');
-            }
-            
-            calculateTotals();
-        }
-
-        function calculateTotals() {
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            // Calculate shipping based on unique origins
-            const origins = [...new Set(cart.map(item => item.origin))];
-            let shippingCost = 0;
-            
-            origins.forEach(origin => {
-                const product = products.find(p => p.origin === origin);
-                if (product) {
-                    shippingCost += currentShipping === 'eu' ? product.shipping.eu : product.shipping.extra;
-                }
+                `;
             });
             
-            // Default shipping if cart has items but no shipping calculated
-            if (cart.length > 0 && shippingCost === 0) {
-                shippingCost = currentShipping === 'eu' ? 10 : 25;
-            }
+            html += `
+                <div style="background:var(--bg-card); padding:15px; border-radius:10px; margin-top:15px; border:1px solid var(--primary-neon);">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                        <span>Subtotal</span>
+                        <span>€${metrics.subtotal.toFixed(0)}</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                        <span>Shipping (${currentShipping === 'eu' ? 'EU' : 'WW'})</span>
+                        <span>€${metrics.shipping.toFixed(0)}</span>
+                    </div>
+                    ${metrics.fee > 0 ? `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:var(--warning);">
+                        <span>Processing Fee (5%)</span>
+                        <span>€${metrics.fee.toFixed(0)}</span>
+                    </div>` : ''}
+                    <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:800; margin-top:10px; padding-top:10px; border-top:1px solid #2c2c35;">
+                        <span>TOTAL</span>
+                        <span style="color:var(--primary-neon);">€${metrics.total.toFixed(0)}</span>
+                    </div>
+                </div>
+            `;
             
-            const total = subtotal + shippingCost;
-            
-            document.getElementById('cart-subtotal').textContent = `€${subtotal.toFixed(2)}`;
-            document.getElementById('cart-shipping').textContent = `€${shippingCost.toFixed(2)}`;
-            document.getElementById('cart-total').textContent = `€${total.toFixed(2)}`;
-            
-            // Update shipping display prices
-            document.getElementById('shipping-price-eu').textContent = cart.length ? `€${origins.length * 10}-${origins.length * 25}` : '€0.00';
-            document.getElementById('shipping-price-extra').textContent = cart.length ? `€${origins.length * 25}-${origins.length * 45}` : '€0.00';
-            
-            return { subtotal, shipping: shippingCost, total };
+            container.innerHTML = html;
         }
 
         function selectShipping(type) {
             currentShipping = type;
             document.getElementById('ship-eu').classList.toggle('selected', type === 'eu');
             document.getElementById('ship-extra').classList.toggle('selected', type === 'extra');
-            calculateTotals();
-        }
-
-        function openCart() {
-            document.getElementById('cart-overlay').classList.add('active');
-            document.getElementById('cart-sidebar').style.right = '0';
             updateCartUI();
         }
 
-        function closeCart() {
-            document.getElementById('cart-overlay').classList.remove('active');
-            document.getElementById('cart-sidebar').style.right = '-100%';
+        function setPaymentMethod(method) {
+            currentPayment = method;
+            document.querySelectorAll('.pay-option').forEach(o => o.classList.remove('active'));
+            document.getElementById(`pay-opt-${method}`).classList.add('active');
+            updateCartUI();
         }
 
-        function openPayment() {
-            if (cart.length === 0) {
-                alert(t('cart_empty'));
-                return;
-            }
-            closeCart();
-            document.getElementById('payment-modal').classList.add('active');
+        function switchTab(tab) {
+            document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(`view-${tab}`).classList.add('active');
+            document.getElementById(`tab-btn-${tab}`).classList.add('active');
+            if (tab === 'chat') updateCartUI();
         }
 
-        function closePayment() {
-            document.getElementById('payment-modal').classList.remove('active');
-            document.getElementById('order-summary').classList.remove('show');
-            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-        }
-
-        function selectPayment(method) {
-            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
+        function processOrder() {
+            const metrics = calculateTotals();
+            const tgUser = document.getElementById('input-telegram').value.trim() || 'Not provided';
             
-            const totals = calculateTotals();
-            const methodText = {
-                btc: 'Bitcoin (BTC)',
-                usdt: 'USDT (TRC20/ERC20)',
-                card: 'Credit Card (+5%)',
-                bank: 'Bank Transfer SEPA (+5%)'
-            };
+            let msg = i18n[currentLang].orderPrefix;
+            msg += `📦 SHIPPING: ${currentShipping === 'eu' ? 'Europe 24-48h' : 'Worldwide 72h'}\n`;
+            msg += `💳 PAYMENT: ${currentPayment.toUpperCase()}\n`;
+            msg += `--------------------------------\n`;
             
-            // Calculate final total with fees
-            let finalTotal = totals.total;
-            if (method === 'card' || method === 'bank') {
-                finalTotal = totals.total * 1.05;
-            }
-            
-            const orderText = `
-⚡ ${t('order_summary')} - SHADE PLUG ⚡
-===============================
-${cart.map((item, i) => `${i+1}. ${item.productName}
-   📦 ${item.weight} × ${item.quantity}
-   📍 ${t('shipping_from')}: ${item.origin}
-   💵 €${item.price * item.quantity}`).join('\n')}
-
-===============================
-💰 ${t('subtotal')}: €${totals.subtotal.toFixed(2)}
-🚚 ${t('shipping')}: €${totals.shipping.toFixed(2)}
-💳 ${t('payment_method')}: ${methodText[method]}
-💎 ${t('total')}: €${finalTotal.toFixed(2)}
-
-📱 ${t('contact')}: @shadeplug (Telegram)
-🌐 Shipping: ${currentShipping === 'eu' ? 'Europe 24-48h' : 'Worldwide 72h'}
-            `.trim();
-            
-            document.getElementById('order-text').textContent = orderText;
-            document.getElementById('order-summary').classList.add('show');
-            
-            // Auto copy to clipboard
-            navigator.clipboard.writeText(orderText).then(() => {
-                showToast('Order copied! Send to Telegram');
-            }).catch(() => {
-                showToast('Copy manually and send to @shadeplug');
+            Object.keys(cart).forEach(id => {
+                const p = productsData.find(x => x.id === id);
+                const g = cart[id];
+                let price = p.price;
+                for (let v of p.variants) {
+                    if (g >= v.g) price = v.price / v.g;
+                }
+                msg += `• ${p.name}: ${g}g (€${(g*price).toFixed(0)})\n`;
             });
-        }
-
-        function copyOrderText() {
-            const text = document.getElementById('order-text').textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('Copied!');
-            });
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            
+            msg += `--------------------------------\n`;
+            msg += `💰 Total: €${metrics.total.toFixed(0)}\n`;
+            msg += `📱 Telegram: ${tgUser}\n`;
+            msg += `🤖 Contact: @shadeplug`;
+            
+            const url = `https://t.me/shadeplug?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
         }
 
         function copySourceCode() {
             const html = document.documentElement.outerHTML;
             navigator.clipboard.writeText(html).then(() => {
-                showToast('Source code copied! Save as .html file');
-            }).catch(() => {
-                showToast('Press Ctrl+S to save page');
+                alert('Source code copied! Save as .html file');
             });
         }
 
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.lang-selector')) {
-                document.getElementById('lang-dropdown').classList.remove('active');
-            }
-        });
-
         // Init
-        renderProducts();
-        updateCartUI();
+        setLanguage('en');
     </script>
 </body>
 </html>
