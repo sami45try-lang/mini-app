@@ -1,34 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shade Plug | Premium Cannabis & Hash</title>
+    <title>Shade Plug | Premium Distribution</title>
+    <meta name="description" content="Premium bulk distribution - Shade Plug">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     <style>
+        :root {
+            --bg-primary: #0a0b0f;
+            --bg-secondary: #12141c;
+            --bg-tertiary: #1a1d28;
+            --accent: #00d084;
+            --accent-hover: #00b873;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --border: rgba(255,255,255,0.08);
+            --shadow: 0 20px 40px rgba(0,0,0,0.4);
+            --gradient: linear-gradient(135deg, #00d084 0%, #00a8e8 100%);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #1a1a2e;
-            --secondary: #16213e;
-            --accent: #0f3460;
-            --gold: #e94560;
-            --text: #eaeaea;
-            --text-muted: #a0a0a0;
-            --success: #00d9a5;
-            --warning: #ffa726;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text);
-            min-height: 100vh;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
@@ -37,16 +40,17 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(26, 26, 46, 0.95);
+            background: rgba(10,11,15,0.95);
             backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
             z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem 0;
         }
 
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -56,60 +60,28 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            cursor: pointer;
         }
 
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--gold), #ff6b6b);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: white;
+        .logo img {
+            height: 45px;
+            width: auto;
+            border-radius: 8px;
         }
 
         .logo-text {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #fff, var(--gold));
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
 
-        .nav {
+        .header-actions {
             display: flex;
-            gap: 2rem;
             align-items: center;
-        }
-
-        .nav a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav a:hover {
-            color: var(--gold);
-        }
-
-        .nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gold);
-            transition: width 0.3s;
-        }
-
-        .nav a:hover::after {
-            width: 100%;
+            gap: 1.5rem;
         }
 
         /* Language Selector */
@@ -118,16 +90,21 @@
         }
 
         .lang-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: var(--text);
-            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.6rem 1rem;
             border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--accent);
         }
 
         .lang-dropdown {
@@ -135,8 +112,8 @@
             top: 100%;
             right: 0;
             margin-top: 0.5rem;
-            background: var(--secondary);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 0.5rem;
             min-width: 150px;
@@ -144,9 +121,10 @@
             visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.3s;
+            box-shadow: var(--shadow);
         }
 
-        .lang-selector:hover .lang-dropdown {
+        .lang-dropdown.active {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
@@ -154,8 +132,8 @@
 
         .lang-option {
             padding: 0.6rem 1rem;
+            border-radius: 6px;
             cursor: pointer;
-            border-radius: 8px;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -163,66 +141,61 @@
         }
 
         .lang-option:hover {
-            background: rgba(255,255,255,0.1);
+            background: var(--bg-tertiary);
         }
 
         /* Cart Button */
         .cart-btn {
-            position: relative;
-            background: linear-gradient(135deg, var(--gold), #ff6b6b);
-            border: none;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
         }
 
         .cart-btn:hover {
+            border-color: var(--accent);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
         }
 
         .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--success);
-            color: var(--primary);
-            width: 24px;
-            height: 24px;
+            background: var(--accent);
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
-            margin-top: 100px;
+            margin-top: 80px;
             padding: 4rem 2rem;
             text-align: center;
-            background: radial-gradient(ellipse at center, rgba(233, 69, 96, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle at top, rgba(0,208,132,0.1) 0%, transparent 50%);
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 800;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
+            color: var(--text-secondary);
+            font-size: 1.1rem;
             max-width: 600px;
             margin: 0 auto 2rem;
         }
@@ -230,1166 +203,1472 @@
         .shipping-badges {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1rem;
             flex-wrap: wrap;
             margin-top: 2rem;
         }
 
         .badge {
-            background: rgba(0, 217, 165, 0.1);
-            border: 1px solid var(--success);
-            color: var(--success);
-            padding: 0.8rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
             border-radius: 50px;
-            font-weight: 600;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        /* Products Section */
-        .products-section {
+        /* Products Grid */
+        .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 2rem;
         }
 
         .section-title {
-            text-align: center;
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold), transparent);
-            border-radius: 2px;
+            margin-bottom: 2rem;
+            text-align: center;
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem;
         }
 
         .product-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
         .product-image {
             width: 100%;
-            height: 250px;
+            height: 220px;
             object-fit: cover;
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-bottom: 1px solid var(--border);
         }
 
         .product-info {
             padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
         }
 
         .product-category {
-            color: var(--gold);
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-weight: 600;
         }
 
-        .product-name {
-            font-size: 1.3rem;
+        .origin-tag {
+            font-size: 0.7rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            text-transform: uppercase;
         }
 
-        .product-origin {
-            color: var(--text-muted);
+        .origin-it { background: rgba(0,208,132,0.2); color: #00d084; }
+        .origin-cz { background: rgba(255,71,87,0.2); color: #ff4757; }
+        .origin-es { background: rgba(255,165,0,0.2); color: #ffa500; }
+
+        .product-desc {
+            color: var(--text-secondary);
             font-size: 0.9rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            margin: 1rem 0;
+            line-height: 1.5;
         }
 
-        .product-price {
+        .variant-selector {
+            margin-top: auto;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .variant-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            display: block;
+            font-weight: 600;
+        }
+
+        select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+        }
+
+        select option {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .price-main {
             font-size: 1.5rem;
             font-weight: 800;
-            color: var(--success);
-            margin-bottom: 1rem;
+            color: var(--accent);
         }
 
-        .product-price span {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            font-weight: 400;
+        .price-unit {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
         }
 
-        .product-controls {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .quantity-selector {
-            display: flex;
-            align-items: center;
-            background: rgba(255,255,255,0.1);
+        .add-cart-btn {
+            width: 100%;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 0.9rem;
             border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .qty-btn {
-            background: transparent;
-            border: none;
-            color: var(--text);
-            width: 40px;
-            height: 40px;
+            font-weight: 700;
+            font-size: 0.95rem;
             cursor: pointer;
-            font-size: 1.2rem;
-            transition: background 0.2s;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .qty-btn:hover {
-            background: rgba(255,255,255,0.1);
+        .add-cart-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.02);
         }
 
-        .qty-input {
-            width: 60px;
-            text-align: center;
-            border: none;
-            background: transparent;
-            color: var(--text);
-            font-weight: 600;
-            -moz-appearance: textfield;
-        }
-
-        .qty-input::-webkit-outer-spin-button,
-        .qty-input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .add-to-cart {
-            flex: 1;
-            background: linear-gradient(135deg, var(--gold), #ff6b6b);
-            border: none;
-            color: white;
-            padding: 0.8rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .add-to-cart:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.4);
-        }
-
-        /* Cart Modal */
-        .modal-overlay {
+        /* Cart Sidebar */
+        .cart-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 500px;
+            height: 100%;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border);
+            z-index: 2001;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-overlay.active + .cart-sidebar {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .close-cart:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 3rem 0;
+        }
+
+        .cart-item {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .cart-item-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .remove-item {
+            background: rgba(255,71,87,0.1);
+            border: none;
+            color: #ff4757;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .remove-item:hover {
+            background: rgba(255,71,87,0.2);
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+
+        .shipping-selector {
+            margin-bottom: 1.5rem;
+        }
+
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .shipping-option.selected {
+            border-color: var(--accent);
+            background: rgba(0,208,132,0.1);
+        }
+
+        .shipping-option-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .shipping-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--text-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .shipping-option.selected .shipping-radio {
+            border-color: var(--accent);
+            background: var(--accent);
+        }
+
+        .shipping-option.selected .shipping-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #000;
+            border-radius: 50%;
+        }
+
+        .shipping-name {
+            font-weight: 600;
+        }
+
+        .shipping-time {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .shipping-price {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .cart-totals {
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .total-row.grand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            border-top: 1px solid var(--border);
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--gradient);
+            color: #000;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,208,132,0.3);
+        }
+
+        /* Payment Modal */
+        .payment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
             display: none;
             align-items: center;
             justify-content: center;
             padding: 2rem;
         }
 
-        .modal-overlay.active {
+        .payment-modal.active {
             display: flex;
         }
 
-        .modal {
-            background: var(--secondary);
-            border-radius: 24px;
+        .payment-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             width: 100%;
-            max-width: 700px;
+            max-width: 600px;
             max-height: 90vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            padding: 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 {
-            font-size: 1.5rem;
-        }
-
-        .close-modal {
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: var(--text);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.5rem;
-            transition: background 0.2s;
-        }
-
-        .close-modal:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .modal-body {
-            flex: 1;
             overflow-y: auto;
             padding: 2rem;
+            position: relative;
         }
 
-        .cart-item {
-            display: flex;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            align-items: center;
-        }
-
-        .cart-item img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-name {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-
-        .cart-item-qty {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .cart-item-price {
-            font-weight: 700;
-            color: var(--success);
-            font-size: 1.1rem;
-        }
-
-        .remove-item {
-            background: rgba(233, 69, 96, 0.2);
-            border: none;
-            color: var(--gold);
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .remove-item:hover {
-            background: rgba(233, 69, 96, 0.4);
-        }
-
-        .cart-empty {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-muted);
-        }
-
-        .cart-empty-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        .modal-footer {
-            padding: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-        }
-
-        .cart-total span:last-child {
-            font-weight: 800;
-            color: var(--success);
+        .payment-title {
             font-size: 1.5rem;
-        }
-
-        .checkout-btn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--success), #00b894);
-            border: none;
-            color: var(--primary);
-            padding: 1rem;
-            border-radius: 12px;
-            font-size: 1.1rem;
             font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
-        .checkout-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 217, 165, 0.4);
-        }
-
-        /* Payment Modal */
-        .payment-options {
+        .payment-methods {
             display: grid;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .payment-option {
-            background: rgba(255,255,255,0.05);
-            border: 2px solid rgba(255,255,255,0.1);
+        .payment-method {
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.2rem;
             cursor: pointer;
-            transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 1rem;
+            transition: all 0.3s;
         }
 
-        .payment-option:hover {
-            border-color: var(--gold);
-            background: rgba(233, 69, 96, 0.1);
+        .payment-method:hover {
+            border-color: var(--accent);
         }
 
-        .payment-option.selected {
-            border-color: var(--success);
-            background: rgba(0, 217, 165, 0.1);
+        .payment-method.selected {
+            border-color: var(--accent);
+            background: rgba(0,208,132,0.1);
         }
 
         .payment-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             font-size: 1.5rem;
         }
 
         .payment-info h4 {
-            margin-bottom: 0.3rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
         }
 
         .payment-info p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
         }
 
-        /* Contact Section */
-        .contact-section {
-            background: var(--accent);
-            padding: 4rem 2rem;
-            margin-top: 4rem;
+        .order-summary-box {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px dashed var(--accent);
+            display: none;
         }
 
-        .contact-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
+        .order-summary-box.show {
+            display: block;
+            animation: fadeIn 0.5s;
         }
 
-        .contact-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .telegram-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.5rem;
             background: #0088cc;
             color: white;
-            padding: 1rem 2rem;
-            border-radius: 12px;
             text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 1.1rem;
             margin-top: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s;
         }
 
         .telegram-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 136, 204, 0.4);
+            background: #0099e6;
+            transform: translateY(-2px);
         }
 
-        /* Footer */
-        .footer {
-            background: var(--primary);
-            padding: 3rem 2rem;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .footer p {
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
+        .copy-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
             margin-top: 1rem;
+            transition: all 0.2s;
         }
 
-        .footer-links a {
-            color: var(--text);
-            text-decoration: none;
-            transition: color 0.2s;
+        .copy-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
-        .footer-links a:hover {
-            color: var(--gold);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .nav {
-                display: none;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .header-content {
-                padding: 1rem;
-            }
-
-            .logo-text {
-                font-size: 1.3rem;
-            }
-        }
-
-        /* Toast Notification */
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            background: var(--success);
-            color: var(--primary);
+            background: var(--accent);
+            color: #000;
             padding: 1rem 2rem;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: 600;
             transform: translateX(400px);
             transition: transform 0.3s;
-            z-index: 3000;
+            z-index: 4000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .toast.show {
             transform: translateX(0);
         }
 
-        /* Shipping Info */
-        .shipping-info {
-            background: rgba(0, 217, 165, 0.1);
-            border: 1px solid var(--success);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 2rem auto;
-            max-width: 800px;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .products-grid { grid-template-columns: 1fr; }
+            .cart-sidebar { max-width: 100%; }
+            .header-content { padding: 0 1rem; }
         }
 
-        .shipping-info h3 {
-            color: var(--success);
-            margin-bottom: 1rem;
+        /* Copy Code Section */
+        .copy-code-section {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 500;
+        }
+
+        .copy-code-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: all 0.3s;
         }
 
-        .shipping-info ul {
-            list-style: none;
-            color: var(--text-muted);
-        }
-
-        .shipping-info li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .shipping-info li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--success);
+        .copy-code-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
         }
     </style>
 </head>
 <body>
+
     <!-- Header -->
     <header class="header">
         <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">SP</div>
-                <div class="logo-text">SHADE PLUG</div>
+            <div class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <img src="https://i.imgur.com/jNug6cl.jpg" alt="Shade Plug Logo">
+                <span class="logo-text">SHADE PLUG</span>
             </div>
-            <nav class="nav">
-                <a href="#products" data-i18n="products">Products</a>
-                <a href="#shipping" data-i18n="shipping">Shipping</a>
-                <a href="#contact" data-i18n="contact">Contact</a>
-            </nav>
-            <div style="display: flex; gap: 1rem; align-items: center;">
+            
+            <div class="header-actions">
                 <div class="lang-selector">
-                    <button class="lang-btn">
+                    <button class="lang-btn" onclick="toggleLang()">
                         <span id="current-lang">🇬🇧 EN</span>
                         <span>▼</span>
                     </button>
-                    <div class="lang-dropdown">
+                    <div class="lang-dropdown" id="lang-dropdown">
                         <div class="lang-option" onclick="setLanguage('en')">🇬🇧 English</div>
                         <div class="lang-option" onclick="setLanguage('fr')">🇫🇷 Français</div>
                         <div class="lang-option" onclick="setLanguage('es')">🇪🇸 Español</div>
                         <div class="lang-option" onclick="setLanguage('de')">🇩🇪 Deutsch</div>
                         <div class="lang-option" onclick="setLanguage('it')">🇮🇹 Italiano</div>
-                        <div class="lang-option" onclick="setLanguage('cs')">🇨🇿 Čeština</div>
+                        <div class="lang-option" onclick="setLanguage('cz')">🇨🇿 Čeština</div>
                         <div class="lang-option" onclick="setLanguage('ru')">🇷🇺 Русский</div>
                     </div>
                 </div>
+                
                 <button class="cart-btn" onclick="openCart()">
-                    🛒 <span data-i18n="cart">Cart</span>
+                    <span>🛒</span>
+                    <span data-i18n="cart">Cart</span>
                     <span class="cart-count" id="cart-count">0</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
-        <h1 data-i18n="hero_title">Premium Cannabis & Hash</h1>
-        <p data-i18n="hero_subtitle">Direct from the best producers in California, Spain and beyond. Lab-tested, vacuum-sealed, discreet shipping.</p>
+        <h1 data-i18n="hero_title">Premium Bulk Distribution</h1>
+        <p data-i18n="hero_desc">Direct from the best European labs. Discrete shipping, lab-tested quality, 24-48h delivery.</p>
         <div class="shipping-badges">
-            <div class="badge">🚀 Europe 24-48h</div>
+            <div class="badge">🇪🇺 Europe 24-48h</div>
             <div class="badge">🌍 Worldwide 72h</div>
-            <div class="badge">🔒 Discreet Packaging</div>
-            <div class="badge">✓ Lab Tested</div>
+            <div class="badge">🔒 Stealth Packaging</div>
+            <div class="badge">💎 Premium Quality</div>
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section class="products-section" id="products">
-        <h2 class="section-title" data-i18n="our_products">Our Products</h2>
-        <div class="products-grid" id="products-grid">
-            <!-- Products will be loaded by JavaScript -->
+    <!-- Products -->
+    <div class="container">
+        <h2 class="section-title" data-i18n="products_title">Our Products</h2>
+        <div class="products-grid" id="products-grid"></div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3 class="cart-title" data-i18n="your_cart">Your Cart</h3>
+            <button class="close-cart" onclick="closeCart()">✕</button>
         </div>
-    </section>
-
-    <!-- Shipping Info -->
-    <section class="shipping-info" id="shipping">
-        <h3>📦 <span data-i18n="shipping_title">Shipping Information</span></h3>
-        <ul>
-            <li data-i18n="shipping_eu">Europe: 24-48 hours delivery</li>
-            <li data-i18n="shipping_intl">Outside Europe: 72 hours delivery</li>
-            <li data-i18n="shipping_discreet">All packages are vacuum-sealed and discreet</li>
-            <li data-i18n="shipping_tracking">Tracking number provided after dispatch</li>
-            <li data-i18n="shipping_reship">100% reship policy if package is lost</li>
-        </ul>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact-section" id="contact">
-        <div class="contact-content">
-            <h2 data-i18n="contact_title">Ready to Order?</h2>
-            <p data-i18n="contact_text">Contact us on Telegram for fast, secure service</p>
-            <a href="https://t.me/shadeplug" class="telegram-btn" target="_blank">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.015-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.48.329-.913.489-1.301.48-.428-.009-1.252-.241-1.865-.44-.751-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.015 3.333-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.141.121.099.154.232.17.325.015.093.034.305.019.471z"/>
-                </svg>
-                @shadeplug
-            </a>
+        
+        <div class="cart-items" id="cart-items">
+            <div class="cart-empty" data-i18n="cart_empty">Your cart is empty</div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <p>© 2025 Shade Plug. All rights reserved.</p>
-        <p data-i18n="footer_text">Premium cannabis products for connoisseurs</p>
-        <div class="footer-links">
-            <a href="#" data-i18n="terms">Terms</a>
-            <a href="#" data-i18n="privacy">Privacy</a>
-            <a href="#" data-i18n="faq">FAQ</a>
-        </div>
-    </footer>
-
-    <!-- Cart Modal -->
-    <div class="modal-overlay" id="cart-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2>🛒 <span data-i18n="your_cart">Your Cart</span></h2>
-                <button class="close-modal" onclick="closeCart()">×</button>
-            </div>
-            <div class="modal-body" id="cart-body">
-                <div class="cart-empty">
-                    <div class="cart-empty-icon">🛒</div>
-                    <p data-i18n="cart_empty">Your cart is empty</p>
+        
+        <div class="cart-footer">
+            <div class="shipping-selector">
+                <div class="shipping-option selected" onclick="selectShipping('eu')" id="ship-eu">
+                    <div class="shipping-option-left">
+                        <div class="shipping-radio"></div>
+                        <div>
+                            <div class="shipping-name" data-i18n="shipping_eu">Europe Shipping</div>
+                            <div class="shipping-time" data-i18n="shipping_eu_time">24-48 hours</div>
+                        </div>
+                    </div>
+                    <div class="shipping-price" id="shipping-price-eu">€0.00</div>
+                </div>
+                
+                <div class="shipping-option" onclick="selectShipping('extra')" id="ship-extra">
+                    <div class="shipping-option-left">
+                        <div class="shipping-radio"></div>
+                        <div>
+                            <div class="shipping-name" data-i18n="shipping_extra">Worldwide Shipping</div>
+                            <div class="shipping-time" data-i18n="shipping_extra_time">72 hours</div>
+                        </div>
+                    </div>
+                    <div class="shipping-price" id="shipping-price-extra">€0.00</div>
                 </div>
             </div>
-            <div class="modal-footer" id="cart-footer" style="display: none;">
-                <div class="cart-total">
-                    <span data-i18n="total">Total:</span>
-                    <span id="cart-total">€0</span>
+            
+            <div class="cart-totals">
+                <div class="total-row">
+                    <span data-i18n="subtotal">Subtotal</span>
+                    <span id="cart-subtotal">€0.00</span>
                 </div>
-                <button class="checkout-btn" onclick="openPayment()" data-i18n="proceed_checkout">Proceed to Checkout</button>
+                <div class="total-row">
+                    <span data-i18n="shipping">Shipping</span>
+                    <span id="cart-shipping">€0.00</span>
+                </div>
+                <div class="total-row grand">
+                    <span data-i18n="total">Total</span>
+                    <span id="cart-total">€0.00</span>
+                </div>
             </div>
+            
+            <button class="checkout-btn" onclick="openPayment()" data-i18n="checkout">Checkout</button>
         </div>
     </div>
 
     <!-- Payment Modal -->
-    <div class="modal-overlay" id="payment-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2>💳 <span data-i18n="payment_title">Select Payment Method</span></h2>
-                <button class="close-modal" onclick="closePayment()">×</button>
+    <div class="payment-modal" id="payment-modal">
+        <div class="payment-content">
+            <button class="close-cart" onclick="closePayment()" style="position: absolute; top: 1rem; right: 1rem;">✕</button>
+            <h3 class="payment-title" data-i18n="select_payment">Select Payment Method</h3>
+            
+            <div class="payment-methods">
+                <div class="payment-method" onclick="selectPayment('btc')">
+                    <div class="payment-icon">₿</div>
+                    <div class="payment-info">
+                        <h4>Bitcoin (BTC)</h4>
+                        <p data-i18n="payment_btc_desc">Fast, secure, no fees</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectPayment('usdt')">
+                    <div class="payment-icon">💎</div>
+                    <div class="payment-info">
+                        <h4>USDT (TRC20/ERC20)</h4>
+                        <p data-i18n="payment_usdt_desc">Stable coin, no volatility</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectPayment('card')">
+                    <div class="payment-icon">💳</div>
+                    <div class="payment-info">
+                        <h4 data-i18n="payment_card">Credit Card</h4>
+                        <p data-i18n="payment_card_desc">+5% processing fee</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectPayment('bank')">
+                    <div class="payment-icon">🏦</div>
+                    <div class="payment-info">
+                        <h4 data-i18n="payment_bank">Bank Transfer (SEPA)</h4>
+                        <p data-i18n="payment_bank_desc">+5% fee, 1-3 days</p>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <div class="payment-options">
-                    <div class="payment-option" onclick="selectPayment('btc')">
-                        <div class="payment-icon">₿</div>
-                        <div class="payment-info">
-                            <h4>Bitcoin (BTC)</h4>
-                            <p data-i18n="btc_desc">Fast, secure, no extra fees</p>
-                        </div>
-                    </div>
-                    <div class="payment-option" onclick="selectPayment('usdt')">
-                        <div class="payment-icon">💎</div>
-                        <div class="payment-info">
-                            <h4>USDT (ERC-20)</h4>
-                            <p data-i18n="usdt_desc">Stablecoin payment, no volatility</p>
-                        </div>
-                    </div>
-                    <div class="payment-option" onclick="selectPayment('card')">
-                        <div class="payment-icon">💳</div>
-                        <div class="payment-info">
-                            <h4>Credit Card</h4>
-                            <p data-i18n="card_desc">Visa, Mastercard +5% fee</p>
-                        </div>
-                    </div>
-                    <div class="payment-option" onclick="selectPayment('bank')">
-                        <div class="payment-icon">🏦</div>
-                        <div class="payment-info">
-                            <h4>Bank Transfer</h4>
-                            <p data-i18n="bank_desc">SEPA transfer +5% fee</p>
-                        </div>
-                    </div>
-                </div>
-                <div id="payment-details" style="margin-top: 2rem; display: none;">
-                    <div style="background: rgba(0,217,165,0.1); border: 1px solid var(--success); border-radius: 12px; padding: 1.5rem; text-align: center;">
-                        <p data-i18n="contact_order">Please contact us on Telegram to complete your order:</p>
-                        <a href="https://t.me/shadeplug" target="_blank" style="color: var(--success); font-size: 1.2rem; font-weight: 700; text-decoration: none; display: inline-block; margin-top: 0.5rem;">@shadeplug</a>
-                        <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;" data-i18n="order_summary">Your order summary has been copied to clipboard</p>
-                    </div>
-                </div>
+            
+            <div class="order-summary-box" id="order-summary">
+                <h4 style="color: var(--accent); margin-bottom: 1rem;" data-i18n="order_ready">Order Ready!</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;" data-i18n="order_copied">Order details copied to clipboard. Send it to our Telegram to complete your order.</p>
+                
+                <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap;" id="order-text"></div>
+                
+                <button class="copy-btn" onclick="copyOrderText()" data-i18n="copy_order">Copy Order Text</button>
+                
+                <a href="https://t.me/shadeplug" target="_blank" class="telegram-btn">
+                    <span>📱</span>
+                    <span data-i18n="send_telegram">Send to @shadeplug</span>
+                </a>
             </div>
         </div>
     </div>
 
     <!-- Toast -->
-    <div class="toast" id="toast">Added to cart!</div>
+    <div class="toast" id="toast">Added to cart</div>
+
+    <!-- Copy Code Button -->
+    <div class="copy-code-section">
+        <button class="copy-code-btn" onclick="copySourceCode()" title="Copy source code for editing">
+            <span>📋</span>
+            <span>Copy Code</span>
+        </button>
+    </div>
 
     <script>
-        // Product Data - REPLACE IMAGE URLs WITH YOUR IMGUR LINKS
-        const products = [
-            {
-                id: 1,
-                name: "Dry Biscotti Spain",
-                category: "Dry Sift Hash",
-                origin: "🇪🇸 Spain",
-                price: 12,
-                image: "https://i.imgur.com/lpcEt39.jpg",
-                description: "Premium dry sift from Spain"
-            },
-            {
-                id: 2,
-                name: "Dry Frozen Top",
-                category: "Dry Sift Hash",
-                origin: "🇪🇸 Spain",
-                price: 14,
-                image: "https://i.imgur.com/q3bnCcp.jpg",
-                description: "Frozen top shelf quality"
-            },
-            {
-                id: 3,
-                name: "Mc Kennai",
-                category: "Premium Hash",
-                origin: "🇳🇱 Netherlands",
-                price: 13,
-                image: "https://i.imgur.com/fq1uFFm.jpg",
-                description: "Classic McKennai strain"
-            },
-            {
-                id: 4,
-                name: "Dry Frozen Sift Top",
-                category: "Dry Sift Hash",
-                origin: "🇪🇸 Spain",
-                price: 15,
-                image: "https://i.imgur.com/rxOoCaf.jpg",
-                description: "Premium frozen sift"
-            },
-            {
-                id: 5,
-                name: "Dry Frozen Sift",
-                category: "Dry Sift Hash",
-                origin: "🇪🇸 Spain",
-                price: 13,
-                image: "https://i.imgur.com/fxzTmBs.jpg",
-                description: "High-quality frozen sift"
-            },
-            {
-                id: 6,
-                name: "Cali Cryo",
-                category: "Cryo Hash",
-                origin: "🇺🇸 California",
-                price: 18,
-                image: "https://i.imgur.com/XZHzDvT.jpg",
-                description: "Cryo-cured California hash"
-            },
-            {
-                id: 7,
-                name: "Dry Memosa Cake",
-                category: "Dry Sift Hash",
-                origin: "🇪🇸 Spain",
-                price: 14,
-                image: "https://i.imgur.com/xQoPEbC.jpg",
-                description: "Mimosa Cake strain"
-            },
-            {
-                id: 8,
-                name: "Dry Memosa Cake Premium",
-                category: "Dry Sift Hash",
-                origin: "🇪🇸 Spain",
-                price: 16,
-                image: "https://i.imgur.com/fh7Gz8d.jpg",
-                description: "Premium Mimosa Cake"
-            },
-            {
-                id: 9,
-                name: "Dry Space",
-                category: "Premium Hash",
-                origin: "🇪🇸 Spain",
-                price: 15,
-                image: "https://i.imgur.com/ilGU1NS.jpg",
-                description: "Out of this world quality"
-            },
-            {
-                id: 10,
-                name: "Dry Space Elite",
-                category: "Premium Hash",
-                origin: "🇪🇸 Spain",
-                price: 17,
-                image: "https://i.imgur.com/1CX1ONF.jpg",
-                description: "Elite space grade hash"
-            },
-            {
-                id: 11,
-                name: "Cali Raspb",
-                category: "Cali Hash",
-                origin: "🇺🇸 California",
-                price: 19,
-                image: "https://i.imgur.com/M1hbjTf.jpg",
-                description: "Raspberry Cali import"
-            },
-            {
-                id: 12,
-                name: "Strawberry Banana 2026",
-                category: "Premium Hash",
-                origin: "🇪🇸 Spain",
-                price: 15,
-                image: "https://i.imgur.com/z4v3zJ2.jpg",
-                description: "Strawberry Banana strain"
-            },
-            {
-                id: 13,
-                name: "Strawberry Banana Elite",
-                category: "Premium Hash",
-                origin: "🇪🇸 Spain",
-                price: 17,
-                image: "https://i.imgur.com/2wDAHWS.jpg",
-                description: "Elite Strawberry Banana"
-            }
-        ];
-
         // Translations
         const translations = {
             en: {
-                products: "Products",
-                shipping: "Shipping",
-                contact: "Contact",
                 cart: "Cart",
-                hero_title: "Premium Cannabis & Hash",
-                hero_subtitle: "Direct from the best producers in California, Spain and beyond. Lab-tested, vacuum-sealed, discreet shipping.",
-                our_products: "Our Products",
-                shipping_title: "Shipping Information",
-                shipping_eu: "Europe: 24-48 hours delivery",
-                shipping_intl: "Outside Europe: 72 hours delivery",
-                shipping_discreet: "All packages are vacuum-sealed and discreet",
-                shipping_tracking: "Tracking number provided after dispatch",
-                shipping_reship: "100% reship policy if package is lost",
-                contact_title: "Ready to Order?",
-                contact_text: "Contact us on Telegram for fast, secure service",
-                footer_text: "Premium cannabis products for connoisseurs",
-                terms: "Terms",
-                privacy: "Privacy",
-                faq: "FAQ",
+                hero_title: "Premium Bulk Distribution",
+                hero_desc: "Direct from the best European labs. Discrete shipping, lab-tested quality, 24-48h delivery.",
+                products_title: "Our Products",
                 your_cart: "Your Cart",
                 cart_empty: "Your cart is empty",
-                total: "Total:",
-                proceed_checkout: "Proceed to Checkout",
-                payment_title: "Select Payment Method",
-                btc_desc: "Fast, secure, no extra fees",
-                usdt_desc: "Stablecoin payment, no volatility",
-                card_desc: "Visa, Mastercard +5% fee",
-                bank_desc: "SEPA transfer +5% fee",
-                contact_order: "Please contact us on Telegram to complete your order:",
-                order_summary: "Your order summary has been copied to clipboard",
-                added_to_cart: "Added to cart!",
-                gram: "g",
-                per_gram: "per gram"
+                shipping_eu: "Europe Shipping",
+                shipping_eu_time: "24-48 hours",
+                shipping_extra: "Worldwide Shipping",
+                shipping_extra_time: "72 hours",
+                subtotal: "Subtotal",
+                shipping: "Shipping",
+                total: "Total",
+                checkout: "Checkout",
+                select_payment: "Select Payment Method",
+                payment_btc_desc: "Fast, secure, no fees",
+                payment_usdt_desc: "Stable coin, no volatility",
+                payment_card: "Credit Card",
+                payment_card_desc: "+5% processing fee",
+                payment_bank: "Bank Transfer (SEPA)",
+                payment_bank_desc: "+5% fee, 1-3 days",
+                order_ready: "Order Ready!",
+                order_copied: "Order details copied to clipboard. Send it to our Telegram to complete your order.",
+                copy_order: "Copy Order Text",
+                send_telegram: "Send to @shadeplug",
+                add_to_cart: "Add to Cart",
+                select_variant: "Select Quantity",
+                price_per_gram: "per gram",
+                shipping_from: "Ships from",
+                order_summary: "ORDER SUMMARY",
+                contact: "Contact",
+                payment_method: "Payment Method"
             },
             fr: {
-                products: "Produits",
-                shipping: "Livraison",
-                contact: "Contact",
                 cart: "Panier",
-                hero_title: "Cannabis & Hash Premium",
-                hero_subtitle: "Directement des meilleurs producteurs de Californie, d'Espagne et d'ailleurs. Testé en laboratoire, emballage sous vide, discret.",
-                our_products: "Nos Produits",
-                shipping_title: "Informations de Livraison",
-                shipping_eu: "Europe: livraison 24-48 heures",
-                shipping_intl: "Hors Europe: livraison 72 heures",
-                shipping_discreet: "Tous les colis sont sous vide et discrets",
-                shipping_tracking: "Numéro de suivi fourni après expédition",
-                shipping_reship: "Politique de renvoi 100% si colis perdu",
-                contact_title: "Prêt à Commander?",
-                contact_text: "Contactez-nous sur Telegram pour un service rapide et sécurisé",
-                footer_text: "Produits cannabis premium pour connaisseurs",
-                terms: "Conditions",
-                privacy: "Confidentialité",
-                faq: "FAQ",
+                hero_title: "Distribution Premium en Gros",
+                hero_desc: "Direct des meilleurs laboratoires européens. Expédition discrète, qualité testée en laboratoire, livraison 24-48h.",
+                products_title: "Nos Produits",
                 your_cart: "Votre Panier",
                 cart_empty: "Votre panier est vide",
-                total: "Total:",
-                proceed_checkout: "Passer la Commande",
-                payment_title: "Choisir le Mode de Paiement",
-                btc_desc: "Rapide, sécurisé, sans frais supplémentaires",
-                usdt_desc: "Paiement stablecoin, sans volatilité",
-                card_desc: "Visa, Mastercard +5% frais",
-                bank_desc: "Virement SEPA +5% frais",
-                contact_order: "Contactez-nous sur Telegram pour finaliser votre commande:",
-                order_summary: "Le récapitulatif de votre commande a été copié",
-                added_to_cart: "Ajouté au panier!",
-                gram: "g",
-                per_gram: "par gramme"
+                shipping_eu: "Livraison Europe",
+                shipping_eu_time: "24-48 heures",
+                shipping_extra: "Livraison Mondiale",
+                shipping_extra_time: "72 heures",
+                subtotal: "Sous-total",
+                shipping: "Livraison",
+                total: "Total",
+                checkout: "Commander",
+                select_payment: "Choisir le Mode de Paiement",
+                payment_btc_desc: "Rapide, sécurisé, sans frais",
+                payment_usdt_desc: "Stable, sans volatilité",
+                payment_card: "Carte de Crédit",
+                payment_card_desc: "+5% frais de traitement",
+                payment_bank: "Virement Bancaire (SEPA)",
+                payment_bank_desc: "+5% frais, 1-3 jours",
+                order_ready: "Commande Prête!",
+                order_copied: "Détails copiés. Envoyez-les sur Telegram pour finaliser.",
+                copy_order: "Copier la Commande",
+                send_telegram: "Envoyer à @shadeplug",
+                add_to_cart: "Ajouter",
+                select_variant: "Quantité",
+                price_per_gram: "par gramme",
+                shipping_from: "Expédition depuis",
+                order_summary: "RÉCAPITULATIF",
+                contact: "Contact",
+                payment_method: "Mode de Paiement"
             },
             es: {
-                products: "Productos",
-                shipping: "Envío",
-                contact: "Contacto",
                 cart: "Carrito",
-                hero_title: "Cannabis y Hash Premium",
-                hero_subtitle: "Directo de los mejores productores de California, España y más allá. Probado en laboratorio, envasado al vacío, envío discreto.",
-                our_products: "Nuestros Productos",
-                shipping_title: "Información de Envío",
-                shipping_eu: "Europa: entrega 24-48 horas",
-                shipping_intl: "Fuera de Europa: entrega 72 horas",
-                shipping_discreet: "Todos los paquetes están al vacío y son discretos",
-                shipping_tracking: "Número de seguimiento proporcionado después del envío",
-                shipping_reship: "Política de reenvío 100% si el paquete se pierde",
-                contact_title: "¿Listo para Ordenar?",
-                contact_text: "Contáctanos en Telegram para un servicio rápido y seguro",
-                footer_text: "Productos de cannabis premium para conocedores",
-                terms: "Términos",
-                privacy: "Privacidad",
-                faq: "FAQ",
+                hero_title: "Distribución Premium al Por Mayor",
+                hero_desc: "Directo de los mejores laboratorios europeos. Envío discreto, calidad de laboratorio, entrega 24-48h.",
+                products_title: "Nuestros Productos",
                 your_cart: "Tu Carrito",
                 cart_empty: "Tu carrito está vacío",
-                total: "Total:",
-                proceed_checkout: "Proceder al Pago",
-                payment_title: "Seleccionar Método de Pago",
-                btc_desc: "Rápido, seguro, sin comisiones extra",
-                usdt_desc: "Pago en stablecoin, sin volatilidad",
-                card_desc: "Visa, Mastercard +5% comisión",
-                bank_desc: "Transferencia bancaria +5% comisión",
-                contact_order: "Contáctanos en Telegram para completar tu pedido:",
-                order_summary: "El resumen de tu pedido se ha copiado al portapapeles",
-                added_to_cart: "¡Añadido al carrito!",
-                gram: "g",
-                per_gram: "por gramo"
+                shipping_eu: "Envío Europa",
+                shipping_eu_time: "24-48 horas",
+                shipping_extra: "Envío Mundial",
+                shipping_extra_time: "72 horas",
+                subtotal: "Subtotal",
+                shipping: "Envío",
+                total: "Total",
+                checkout: "Pagar",
+                select_payment: "Seleccionar Método de Pago",
+                payment_btc_desc: "Rápido, seguro, sin comisiones",
+                payment_usdt_desc: "Moneda estable, sin volatilidad",
+                payment_card: "Tarjeta de Crédito",
+                payment_card_desc: "+5% comisión",
+                payment_bank: "Transferencia Bancaria (SEPA)",
+                payment_bank_desc: "+5% comisión, 1-3 días",
+                order_ready: "¡Pedido Listo!",
+                order_copied: "Detalles copiados. Envíalos por Telegram para completar.",
+                copy_order: "Copiar Pedido",
+                send_telegram: "Enviar a @shadeplug",
+                add_to_cart: "Añadir",
+                select_variant: "Cantidad",
+                price_per_gram: "por gramo",
+                shipping_from: "Envío desde",
+                order_summary: "RESUMEN DEL PEDIDO",
+                contact: "Contacto",
+                payment_method: "Método de Pago"
             },
             de: {
-                products: "Produkte",
-                shipping: "Versand",
-                contact: "Kontakt",
                 cart: "Warenkorb",
-                hero_title: "Premium Cannabis & Hash",
-                hero_subtitle: "Direkt von den besten Produzenten in Kalifornien, Spanien und darüber hinaus. Labortestet, vakuumverpackt, diskreter Versand.",
-                our_products: "Unsere Produkte",
-                shipping_title: "Versandinformationen",
-                shipping_eu: "Europa: Lieferung 24-48 Stunden",
-                shipping_intl: "Außerhalb Europa: Lieferung 72 Stunden",
-                shipping_discreet: "Alle Pakete sind vakuumversiegelt und diskret",
-                shipping_tracking: "Sendungsnummer wird nach Versand bereitgestellt",
-                shipping_reship: "100% Nachsendepolitik bei verlorenem Paket",
-                contact_title: "Bereit zu Bestellen?",
-                contact_text: "Kontaktiere uns auf Telegram für schnellen, sicheren Service",
-                footer_text: "Premium Cannabis-Produkte für Kenner",
-                terms: "AGB",
-                privacy: "Datenschutz",
-                faq: "FAQ",
-                your_cart: "Dein Warenkorb",
-                cart_empty: "Dein Warenkorb ist leer",
-                total: "Gesamt:",
-                proceed_checkout: "Zur Kasse",
-                payment_title: "Zahlungsmethode Wählen",
-                btc_desc: "Schnell, sicher, keine zusätzlichen Gebühren",
-                usdt_desc: "Stablecoin-Zahlung, keine Volatilität",
-                card_desc: "Visa, Mastercard +5% Gebühr",
-                bank_desc: "Banküberweisung +5% Gebühr",
-                contact_order: "Kontaktiere uns auf Telegram, um deine Bestellung abzuschließen:",
-                order_summary: "Deine Bestellübersicht wurde in die Zwischenablage kopiert",
-                added_to_cart: "Zum Warenkorb hinzugefügt!",
-                gram: "g",
-                per_gram: "pro Gramm"
+                hero_title: "Premium Großhandel",
+                hero_desc: "Direkt aus den besten europäischen Laboren. Diskreter Versand, labortested Qualität, 24-48h Lieferung.",
+                products_title: "Unsere Produkte",
+                your_cart: "Ihr Warenkorb",
+                cart_empty: "Ihr Warenkorb ist leer",
+                shipping_eu: "Europa Versand",
+                shipping_eu_time: "24-48 Stunden",
+                shipping_extra: "Weltweiter Versand",
+                shipping_extra_time: "72 Stunden",
+                subtotal: "Zwischensumme",
+                shipping: "Versand",
+                total: "Gesamt",
+                checkout: "Zur Kasse",
+                select_payment: "Zahlungsmethode Wählen",
+                payment_btc_desc: "Schnell, sicher, gebührenfrei",
+                payment_usdt_desc: "Stabil, keine Volatilität",
+                payment_card: "Kreditkarte",
+                payment_card_desc: "+5% Bearbeitungsgebühr",
+                payment_bank: "Banküberweisung (SEPA)",
+                payment_bank_desc: "+5% Gebühr, 1-3 Tage",
+                order_ready: "Bestellung Bereit!",
+                order_copied: "Details kopiert. Senden Sie sie über Telegram.",
+                copy_order: "Bestellung Kopieren",
+                send_telegram: "An @shadeplug Senden",
+                add_to_cart: "Hinzufügen",
+                select_variant: "Menge",
+                price_per_gram: "pro Gramm",
+                shipping_from: "Versand aus",
+                order_summary: "BESTELLÜBERSICHT",
+                contact: "Kontakt",
+                payment_method: "Zahlungsmethode"
             },
             it: {
-                products: "Prodotti",
-                shipping: "Spedizioni",
-                contact: "Contatti",
                 cart: "Carrello",
-                hero_title: "Cannabis & Hash Premium",
-                hero_subtitle: "Direttamente dai migliori produttori di California, Spagna e oltre. Testato in laboratorio, sottovuoto, spedizione discreta.",
-                our_products: "I Nostri Prodotti",
-                shipping_title: "Informazioni Spedizioni",
-                shipping_eu: "Europa: consegna 24-48 ore",
-                shipping_intl: "Fuori Europa: consegna 72 ore",
-                shipping_discreet: "Tutti i pacchi sono sottovuoto e discreti",
-                shipping_tracking: "Tracking fornito dopo la spedizione",
-                shipping_reship: "Politica reship 100% se il pacco si perde",
-                contact_title: "Pronto per Ordinare?",
-                contact_text: "Contattaci su Telegram per un servizio veloce e sicuro",
-                footer_text: "Prodotti cannabis premium per intenditori",
-                terms: "Termini",
-                privacy: "Privacy",
-                faq: "FAQ",
+                hero_title: "Distribuzione Premium Bulk",
+                hero_desc: "Direttamente dai migliori laboratori europei. Spedizione discreta, qualità lab-tested, consegna 24-48h.",
+                products_title: "I Nostri Prodotti",
                 your_cart: "Il Tuo Carrello",
-                cart_empty: "Il tuo carrello è vuoto",
-                total: "Totale:",
-                proceed_checkout: "Procedi all'Ordine",
-                payment_title: "Seleziona Metodo di Pagamento",
-                btc_desc: "Veloce, sicuro, nessuna commissione extra",
-                usdt_desc: "Pagamento stablecoin, nessuna volatilità",
-                card_desc: "Visa, Mastercard +5% commissione",
-                bank_desc: "Bonifico bancario +5% commissione",
-                contact_order: "Contattaci su Telegram per completare il tuo ordine:",
-                order_summary: "Il riepilogo del tuo ordine è stato copiato",
-                added_to_cart: "Aggiunto al carrello!",
-                gram: "g",
-                per_gram: "al grammo"
+                cart_empty: "Il carrello è vuoto",
+                shipping_eu: "Spedizione Europa",
+                shipping_eu_time: "24-48 ore",
+                shipping_extra: "Spedizione Worldwide",
+                shipping_extra_time: "72 ore",
+                subtotal: "Subtotale",
+                shipping: "Spedizione",
+                total: "Totale",
+                checkout: "Checkout",
+                select_payment: "Seleziona Metodo di Pagamento",
+                payment_btc_desc: "Veloce, sicuro, zero commissioni",
+                payment_usdt_desc: "Stabile, senza volatilità",
+                payment_card: "Carta di Credito",
+                payment_card_desc: "+5% commissione",
+                payment_bank: "Bonifico Bancario (SEPA)",
+                payment_bank_desc: "+5% commissione, 1-3 giorni",
+                order_ready: "Ordine Pronto!",
+                order_copied: "Dettagli copiati. Inviali su Telegram per completare.",
+                copy_order: "Copia Ordine",
+                send_telegram: "Invia a @shadeplug",
+                add_to_cart: "Aggiungi",
+                select_variant: "Seleziona Quantità",
+                price_per_gram: "al grammo",
+                shipping_from: "Spedito da",
+                order_summary: "RIEPILOGO ORDINE",
+                contact: "Contatto",
+                payment_method: "Metodo di Pagamento"
             },
-            cs: {
-                products: "Produkty",
-                shipping: "Doprava",
-                contact: "Kontakt",
+            cz: {
                 cart: "Košík",
-                hero_title: "Prémiová Cannabis & Hašiš",
-                hero_subtitle: "Přímo od nejlepších producentů z Kalifornie, Španělska a dalších. Testováno v laboratoři, vakuově baleno, diskrétní doručení.",
-                our_products: "Naše Produkty",
-                shipping_title: "Informace o Dopravě",
-                shipping_eu: "Evropa: doručení 24-48 hodin",
-                shipping_intl: "Mimo Evropu: doručení 72 hodin",
-                shipping_discreet: "Všechny balíčky jsou vakuově uzavřené a diskrétní",
-                shipping_tracking: "Sledovací číslo po odeslání",
-                shipping_reship: "100% politika přeposlání při ztrátě balíčku",
-                contact_title: "Připraveni Objednat?",
-                contact_text: "Kontaktujte nás na Telegramu pro rychlý, bezpečný servis",
-                footer_text: "Prémiové cannabis produkty pro ználce",
-                terms: "Podmínky",
-                privacy: "Soukromí",
-                faq: "FAQ",
+                hero_title: "Premium Velkoobchod",
+                hero_desc: "Přímo z nejlepších evropských laboratoří. Diskrétní doprava, laboratorně testovaná kvalita, doručení 24-48h.",
+                products_title: "Naše Produkty",
                 your_cart: "Váš Košík",
-                cart_empty: "Váš košík je prázdný",
-                total: "Celkem:",
-                proceed_checkout: "Pokračovat k Objednávce",
-                payment_title: "Vyberte Způsob Platby",
-                btc_desc: "Rychlé, bezpečné, žádné extra poplatky",
-                usdt_desc: "Platba stablecoinem, žádná volatilita",
-                card_desc: "Visa, Mastercard +5% poplatek",
-                bank_desc: "Bankovní převod +5% poplatek",
-                contact_order: "Kontaktujte nás na Telegramu pro dokončení objednávky:",
-                order_summary: "Shrnutí objednávky bylo zkopírováno",
-                added_to_cart: "Přidáno do košíku!",
-                gram: "g",
-                per_gram: "za gram"
+                cart_empty: "Košík je prázdný",
+                shipping_eu: "Doprava Evropa",
+                shipping_eu_time: "24-48 hodin",
+                shipping_extra: "Celosvětová Doprava",
+                shipping_extra_time: "72 hodin",
+                subtotal: "Mezisoučet",
+                shipping: "Doprava",
+                total: "Celkem",
+                checkout: "Objednat",
+                select_payment: "Vyberte Způsob Platby",
+                payment_btc_desc: "Rychlé, bezpečné, bez poplatků",
+                payment_usdt_desc: "Stabilní, bez volatility",
+                payment_card: "Kreditní Karta",
+                payment_card_desc: "+5% poplatek",
+                payment_bank: "Bankovní Převod (SEPA)",
+                payment_bank_desc: "+5% poplatek, 1-3 dny",
+                order_ready: "Objednávka Připravena!",
+                order_copied: "Detaily zkopírovány. Pošlete je na Telegram.",
+                copy_order: "Kopírovat Objednávku",
+                send_telegram: "Poslat @shadeplug",
+                add_to_cart: "Přidat",
+                select_variant: "Množství",
+                price_per_gram: "za gram",
+                shipping_from: "Odesláno z",
+                order_summary: "SOUHRN OBJEDNÁVKY",
+                contact: "Kontakt",
+                payment_method: "Způsob Platby"
             },
             ru: {
-                products: "Продукты",
-                shipping: "Доставка",
-                contact: "Контакты",
                 cart: "Корзина",
-                hero_title: "Премиум Каннабис & Гашиш",
-                hero_subtitle: "Напрямую от лучших производителей Калифорнии, Испании и других. Лабораторно протестировано, вакуумная упаковка, дискретная доставка.",
-                our_products: "Наши Продукты",
-                shipping_title: "Информация о Доставке",
-                shipping_eu: "Европа: доставка 24-48 часов",
-                shipping_intl: "За пределами Европы: доставка 72 часа",
-                shipping_discreet: "Все посылки в вакуумной упаковке и дискретны",
-                shipping_tracking: "Трек-номер после отправки",
-                shipping_reship: "100% политика переотправки при потере",
-                contact_title: "Готовы Заказать?",
-                contact_text: "Свяжитесь с нами в Telegram для быстрого, безопасного сервиса",
-                footer_text: "Премиум каннабис-продукты для ценителей",
-                terms: "Условия",
-                privacy: "Конфиденциальность",
-                faq: "FAQ",
+                hero_title: "Премиум Оптовые Поставки",
+                hero_desc: "Напрямую из лучших европейских лабораторий. Дискретная доставка, лабораторное качество, 24-48ч.",
+                products_title: "Наши Продукты",
                 your_cart: "Ваша Корзина",
-                cart_empty: "Ваша корзина пуста",
-                total: "Итого:",
-                proceed_checkout: "Оформить Заказ",
-                payment_title: "Выберите Способ Оплаты",
-                btc_desc: "Быстро, безопасно, без дополнительных сборов",
-                usdt_desc: "Оплата стейблкоином, без волатильности",
-                card_desc: "Visa, Mastercard +5% комиссия",
-                bank_desc: "Банковский перевод +5% комиссия",
-                contact_order: "Свяжитесь с нами в Telegram для завершения заказа:",
-                order_summary: "Сводка заказа скопирована в буфер обмена",
-                added_to_cart: "Добавлено в корзину!",
-                gram: "г",
-                per_gram: "за грамм"
+                cart_empty: "Корзина пуста",
+                shipping_eu: "Доставка по Европе",
+                shipping_eu_time: "24-48 часов",
+                shipping_extra: "Мировая Доставка",
+                shipping_extra_time: "72 часа",
+                subtotal: "Промежуточный итог",
+                shipping: "Доставка",
+                total: "Итого",
+                checkout: "Оформить",
+                select_payment: "Выберите Способ Оплаты",
+                payment_btc_desc: "Быстро, безопасно, без комиссии",
+                payment_usdt_desc: "Стабильная, без волатильности",
+                payment_card: "Кредитная Карта",
+                payment_card_desc: "+5% комиссия",
+                payment_bank: "Банковский Перевод (SEPA)",
+                payment_bank_desc: "+5% комиссия, 1-3 дня",
+                order_ready: "Заказ Готов!",
+                order_copied: "Детали скопированы. Отправьте в Telegram.",
+                copy_order: "Копировать Заказ",
+                send_telegram: "Отправить @shadeplug",
+                add_to_cart: "Добавить",
+                select_variant: "Количество",
+                price_per_gram: "за грамм",
+                shipping_from: "Отправка из",
+                order_summary: "СВОДКА ЗАКАЗА",
+                contact: "Контакт",
+                payment_method: "Способ Оплаты"
             }
         };
 
-        let cart = [];
         let currentLang = 'en';
+        let cart = JSON.parse(localStorage.getItem('shadeplug_cart')) || [];
+        let currentShipping = 'eu';
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
+        // Products Database with Imgur Images
+        const products = [
+            {
+                id: 'cali-cryo',
+                name: 'Cali Cryo',
+                category: 'Weed',
+                origin: 'CZ',
+                image: 'https://i.imgur.com/XZHzDvT.jpg',
+                desc: 'Premium indoor flowers with intense terpene profile. Cryo-cured for maximum preservation.',
+                variants: [
+                    { weight: '100g', price: 350, unit: '3.50' },
+                    { weight: '500g', price: 1500, unit: '3.00' },
+                    { weight: '1000g', price: 2600, unit: '2.60' }
+                ],
+                shipping: { eu: 25, extra: 40 }
+            },
+            {
+                id: 'dry-frozen-sift',
+                name: 'Dry Frozen Sift Top',
+                category: 'Hash',
+                origin: 'IT',
+                image: 'https://i.imgur.com/rxOoCaf.jpg',
+                desc: 'Premium dry sift extracted at sub-zero temperatures. 120u filtered top quality.',
+                variants: [
+                    { weight: '50g', price: 350, unit: '7.00' },
+                    { weight: '100g', price: 600, unit: '6.00' },
+                    { weight: '250g', price: 1375, unit: '5.50' },
+                    { weight: '500g', price: 2500, unit: '5.00' }
+                ],
+                shipping: { eu: 10, extra: 25 }
+            },
+            {
+                id: 'dry-biscotti',
+                name: 'Dry Biscotti Spain',
+                category: 'Hash',
+                origin: 'ES',
+                image: 'https://i.imgur.com/lpcEt39.jpg',
+                desc: 'Spanish import quality. Soft, creamy texture with spicy undertones.',
+                variants: [
+                    { weight: '25g', price: 125, unit: '5.00' },
+                    { weight: '100g', price: 400, unit: '4.00' },
+                    { weight: '500g', price: 1800, unit: '3.60' },
+                    { weight: '1000g', price: 3300, unit: '3.30' }
+                ],
+                shipping: { eu: 15, extra: 30 }
+            },
+            {
+                id: 'dry-frozen-top',
+                name: 'Dry Frozen Top',
+                category: 'Hash',
+                origin: 'CZ',
+                image: 'https://i.imgur.com/q3bnCcp.jpg',
+                desc: 'Top shelf frozen hash. Constant refrigerated storage maintains premium quality.',
+                variants: [
+                    { weight: '100g', price: 380, unit: '3.80' },
+                    { weight: '500g', price: 1500, unit: '3.00' },
+                    { weight: '1000g', price: 2600, unit: '2.60' }
+                ],
+                shipping: { eu: 20, extra: 35 }
+            },
+            {
+                id: 'mc-kennai',
+                name: 'MC Kennaiii',
+                category: 'Mushrooms',
+                origin: 'IT',
+                image: 'https://i.imgur.com/fq1uFFm.jpg',
+                desc: 'Premium selected mushrooms. Carefully dried and packed in padded envelopes.',
+                variants: [
+                    { weight: '5g', price: 60, unit: '12.00' },
+                    { weight: '10g', price: 90, unit: '9.00' }
+                ],
+                shipping: { eu: 10, extra: 20 }
+            },
+            {
+                id: 'dry-mimosa',
+                name: 'Dry Mimosa Cake',
+                category: 'Hash',
+                origin: 'IT',
+                image: 'https://i.imgur.com/xQoPEbC.jpg',
+                desc: 'Sweet citrusy resin, soft to the touch. Perfect evening smoke made in Italy.',
+                variants: [
+                    { weight: '25g', price: 150, unit: '6.00' },
+                    { weight: '100g', price: 450, unit: '4.50' },
+                    { weight: '500g', price: 2000, unit: '4.00' },
+                    { weight: '1000g', price: 3800, unit: '3.80' }
+                ],
+                shipping: { eu: 10, extra: 25 }
+            },
+            {
+                id: 'dry-space',
+                name: 'Dry Space',
+                category: 'Hash',
+                origin: 'IT',
+                image: 'https://i.imgur.com/ilGU1NS.jpg',
+                desc: 'Wet and sandy resin. Out of this world quality available locally in Italy.',
+                variants: [
+                    { weight: '25g', price: 113, unit: '4.52' },
+                    { weight: '100g', price: 360, unit: '3.60' },
+                    { weight: '500g', price: 1600, unit: '3.20' },
+                    { weight: '1000g', price: 3000, unit: '3.00' }
+                ],
+                shipping: { eu: 10, extra: 25 }
+            },
+            {
+                id: 'cali-raspberry',
+                name: 'Cali RaspBerry',
+                category: 'Weed',
+                origin: 'CZ',
+                image: 'https://i.imgur.com/M1hbjTf.jpg',
+                desc: 'Compact raspberry-scented buds. Ideal for large scale resale.',
+                variants: [
+                    { weight: '100g', price: 400, unit: '4.00' },
+                    { weight: '500g', price: 1500, unit: '3.00' },
+                    { weight: '1000g', price: 2000, unit: '2.00' }
+                ],
+                shipping: { eu: 25, extra: 45 }
+            },
+            {
+                id: 'strawberry-banana',
+                name: 'Dry Strawberry Banana 2026',
+                category: 'Hash',
+                origin: 'IT',
+                image: 'https://i.imgur.com/z4v3zJ2.jpg',
+                desc: 'Fresh 2026 batch, oily aromatic consistency. Fast shipping.',
+                variants: [
+                    { weight: '25g', price: 150, unit: '6.00' },
+                    { weight: '100g', price: 450, unit: '4.50' },
+                    { weight: '500g', price: 2000, unit: '4.00' },
+                    { weight: '1000g', price: 3800, unit: '3.80' }
+                ],
+                shipping: { eu: 10, extra: 25 }
+            },
+            {
+                id: 'cali-lemon',
+                name: 'Cali Lemon Pop',
+                category: 'Weed',
+                origin: 'IT',
+                image: 'https://i.imgur.com/XZHzDvT.jpg',
+                desc: 'Intense citrus terpenes, solid and bright buds. Shipped directly from Italy.',
+                variants: [
+                    { weight: '25g', price: 125, unit: '5.00' },
+                    { weight: '100g', price: 330, unit: '3.30' },
+                    { weight: '500g', price: 1500, unit: '3.00' },
+                    { weight: '1000g', price: 2800, unit: '2.80' }
+                ],
+                shipping: { eu: 10, extra: 25 }
+            },
+            {
+                id: 'premium-static',
+                name: 'Premium Frozen Static',
+                category: 'Hash',
+                origin: 'IT',
+                image: 'https://i.imgur.com/fxzTmBs.jpg',
+                desc: 'High level static sift for refined palates. Limited Italian availability.',
+                variants: [
+                    { weight: '25g', price: 162, unit: '6.50' },
+                    { weight: '50g', price: 300, unit: '6.00' },
+                    { weight: '100g', price: 550, unit: '5.50' }
+                ],
+                shipping: { eu: 10, extra: 20 }
+            }
+        ];
+
+        function t(key) {
+            return translations[currentLang][key] || translations['en'][key] || key;
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.getElementById('current-lang').textContent = getLangLabel(lang);
+            document.getElementById('lang-dropdown').classList.remove('active');
+            
+            // Update all i18n elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.textContent = t(key);
+            });
+            
             renderProducts();
-            updateCartCount();
-        });
+            updateCartUI();
+        }
 
-        // Render Products
+        function getLangLabel(lang) {
+            const labels = {
+                en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', 
+                de: '🇩🇪 DE', it: '🇮🇹 IT', cz: '🇨🇿 CZ', ru: '🇷🇺 RU'
+            };
+            return labels[lang] || '🇬🇧 EN';
+        }
+
+        function toggleLang() {
+            document.getElementById('lang-dropdown').classList.toggle('active');
+        }
+
         function renderProducts() {
             const grid = document.getElementById('products-grid');
-            const t = translations[currentLang];
-            
-            grid.innerHTML = products.map(product => `
-                <div class="product-card">
-                    <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/400x300/1a1a2e/fff?text=${encodeURIComponent(product.name)}'">
-                    <div class="product-info">
-                        <div class="product-category">${product.category}</div>
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-origin">${product.origin} • ${product.description}</div>
-                        <div class="product-price">€${product.price} <span>/ ${t.per_gram}</span></div>
-                        <div class="product-controls">
-                            <div class="quantity-selector">
-                                <button class="qty-btn" onclick="updateQty(${product.id}, -1)">−</button>
-                                <input type="number" class="qty-input" id="qty-${product.id}" value="1" min="1" max="100">
-                                <button class="qty-btn" onclick="updateQty(${product.id}, 1)">+</button>
+            grid.innerHTML = products.map(p => {
+                const originClass = p.origin === 'IT' ? 'origin-it' : p.origin === 'CZ' ? 'origin-cz' : 'origin-es';
+                const originText = p.origin === 'IT' ? 'Italy' : p.origin === 'CZ' ? 'Czech Republic' : 'Spain';
+                
+                return `
+                    <div class="product-card">
+                        <img src="${p.image}" alt="${p.name}" class="product-image" onerror="this.src='https://via.placeholder.com/400x300/1a1d28/00d084?text=${encodeURIComponent(p.name)}'">
+                        <div class="product-info">
+                            <div class="product-header">
+                                <div>
+                                    <div class="product-category">${p.category}</div>
+                                    <h3 class="product-title">${p.name}</h3>
+                                </div>
+                                <span class="origin-tag ${originClass}">${p.origin}</span>
                             </div>
-                            <button class="add-to-cart" onclick="addToCart(${product.id})">
-                                🛒 ${t.added_to_cart.split(' ')[0]}
+                            <p class="product-desc">${p.desc}</p>
+                            
+                            <div class="variant-selector">
+                                <label class="variant-label">${t('select_variant')}</label>
+                                <select id="variant-${p.id}" onchange="updatePrice('${p.id}')">
+                                    ${p.variants.map((v, i) => `
+                                        <option value="${i}">${v.weight} - €${v.price} (${v.unit}€/${t('price_per_gram')})</option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            
+                            <div class="price-row">
+                                <span class="price-main" id="price-${p.id}">€${p.variants[0].price}</span>
+                                <span class="price-unit" id="unit-${p.id}">€${p.variants[0].unit}/${t('price_per_gram')}</span>
+                            </div>
+                            
+                            <button class="add-cart-btn" onclick="addToCart('${p.id}')">
+                                ${t('add_to_cart')}
                             </button>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-        // Update Quantity
-        function updateQty(productId, change) {
-            const input = document.getElementById(`qty-${productId}`);
-            let val = parseInt(input.value) + change;
-            if (val < 1) val = 1;
-            if (val > 100) val = 100;
-            input.value = val;
+        function updatePrice(productId) {
+            const product = products.find(p => p.id === productId);
+            const select = document.getElementById(`variant-${productId}`);
+            const variant = product.variants[select.value];
+            
+            document.getElementById(`price-${productId}`).textContent = `€${variant.price}`;
+            document.getElementById(`unit-${productId}`).textContent = `€${variant.unit}/${t('price_per_gram')}`;
         }
 
-        // Add to Cart
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
-            const qty = parseInt(document.getElementById(`qty-${productId}`).value);
+            const select = document.getElementById(`variant-${productId}`);
+            const variantIndex = parseInt(select.value);
+            const variant = product.variants[variantIndex];
             
-            const existingItem = cart.find(item => item.id === productId);
+            const existingItem = cart.find(item => item.productId === productId && item.variantIndex === variantIndex);
+            
             if (existingItem) {
-                existingItem.qty += qty;
+                existingItem.quantity += 1;
             } else {
-                cart.push({ ...product, qty });
+                cart.push({
+                    productId,
+                    variantIndex,
+                    quantity: 1,
+                    ...variant,
+                    productName: product.name,
+                    category: product.category,
+                    origin: product.origin,
+                    shipping: product.shipping
+                });
             }
             
-            updateCartCount();
-            showToast(translations[currentLang].added_to_cart);
-            
-            // Reset quantity
-            document.getElementById(`qty-${productId}`).value = 1;
+            saveCart();
+            updateCartUI();
+            showToast(t('add_to_cart') + ' ✓');
         }
 
-        // Update Cart Count
-        function updateCartCount() {
-            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartUI();
+        }
+
+        function saveCart() {
+            localStorage.setItem('shadeplug_cart', JSON.stringify(cart));
+        }
+
+        function updateCartUI() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById('cart-count').textContent = count;
+            
+            const container = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="cart-empty">${t('cart_empty')}</div>`;
+            } else {
+                container.innerHTML = cart.map((item, index) => `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <h4>${item.productName}</h4>
+                            <p>${item.weight} × ${item.quantity} | ${t('shipping_from')}: ${item.origin}</p>
+                        </div>
+                        <div class="cart-item-actions">
+                            <span class="cart-item-price">€${item.price * item.quantity}</span>
+                            <button class="remove-item" onclick="removeFromCart(${index})">🗑</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            calculateTotals();
         }
 
-        // Show Toast
+        function calculateTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            // Calculate shipping based on unique origins
+            const origins = [...new Set(cart.map(item => item.origin))];
+            let shippingCost = 0;
+            
+            origins.forEach(origin => {
+                const product = products.find(p => p.origin === origin);
+                if (product) {
+                    shippingCost += currentShipping === 'eu' ? product.shipping.eu : product.shipping.extra;
+                }
+            });
+            
+            // Default shipping if cart has items but no shipping calculated
+            if (cart.length > 0 && shippingCost === 0) {
+                shippingCost = currentShipping === 'eu' ? 10 : 25;
+            }
+            
+            const total = subtotal + shippingCost;
+            
+            document.getElementById('cart-subtotal').textContent = `€${subtotal.toFixed(2)}`;
+            document.getElementById('cart-shipping').textContent = `€${shippingCost.toFixed(2)}`;
+            document.getElementById('cart-total').textContent = `€${total.toFixed(2)}`;
+            
+            // Update shipping display prices
+            document.getElementById('shipping-price-eu').textContent = cart.length ? `€${origins.length * 10}-${origins.length * 25}` : '€0.00';
+            document.getElementById('shipping-price-extra').textContent = cart.length ? `€${origins.length * 25}-${origins.length * 45}` : '€0.00';
+            
+            return { subtotal, shipping: shippingCost, total };
+        }
+
+        function selectShipping(type) {
+            currentShipping = type;
+            document.getElementById('ship-eu').classList.toggle('selected', type === 'eu');
+            document.getElementById('ship-extra').classList.toggle('selected', type === 'extra');
+            calculateTotals();
+        }
+
+        function openCart() {
+            document.getElementById('cart-overlay').classList.add('active');
+            document.getElementById('cart-sidebar').style.right = '0';
+            updateCartUI();
+        }
+
+        function closeCart() {
+            document.getElementById('cart-overlay').classList.remove('active');
+            document.getElementById('cart-sidebar').style.right = '-100%';
+        }
+
+        function openPayment() {
+            if (cart.length === 0) {
+                alert(t('cart_empty'));
+                return;
+            }
+            closeCart();
+            document.getElementById('payment-modal').classList.add('active');
+        }
+
+        function closePayment() {
+            document.getElementById('payment-modal').classList.remove('active');
+            document.getElementById('order-summary').classList.remove('show');
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+        }
+
+        function selectPayment(method) {
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            
+            const totals = calculateTotals();
+            const methodText = {
+                btc: 'Bitcoin (BTC)',
+                usdt: 'USDT (TRC20/ERC20)',
+                card: 'Credit Card (+5%)',
+                bank: 'Bank Transfer SEPA (+5%)'
+            };
+            
+            // Calculate final total with fees
+            let finalTotal = totals.total;
+            if (method === 'card' || method === 'bank') {
+                finalTotal = totals.total * 1.05;
+            }
+            
+            const orderText = `
+⚡ ${t('order_summary')} - SHADE PLUG ⚡
+===============================
+${cart.map((item, i) => `${i+1}. ${item.productName}
+   📦 ${item.weight} × ${item.quantity}
+   📍 ${t('shipping_from')}: ${item.origin}
+   💵 €${item.price * item.quantity}`).join('\n')}
+
+===============================
+💰 ${t('subtotal')}: €${totals.subtotal.toFixed(2)}
+🚚 ${t('shipping')}: €${totals.shipping.toFixed(2)}
+💳 ${t('payment_method')}: ${methodText[method]}
+💎 ${t('total')}: €${finalTotal.toFixed(2)}
+
+📱 ${t('contact')}: @shadeplug (Telegram)
+🌐 Shipping: ${currentShipping === 'eu' ? 'Europe 24-48h' : 'Worldwide 72h'}
+            `.trim();
+            
+            document.getElementById('order-text').textContent = orderText;
+            document.getElementById('order-summary').classList.add('show');
+            
+            // Auto copy to clipboard
+            navigator.clipboard.writeText(orderText).then(() => {
+                showToast('Order copied! Send to Telegram');
+            }).catch(() => {
+                showToast('Copy manually and send to @shadeplug');
+            });
+        }
+
+        function copyOrderText() {
+            const text = document.getElementById('order-text').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Copied!');
+            });
+        }
+
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.textContent = message;
@@ -1397,117 +1676,25 @@
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // Open Cart
-        function openCart() {
-            const modal = document.getElementById('cart-modal');
-            const body = document.getElementById('cart-body');
-            const footer = document.getElementById('cart-footer');
-            const t = translations[currentLang];
-            
-            if (cart.length === 0) {
-                body.innerHTML = `
-                    <div class="cart-empty">
-                        <div class="cart-empty-icon">🛒</div>
-                        <p>${t.cart_empty}</p>
-                    </div>
-                `;
-                footer.style.display = 'none';
-            } else {
-                body.innerHTML = cart.map(item => `
-                    <div class="cart-item">
-                        <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/80/1a1a2e/fff?text=IMG'">
-                        <div class="cart-item-info">
-                            <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-qty">${item.qty}${t.gram} × €${item.price}</div>
-                        </div>
-                        <div class="cart-item-price">€${(item.qty * item.price).toFixed(2)}</div>
-                        <button class="remove-item" onclick="removeFromCart(${item.id})">🗑</button>
-                    </div>
-                `).join('');
-                footer.style.display = 'block';
-                
-                const total = cart.reduce((sum, item) => sum + (item.qty * item.price), 0);
-                document.getElementById('cart-total').textContent = `€${total.toFixed(2)}`;
+        function copySourceCode() {
+            const html = document.documentElement.outerHTML;
+            navigator.clipboard.writeText(html).then(() => {
+                showToast('Source code copied! Save as .html file');
+            }).catch(() => {
+                showToast('Press Ctrl+S to save page');
+            });
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.lang-selector')) {
+                document.getElementById('lang-dropdown').classList.remove('active');
             }
-            
-            modal.classList.add('active');
-        }
-
-        // Close Cart
-        function closeCart() {
-            document.getElementById('cart-modal').classList.remove('active');
-        }
-
-        // Remove from Cart
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            updateCartCount();
-            openCart();
-        }
-
-        // Open Payment
-        function openPayment() {
-            closeCart();
-            document.getElementById('payment-modal').classList.add('active');
-        }
-
-        // Close Payment
-        function closePayment() {
-            document.getElementById('payment-modal').classList.remove('active');
-            document.getElementById('payment-details').style.display = 'none';
-            document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
-        }
-
-        // Select Payment
-        function selectPayment(method) {
-            document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
-            document.getElementById('payment-details').style.display = 'block';
-            
-            // Copy order summary to clipboard
-            const t = translations[currentLang];
-            const total = cart.reduce((sum, item) => sum + (item.qty * item.price), 0);
-            const orderText = `
-SHADE PLUG ORDER
-=================
-${cart.map(item => `${item.name}: ${item.qty}g × €${item.price} = €${(item.qty * item.price).toFixed(2)}`).join('\n')}
-
-Total: €${total.toFixed(2)}
-Payment: ${method.toUpperCase()}
-
-Contact: @shadeplug
-            `.trim();
-            
-            navigator.clipboard.writeText(orderText).catch(() => {});
-        }
-
-        // Set Language
-        function setLanguage(lang) {
-            currentLang = lang;
-            const t = translations[lang];
-            const flags = { en: '🇬🇧', fr: '🇫🇷', es: '🇪🇸', de: '🇩🇪', it: '🇮🇹', cs: '🇨🇿', ru: '🇷🇺' };
-            const names = { en: 'EN', fr: 'FR', es: 'ES', de: 'DE', it: 'IT', cs: 'CS', ru: 'RU' };
-            
-            document.getElementById('current-lang').textContent = `${flags[lang]} ${names[lang]}`;
-            
-            // Update all translatable elements
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key]) el.textContent = t[key];
-            });
-            
-            // Re-render products to update per_gram text
-            renderProducts();
-        }
-
-        // Close modals on outside click
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                }
-            });
         });
+
+        // Init
+        renderProducts();
+        updateCartUI();
     </script>
 </body>
-                </html>
+</html>
