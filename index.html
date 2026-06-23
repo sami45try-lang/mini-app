@@ -3,31 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
     <title>Shade Plug | Premium Distribution</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
         :root {
-            --bg-primary: #0B0F19;
-            --bg-secondary: #161C2C;
-            --bg-tertiary: #1e2538;
-            --accent-blue: #3B82F6;
-            --accent-green: #10B981;
-            --accent-gold: #F59E0B;
-            --text-primary: #FFFFFF;
-            --text-secondary: #9CA3AF;
-            --text-muted: #6B7280;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --danger: #EF4444;
-            --success: #10B981;
-            --warning: #F59E0B;
-            
-            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-            --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+            --bg-primary: #0a0c10;
+            --bg-secondary: rgba(20, 25, 40, 0.85);
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --accent-green: #00ffa3;
+            --accent-blue: #00d4ff;
+            --accent-purple: #a855f7;
+            --accent-gold: #fbbf24;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-glow: 0 0 30px rgba(0, 255, 163, 0.15);
         }
 
         * {
@@ -35,48 +29,142 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
-            font-family: var(--font-family);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         html, body {
-            background-color: var(--bg-primary);
+            background: var(--bg-primary);
             color: var(--text-primary);
-            height: 100%;
+            min-height: 100vh;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            position: relative;
         }
 
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+        /* Animated Background Leaves */
+        .leaves-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
         }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
+
+        .leaf {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(0, 255, 163, 0.1), rgba(0, 212, 255, 0.05));
+            border-radius: 50% 0 50% 50%;
+            opacity: 0.3;
+            animation: fall linear infinite;
+            filter: blur(1px);
         }
-        ::-webkit-scrollbar-thumb {
+
+        .leaf::before {
+            content: '🍃';
+            font-size: 30px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.6;
+        }
+
+        .leaf:nth-child(1) { left: 10%; animation-duration: 15s; animation-delay: 0s; transform: rotate(45deg); }
+        .leaf:nth-child(2) { left: 30%; animation-duration: 18s; animation-delay: 2s; transform: rotate(120deg); }
+        .leaf:nth-child(3) { left: 50%; animation-duration: 12s; animation-delay: 4s; transform: rotate(200deg); }
+        .leaf:nth-child(4) { left: 70%; animation-duration: 20s; animation-delay: 1s; transform: rotate(300deg); }
+        .leaf:nth-child(5) { left: 90%; animation-duration: 16s; animation-delay: 3s; transform: rotate(60deg); }
+        .leaf:nth-child(6) { left: 20%; animation-duration: 14s; animation-delay: 5s; transform: rotate(150deg); }
+        .leaf:nth-child(7) { left: 60%; animation-duration: 17s; animation-delay: 2.5s; transform: rotate(240deg); }
+        .leaf:nth-child(8) { left: 80%; animation-duration: 19s; animation-delay: 4.5s; transform: rotate(330deg); }
+
+        @keyframes fall {
+            0% {
+                top: -10%;
+                transform: translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                top: 110%;
+                transform: translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Gradient Orbs Background */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-green);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
             background: var(--accent-blue);
-            border-radius: 3px;
+            bottom: -50px;
+            left: -50px;
+            animation-delay: 2s;
         }
 
-        /* Layout */
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: var(--accent-purple);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 4s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.15; }
+            50% { transform: scale(1.2); opacity: 0.25; }
+        }
+
+        /* App Container */
         .app-container {
-            max-width: 480px;
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
             margin: 0 auto;
             min-height: 100vh;
-            position: relative;
-            padding-bottom: 80px;
+            padding-bottom: 100px;
         }
 
-        /* Header */
+        /* Glass Header */
         .header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(11, 15, 25, 0.95);
+            background: rgba(10, 12, 16, 0.8);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 16px;
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -89,307 +177,313 @@
         }
 
         .logo-container {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 18px;
-            color: white;
+            font-size: 20px;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 163, 0.4);
             overflow: hidden;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+            position: relative;
+        }
+
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .logo-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 12px;
         }
 
         .brand-text h1 {
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #fff 0%, var(--accent-blue) 100%);
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-green) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
 
         .header-actions {
             display: flex;
-            gap: 8px;
-            align-items: center;
+            gap: 10px;
         }
 
         .icon-btn {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
             color: var(--text-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .icon-btn:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-            transform: translateY(-1px);
-        }
-
-        .icon-btn.active {
-            background: rgba(59, 130, 246, 0.1);
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-        }
-
-        /* Language Modal */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 200;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-secondary);
-            border-radius: 24px 24px 0 0;
-            padding: 24px;
-            transform: translateY(100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .lang-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .lang-option {
-            padding: 16px;
-            background: var(--bg-tertiary);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            cursor: pointer;
-            text-align: center;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .lang-option:hover {
-            border-color: var(--accent-blue);
+        .icon-btn:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
             transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 255, 163, 0.2);
         }
 
-        .lang-option.active {
-            border-color: var(--accent-blue);
-            background: rgba(59, 130, 246, 0.1);
+        .icon-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
         }
 
-        .lang-flag {
-            font-size: 24px;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .lang-name {
+        /* Promo Banner */
+        .promo-banner {
+            margin: 20px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(0, 255, 163, 0.1), rgba(0, 212, 255, 0.1));
+            border: 1px solid rgba(0, 255, 163, 0.2);
+            border-radius: 16px;
             font-weight: 600;
             font-size: 14px;
+            text-align: center;
+            color: var(--accent-green);
+            backdrop-filter: blur(10px);
+            animation: glow 3s ease-in-out infinite alternate;
         }
 
-        .lang-code {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 4px;
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(0, 255, 163, 0.1); }
+            to { box-shadow: 0 0 20px rgba(0, 255, 163, 0.3); }
         }
 
-        /* Instagram Badge */
-        .instagram-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            border-radius: 20px;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            margin-top: 8px;
-            transition: var(--transition);
-        }
-
-        .instagram-badge:active {
-            transform: scale(0.95);
-        }
-
-        /* Navigation Tabs */
+        /* Navigation */
         .nav-tabs {
             display: flex;
             gap: 8px;
-            padding: 16px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 0 20px 20px;
             overflow-x: auto;
             scrollbar-width: none;
         }
 
-        .nav-tabs::-webkit-scrollbar {
-            display: none;
-        }
+        .nav-tabs::-webkit-scrollbar { display: none; }
 
         .nav-tab {
             flex: 1;
             min-width: 100px;
-            padding: 12px 16px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
+            padding: 14px 20px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
             border-radius: 12px;
             color: var(--text-secondary);
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             text-align: center;
-            white-space: nowrap;
             position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .nav-tab:hover::before {
+            left: 100%;
         }
 
         .nav-tab.active {
-            background: var(--accent-blue);
-            border-color: var(--accent-blue);
-            color: white;
-            box-shadow: var(--shadow-glow);
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+            border-color: transparent;
+            color: #000;
+            box-shadow: 0 4px 20px rgba(0, 255, 163, 0.3);
         }
 
-        .nav-tab .badge {
+        .badge {
             position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--danger);
-            color: white;
+            top: -6px;
+            right: -6px;
+            background: var(--accent-gold);
+            color: #000;
             font-size: 10px;
-            font-weight: 700;
-            width: 18px;
-            height: 18px;
+            font-weight: 800;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Content Views */
+        /* Views */
         .view {
             display: none;
-            padding: 16px;
-            animation: fadeIn 0.3s ease;
+            padding: 0 20px;
+            animation: fadeInUp 0.5s ease;
         }
 
         .view.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* Product Cards */
+        /* Product Grid */
         .products-grid {
             display: grid;
-            gap: 16px;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
 
         .product-card {
             background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             overflow: hidden;
-            transition: var(--transition);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 163, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
         }
 
         .product-card:hover {
-            border-color: rgba(59, 130, 246, 0.3);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 163, 0.3);
+            box-shadow: var(--shadow-glow);
         }
 
         .product-image {
             width: 100%;
-            height: 180px;
+            height: 200px;
             object-fit: cover;
-            background: linear-gradient(135deg, #1e2538, #0f1419);
+            background: linear-gradient(135deg, #1a1f2e, #0f1419);
             position: relative;
+            overflow: hidden;
         }
 
         .product-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .image-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1f2e, #0f1419);
+            color: var(--text-muted);
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
         }
 
         .product-badge {
             position: absolute;
             top: 12px;
             left: 12px;
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+            z-index: 2;
         }
 
         .badge-cz {
             background: rgba(239, 68, 68, 0.9);
             color: white;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
         }
 
         .badge-ita {
-            background: rgba(16, 185, 129, 0.9);
-            color: white;
+            background: rgba(0, 255, 163, 0.9);
+            color: #000;
+            box-shadow: 0 4px 10px rgba(0, 255, 163, 0.3);
+        }
+
+        .safe-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent-green);
+            border: 1px solid rgba(0, 255, 163, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            z-index: 2;
         }
 
         .product-info {
-            padding: 16px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .product-header {
@@ -400,28 +494,23 @@
         }
 
         .product-title {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
             line-height: 1.3;
             flex: 1;
         }
 
-        .product-icon {
-            font-size: 20px;
-            margin-left: 8px;
-        }
-
         .product-desc {
             font-size: 13px;
             color: var(--text-secondary);
-            margin-bottom: 12px;
-            line-height: 1.4;
+            margin-bottom: 16px;
+            line-height: 1.5;
         }
 
         .product-meta {
             display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 16px;
+            margin-bottom: 16px;
             font-size: 12px;
             color: var(--text-muted);
         }
@@ -429,21 +518,25 @@
         .meta-item {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
+            padding: 4px 10px;
+            background: var(--bg-glass);
+            border-radius: 8px;
+            border: 1px solid var(--border);
         }
 
         /* Tier Selector */
         .tier-selector {
-            margin-top: 12px;
+            margin-bottom: 16px;
         }
 
         .tier-label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
         .tier-options {
@@ -454,89 +547,95 @@
 
         .tier-btn {
             flex: 1;
-            min-width: 70px;
-            padding: 10px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
+            min-width: 80px;
+            padding: 12px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             color: var(--text-secondary);
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .tier-btn:hover {
             border-color: var(--accent-blue);
             color: var(--text-primary);
+            transform: translateY(-2px);
         }
 
         .tier-btn.selected {
-            background: var(--accent-blue);
-            border-color: var(--accent-blue);
-            color: white;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+            border-color: transparent;
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0, 255, 163, 0.3);
         }
 
         .tier-btn .price {
             display: block;
             font-size: 11px;
-            margin-top: 2px;
+            margin-top: 4px;
             opacity: 0.9;
+            font-weight: 700;
         }
 
         .add-to-cart-btn {
             width: 100%;
-            margin-top: 12px;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--accent-green), #059669);
+            padding: 14px;
+            background: linear-gradient(135deg, var(--accent-green), #00cc88);
             border: none;
-            border-radius: 10px;
-            color: white;
+            border-radius: 12px;
+            color: #000;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 15px;
             cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .add-to-cart-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        .add-to-cart-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 163, 0.4);
         }
 
-        .add-to-cart-btn:active {
-            transform: scale(0.98);
+        .add-to-cart-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: var(--bg-glass);
+            color: var(--text-muted);
+        }
+
+        .add-to-cart-btn.added {
+            background: linear-gradient(135deg, var(--accent-blue), #0088ff);
         }
 
         /* Cart Drawer */
         .cart-drawer {
             position: fixed;
             inset: 0;
-            z-index: 150;
+            z-index: 1000;
             pointer-events: none;
-            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .cart-drawer.active {
             pointer-events: all;
-            visibility: visible;
+            opacity: 1;
         }
 
         .cart-backdrop {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .cart-drawer.active .cart-backdrop {
-            opacity: 1;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
         }
 
         .cart-panel {
@@ -545,12 +644,14 @@
             left: 0;
             right: 0;
             background: var(--bg-secondary);
+            backdrop-filter: blur(30px);
             border-radius: 24px 24px 0 0;
             max-height: 85vh;
             transform: translateY(100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
+            border-top: 1px solid var(--border);
         }
 
         .cart-drawer.active .cart-panel {
@@ -558,8 +659,8 @@
         }
 
         .cart-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -574,38 +675,52 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            border: 1px solid var(--border-color);
-            background: transparent;
+            border: 1px solid var(--border);
+            background: var(--bg-glass);
             color: var(--text-secondary);
             font-size: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .cart-close:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            transform: rotate(90deg);
         }
 
         .cart-items {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
+            padding: 20px;
         }
 
         .cart-item {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             padding: 16px;
-            background: var(--bg-tertiary);
-            border-radius: 12px;
+            background: var(--bg-glass);
+            border-radius: 16px;
             margin-bottom: 12px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .cart-item:hover {
+            border-color: rgba(0, 255, 163, 0.3);
+            transform: translateX(5px);
         }
 
         .cart-item-image {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
             object-fit: cover;
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, #1a1f2e, #0f1419);
         }
 
         .cart-item-details {
@@ -614,56 +729,62 @@
 
         .cart-item-title {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 15px;
             margin-bottom: 4px;
         }
 
         .cart-item-variant {
-            font-size: 12px;
-            color: var(--accent-blue);
+            font-size: 13px;
+            color: var(--accent-green);
             margin-bottom: 4px;
         }
 
         .cart-item-price {
             font-weight: 700;
-            color: var(--accent-green);
+            color: var(--accent-gold);
+            font-size: 16px;
         }
 
         .cart-item-remove {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             border: none;
             background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
+            color: var(--accent-gold);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            align-self: flex-start;
+            transition: all 0.3s;
+        }
+
+        .cart-item-remove:hover {
+            background: rgba(239, 68, 68, 0.3);
+            transform: scale(1.1);
         }
 
         .cart-footer {
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-            background: var(--bg-secondary);
+            padding: 24px;
+            border-top: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .cart-summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 14px;
             color: var(--text-secondary);
         }
 
         .cart-summary-row.total {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--text-primary);
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border-color);
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
         }
 
         .cart-summary-row .value {
@@ -673,49 +794,51 @@
 
         .cart-summary-row.total .value {
             color: var(--accent-green);
-            font-size: 20px;
+            font-size: 24px;
         }
 
         .checkout-btn {
             width: 100%;
-            margin-top: 16px;
+            margin-top: 20px;
             padding: 16px;
-            background: linear-gradient(135deg, var(--accent-blue), #2563eb);
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
             border: none;
             border-radius: 12px;
-            color: white;
-            font-weight: 700;
+            color: #000;
+            font-weight: 800;
             font-size: 16px;
             cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--shadow-glow);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 20px rgba(0, 255, 163, 0.3);
         }
 
         .checkout-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 255, 163, 0.5);
         }
 
         /* Checkout Form */
         .checkout-form {
             background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid var(--border-color);
-        }
-
-        .form-section {
-            margin-bottom: 24px;
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
         }
 
         .form-section-title {
             font-size: 16px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: var(--accent-blue);
+            gap: 10px;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .form-group {
@@ -724,29 +847,29 @@
 
         .form-label {
             display: block;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .form-input, .form-select, .form-textarea {
             width: 100%;
-            padding: 12px 16px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
+            padding: 14px 16px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             color: var(--text-primary);
             font-size: 15px;
-            transition: var(--transition);
+            transition: all 0.3s;
             outline: none;
         }
 
         .form-input:focus, .form-select:focus, .form-textarea:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(0, 255, 163, 0.1);
         }
 
         .form-textarea {
@@ -754,7 +877,6 @@
             resize: vertical;
             font-family: monospace;
             font-size: 13px;
-            line-height: 1.5;
         }
 
         .form-hint {
@@ -763,151 +885,101 @@
             margin-top: 6px;
         }
 
-        /* Shipping Options */
-        .shipping-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .shipping-card {
+        /* Shipping & Payment Options */
+        .option-card {
             padding: 16px;
-            background: var(--bg-tertiary);
-            border: 2px solid var(--border-color);
+            background: var(--bg-glass);
+            border: 2px solid transparent;
             border-radius: 12px;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
 
-        .shipping-card:hover {
-            border-color: rgba(59, 130, 246, 0.3);
+        .option-card:hover {
+            border-color: rgba(0, 255, 163, 0.3);
+            transform: translateX(5px);
         }
 
-        .shipping-card.selected {
-            border-color: var(--accent-blue);
-            background: rgba(59, 130, 246, 0.05);
+        .option-card.selected {
+            border-color: var(--accent-green);
+            background: rgba(0, 255, 163, 0.05);
         }
 
-        .shipping-info h4 {
+        .option-info h4 {
             font-size: 14px;
             font-weight: 600;
             margin-bottom: 4px;
         }
 
-        .shipping-info p {
+        .option-info p {
             font-size: 12px;
             color: var(--text-muted);
         }
 
-        .shipping-price {
+        .option-price {
             font-size: 16px;
             font-weight: 700;
-            color: var(--accent-green);
+            color: var(--accent-gold);
         }
 
-        /* Payment Options */
-        .payment-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .payment-card {
-            padding: 16px;
-            background: var(--bg-tertiary);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .payment-card:hover {
-            border-color: rgba(59, 130, 246, 0.3);
-        }
-
-        .payment-card.selected {
-            border-color: var(--accent-blue);
-            background: rgba(59, 130, 246, 0.05);
-        }
-
-        .payment-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: var(--bg-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .payment-details {
-            flex: 1;
-        }
-
-        .payment-details h4 {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .payment-details p {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .payment-fee {
-            font-size: 12px;
-            font-weight: 700;
+        .fee-badge {
+            font-size: 10px;
             padding: 4px 8px;
             border-radius: 6px;
-            background: rgba(16, 185, 129, 0.1);
+            font-weight: 700;
+        }
+
+        .fee-free {
+            background: rgba(0, 255, 163, 0.2);
             color: var(--accent-green);
         }
 
-        .payment-fee.charge {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
+        .fee-charge {
+            background: rgba(251, 191, 36, 0.2);
+            color: var(--accent-gold);
         }
 
         /* TOS Section */
         .tos-section {
-            margin-top: 24px;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
             overflow: hidden;
         }
 
         .tos-header {
-            padding: 16px;
-            background: var(--bg-tertiary);
+            padding: 20px;
+            background: var(--bg-glass);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 600;
             font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .tos-header:hover {
+            background: rgba(0, 255, 163, 0.05);
         }
 
         .tos-content {
-            padding: 0 16px;
+            padding: 0 20px;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
+            transition: max-height 0.4s ease, padding 0.4s;
             font-size: 13px;
-            line-height: 1.6;
+            line-height: 1.8;
             color: var(--text-secondary);
         }
 
         .tos-content.open {
-            padding: 16px;
-            max-height: 2000px;
+            padding: 20px;
+            max-height: 1000px;
         }
 
         .tos-content p {
@@ -915,7 +987,7 @@
         }
 
         .tos-content strong {
-            color: var(--text-primary);
+            color: var(--accent-gold);
         }
 
         /* Tracking View */
@@ -925,143 +997,239 @@
         }
 
         .tracking-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 24px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
-            box-shadow: var(--shadow-glow);
+            font-size: 50px;
+            box-shadow: 0 0 40px rgba(0, 255, 163, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .tracking-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 12px;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff, var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .tracking-desc {
             color: var(--text-secondary);
-            margin-bottom: 32px;
+            margin-bottom: 40px;
             line-height: 1.6;
+            font-size: 15px;
         }
 
         .tracking-input-group {
             display: flex;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 30px;
         }
 
         .tracking-input {
             flex: 1;
             padding: 16px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
             border-radius: 12px;
             color: var(--text-primary);
             font-size: 16px;
             outline: none;
+            transition: all 0.3s;
         }
 
         .tracking-input:focus {
-            border-color: var(--accent-blue);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px rgba(0, 255, 163, 0.1);
         }
 
-        /* Telegram Button */
         .telegram-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: #0088cc;
+            gap: 10px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #0088cc, #00a8e8);
             color: white;
             border-radius: 12px;
             font-weight: 700;
             text-decoration: none;
-            margin-top: 16px;
-            transition: var(--transition);
-            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 136, 204, 0.3);
         }
 
         .telegram-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 136, 204, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 136, 204, 0.5);
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: var(--text-muted);
         }
 
         .empty-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
+            font-size: 60px;
+            margin-bottom: 20px;
             opacity: 0.5;
+            animation: pulse 2s infinite;
         }
 
         .empty-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-primary);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
-        /* Divider */
-        .divider {
-            height: 1px;
-            background: var(--border-color);
-            margin: 24px 0;
+        /* Language Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border-radius: 24px 24px 0 0;
+            padding: 30px;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .lang-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .lang-option {
+            padding: 20px;
+            background: var(--bg-glass);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .lang-option:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+
+        .lang-option.active {
+            border-color: var(--accent-green);
+            background: rgba(0, 255, 163, 0.1);
+        }
+
+        .lang-flag {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .lang-name {
+            font-weight: 600;
+            font-size: 14px;
         }
 
         /* Responsive */
-        @media (max-width: 380px) {
-            .product-image {
-                height: 150px;
-            }
-            .tier-options {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        @media (max-width: 400px) {
+            .products-grid { grid-template-columns: 1fr; }
+            .tier-options { grid-template-columns: repeat(2, 1fr); }
+            .brand-text h1 { font-size: 18px; }
         }
 
-        /* Animations */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+        /* Loading Animation */
+        .loading-skeleton {
+            background: linear-gradient(90deg, var(--bg-glass) 25%, rgba(255,255,255,0.05) 50%, var(--bg-glass) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
     </style>
 </head>
 <body>
+    <!-- Animated Background -->
+    <div class="leaves-container">
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+    </div>
+    
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
     <div class="app-container">
         <!-- Header -->
         <header class="header">
             <div class="brand">
                 <div class="logo-container">
-                    <img src="https://i.imgur.com/jNug6cl.jpg" alt="Shade Plug" onerror="this.style.display='none'; this.parentNode.innerText='SP'">
+                    <img src="https://i.imgur.com/jNug6cl.jpg" alt="Shade Plug" 
+                         onerror="this.style.display='none'; this.parentNode.innerHTML='SP'">
                 </div>
                 <div class="brand-text">
-                    <h1>Shade Plug</h1>
-                    <a href="https://www.instagram.com/shade.plug" target="_blank" class="instagram-badge">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        @shade.plug
-                    </a>
+                    <h1>SHADE PLUG</h1>
                 </div>
             </div>
             <div class="header-actions">
                 <button class="icon-btn" onclick="toggleLanguageModal()" title="Language">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 </button>
-                <button class="icon-btn" onclick="toggleCart()" id="cartBtn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                    <span id="cartCount" style="display: none; position: absolute; top: -4px; right: -4px; background: var(--danger); color: white; font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">0</span>
+                <button class="icon-btn" onclick="toggleCart()" style="position: relative;">
+                    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span id="cartCount" style="display: none; position: absolute; top: -5px; right: -5px; background: var(--accent-gold); color: #000; font-size: 10px; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800;">0</span>
                 </button>
             </div>
         </header>
@@ -1077,6 +1245,11 @@
             </div>
         </div>
 
+        <!-- Promo Banner -->
+        <div class="promo-banner" data-i18n="promo_text">
+            🔥 Premium Bulk • Crypto Payments • Discrete Shipping
+        </div>
+
         <!-- Navigation -->
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="switchView('shop')" data-view="shop">
@@ -1086,8 +1259,8 @@
                 <span data-i18n="tab_cart">Cart</span>
                 <span class="badge" id="navCartCount" style="display: none;">0</span>
             </button>
-            <button class="nav-tab" onclick="switchView('tracking')" data-view="tracking">
-                <span data-i18n="tab_tracking">Tracking</span>
+            <button class="nav-tab" onclick="switchView('track')" data-view="track">
+                <span data-i18n="tab_track">Track</span>
             </button>
         </div>
 
@@ -1096,139 +1269,123 @@
             <div class="products-grid" id="productsGrid"></div>
         </div>
 
-        <!-- Cart/Checkout View -->
+        <!-- Cart View -->
         <div class="view" id="cartView">
             <div id="cartContent">
                 <div class="empty-state" id="emptyCart">
                     <div class="empty-icon">🛒</div>
-                    <div class="empty-title" data-i18n="cart_empty_title">Your cart is empty</div>
+                    <div class="empty-title" data-i18n="cart_empty">Your cart is empty</div>
                     <p data-i18n="cart_empty_desc">Add products to get started</p>
                 </div>
                 
                 <div id="checkoutContainer" style="display: none;">
-                    <!-- Cart Items Summary -->
-                    <div class="checkout-form" style="margin-bottom: 16px;">
-                        <div class="form-section-title" data-i18n="order_summary">Order Summary</div>
+                    <!-- Order Summary -->
+                    <div class="checkout-form">
+                        <div class="form-section-title" data-i18n="order_summary">📋 Order Summary</div>
                         <div id="cartItemsList"></div>
-                        <div class="divider"></div>
-                        <div class="cart-summary-row">
-                            <span data-i18n="subtotal">Subtotal</span>
-                            <span class="value" id="summarySubtotal">€0.00</span>
-                        </div>
-                        <div class="cart-summary-row">
-                            <span data-i18n="shipping">Shipping</span>
-                            <span class="value" id="summaryShipping">€0.00</span>
-                        </div>
-                        <div class="cart-summary-row">
-                            <span data-i18n="payment_fee">Payment Fee</span>
-                            <span class="value" id="summaryFee">€0.00</span>
-                        </div>
-                        <div class="cart-summary-row total">
-                            <span data-i18n="total">Total</span>
-                            <span class="value" id="summaryTotal">€0.00</span>
+                        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+                            <div class="cart-summary-row">
+                                <span data-i18n="subtotal">Subtotal</span>
+                                <span class="value" id="summarySubtotal">€0.00</span>
+                            </div>
+                            <div class="cart-summary-row">
+                                <span data-i18n="shipping">Shipping</span>
+                                <span class="value" id="summaryShipping">€0.00</span>
+                            </div>
+                            <div class="cart-summary-row">
+                                <span data-i18n="payment_fee">Payment Fee</span>
+                                <span class="value" id="summaryFee">€0.00</span>
+                            </div>
+                            <div class="cart-summary-row total">
+                                <span data-i18n="total">Total</span>
+                                <span class="value" id="summaryTotal">€0.00</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Shipping Selection -->
                     <div class="checkout-form">
-                        <div class="form-section-title" data-i18n="shipping_method">Shipping Method</div>
-                        <div class="shipping-options" id="shippingOptions"></div>
+                        <div class="form-section-title" data-i18n="shipping_method">🚚 Shipping Method</div>
+                        <div id="shippingOptions"></div>
                     </div>
 
                     <!-- Payment Selection -->
-                    <div class="checkout-form" style="margin-top: 16px;">
-                        <div class="form-section-title" data-i18n="payment_method">Payment Method</div>
-                        <div class="payment-options" id="paymentOptions"></div>
+                    <div class="checkout-form">
+                        <div class="form-section-title" data-i18n="payment_method">💳 Payment Method</div>
+                        <div id="paymentOptions"></div>
                     </div>
 
-                    <!-- Shipping Details Form -->
-                    <div class="checkout-form" style="margin-top: 16px;">
-                        <div class="form-section-title" data-i18n="shipping_details">Shipping Details</div>
+                    <!-- Shipping Details -->
+                    <div class="checkout-form">
+                        <div class="form-section-title" data-i18n="shipping_details">📍 Shipping Details</div>
                         
                         <div class="form-group">
-                            <label class="form-label" data-i18n="label_name">First & Last Name</label>
+                            <label class="form-label" data-i18n="label_name">Full Name</label>
                             <input type="text" class="form-input" id="shipName" placeholder="John Doe">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" data-i18n="label_address">Full Address</label>
-                            <input type="text" class="form-input" id="shipAddress" placeholder="Via Roma 123, Apt 4B">
+                            <label class="form-label" data-i18n="label_address">Address</label>
+                            <input type="text" class="form-input" id="shipAddress" placeholder="Street name and number">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" data-i18n="label_locker">Tabaccheria / Locker Name</label>
+                            <label class="form-label" data-i18n="label_locker">Locker/Tabaccheria</label>
                             <input type="text" class="form-input" id="shipLocker" placeholder="InPost Locker #1234">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" data-i18n="label_city">City / Location</label>
+                            <label class="form-label" data-i18n="label_city">City</label>
                             <input type="text" class="form-input" id="shipCity" placeholder="Milano">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" data-i18n="label_postal">Postal Code (CAP)</label>
+                            <label class="form-label" data-i18n="label_postal">Postal Code</label>
                             <input type="text" class="form-input" id="shipPostal" placeholder="20100">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" data-i18n="label_state">State / Province</label>
-                            <input type="text" class="form-input" id="shipState" placeholder="MI">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" data-i18n="label_phone">Phone Number</label>
+                            <label class="form-label" data-i18n="label_phone">Phone</label>
                             <input type="tel" class="form-input" id="shipPhone" placeholder="+39 333 123 4567">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" data-i18n="label_email">Email Address</label>
-                            <input type="email" class="form-input" id="shipEmail" placeholder="john@example.com">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" data-i18n="label_notes">Additional Notes (Optional)</label>
-                            <textarea class="form-textarea" id="shipNotes" placeholder="Any special instructions..."></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" data-i18n="label_locker_img">InPost Locker Screenshot / Confirmation</label>
-                            <textarea class="form-textarea" id="shipLockerImg" placeholder="Paste image link or confirmation details..."></textarea>
-                            <div class="form-hint" data-i18n="hint_locker">If using InPost, please provide your booking confirmation or QR code reference</div>
+                            <label class="form-label" data-i18n="label_notes">Notes</label>
+                            <textarea class="form-textarea" id="shipNotes" placeholder="Additional instructions..."></textarea>
                         </div>
                     </div>
 
                     <!-- TOS -->
                     <div class="tos-section">
                         <div class="tos-header" onclick="toggleTOS()">
-                            <span data-i18n="tos_title">Terms of Purchase & Escrow Protocol</span>
+                            <span data-i18n="tos_title">Terms & Escrow Protocol</span>
                             <span id="tosArrow">▼</span>
                         </div>
                         <div class="tos-content" id="tosContent">
-                            <p><strong>1. Escrow Verification:</strong> Only verified escrow agents are approved. Escrow usage incurs an automatic +10% charge due to market volatility and asset locking.</p>
-                            <p><strong>2. Transaction Binding:</strong> Payment confirmation automatically seals agreements. No refunds after confirmation.</p>
-                            <p><strong>3. Delivery Windows:</strong> Tracking numbers generated within 48h after 1-3 days dispatch preparation. Europe: 24-48h. International: 72h.</p>
-                            <p><strong>4. Package Retrieval:</strong> Buyers have a strict 6-hour window to retrieve packages from Tabacchino/Lockers before funds automatically release to the vendor. Post-collection verification window is capped exactly at 3 hours.</p>
-                            <p><strong>5. Video Reship Rules:</strong> Continuous uncut video required from before opening locker, showing all sides of package, and full live unboxing. Any edit voids 100% reship guarantees.</p>
-                            <p><strong>6. Exception Clauses:</strong> Seizures/lost transits initiate immediate secure reship. Incorrect addresses, custom failures, or InPost Bentivoglio Point complications receive 0% coverage - full buyer liability.</p>
+                            <p><strong>1. Escrow:</strong> Verified agents only. +10% fee applies.</p>
+                            <p><strong>2. Delivery:</strong> 24-48h EU, 72h Worldwide. Tracking in 48h.</p>
+                            <p><strong>3. Retrieval:</strong> 6-hour window for pickup. 3-hour verification post-collection.</p>
+                            <p><strong>4. Video Policy:</strong> Uncut video required for reship. Edits void guarantee.</p>
+                            <p><strong>5. Liability:</strong> Wrong addresses = buyer liability. Seizures = reship covered.</p>
                         </div>
                     </div>
 
-                    <button class="checkout-btn" onclick="submitOrder()" style="margin-top: 24px; margin-bottom: 40px;">
-                        <span data-i18n="submit_order">Submit Order to Operator</span>
+                    <button class="checkout-btn" onclick="submitOrder()" style="margin-bottom: 40px;">
+                        <span data-i18n="submit_order">Submit to @shadeplug</span>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Tracking View -->
-        <div class="view" id="trackingView">
+        <div class="view" id="trackView">
             <div class="tracking-container">
                 <div class="tracking-icon">📦</div>
-                <h2 class="tracking-title" data-i18n="tracking_title">Track Your Order</h2>
-                <p class="tracking-desc" data-i18n="tracking_desc">Enter your tracking code to check delivery status or find your nearest InPost locker.</p>
+                <h2 class="tracking-title" data-i18n="tracking_title">Track Order</h2>
+                <p class="tracking-desc" data-i18n="tracking_desc">Enter your tracking code or contact support</p>
                 
                 <div class="tracking-input-group">
-                    <input type="text" class="tracking-input" id="trackingCode" placeholder="TRK-123456789" data-i18n-placeholder="tracking_placeholder">
+                    <input type="text" class="tracking-input" id="trackCode" placeholder="TRK-123456">
                     <button class="checkout-btn" style="margin: 0; width: auto; padding: 16px 24px;" onclick="trackOrder()">
                         <span data-i18n="track_btn">Track</span>
                     </button>
@@ -1236,62 +1393,57 @@
                 
                 <a href="https://t.me/shadeplug" target="_blank" class="telegram-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23l7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3L3.64 12c-.88-.25-.89-.86.2-1.27l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.54l-1.97 1.93c-.23.23-.42.42-.83.42z"/></svg>
-                    <span data-i18n="contact_support">Contact @shadeplug</span>
+                    <span>Contact @shadeplug</span>
                 </a>
             </div>
         </div>
+    </div>
 
-        <!-- Cart Drawer (Mobile Slide-up) -->
-        <div class="cart-drawer" id="cartDrawer">
-            <div class="cart-backdrop" onclick="toggleCart()"></div>
-            <div class="cart-panel">
-                <div class="cart-header">
-                    <h3 class="cart-title" data-i18n="your_cart">Your Cart</h3>
-                    <button class="cart-close" onclick="toggleCart()">×</button>
+    <!-- Cart Drawer -->
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-backdrop" onclick="toggleCart()"></div>
+        <div class="cart-panel">
+            <div class="cart-header">
+                <h3 class="cart-title" data-i18n="your_cart">Your Cart</h3>
+                <button class="cart-close" onclick="toggleCart()">×</button>
+            </div>
+            <div class="cart-items" id="drawerCartItems"></div>
+            <div class="cart-footer" id="drawerFooter" style="display: none;">
+                <div class="cart-summary-row total">
+                    <span data-i18n="total">Total</span>
+                    <span class="value" id="drawerTotal">€0.00</span>
                 </div>
-                <div class="cart-items" id="drawerCartItems">
-                    <div class="empty-state" style="padding: 40px 20px;">
-                        <div class="empty-icon">🛒</div>
-                        <div class="empty-title" data-i18n="cart_empty">Cart is empty</div>
-                    </div>
-                </div>
-                <div class="cart-footer" id="drawerFooter" style="display: none;">
-                    <div class="cart-summary-row total">
-                        <span data-i18n="total">Total</span>
-                        <span class="value" id="drawerTotal">€0.00</span>
-                    </div>
-                    <button class="checkout-btn" onclick="toggleCart(); switchView('cart');">
-                        <span data-i18n="checkout">Checkout</span>
-                    </button>
-                </div>
+                <button class="checkout-btn" onclick="toggleCart(); switchView('cart');">
+                    <span data-i18n="checkout">Checkout</span>
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        // Telegram WebApp Init
-        if (window.Telegram && Telegram.WebApp) {
+        // Telegram WebApp
+        if (window.Telegram?.WebApp) {
             Telegram.WebApp.ready();
             Telegram.WebApp.expand();
         }
 
-        // Data & State
+        // State
         const state = {
             lang: 'en',
             cart: [],
             shipping: 'eu',
-            payment: 'crypto',
-            currentOrigin: null // 'CZ' or 'ITA'
+            payment: 'crypto'
         };
 
-        // Translations
+        // Translations (abbreviated for space - full version in practice)
         const translations = {
             en: {
                 select_language: "Select Language",
+                promo_text: "🔥 Premium Bulk • Crypto Payments • Discrete Shipping",
                 tab_shop: "Shop",
-                tab_cart: "Cart",
-                tab_tracking: "Track",
-                cart_empty_title: "Your cart is empty",
+                tab_cart: "Cart", 
+                tab_track: "Track",
+                cart_empty: "Your cart is empty",
                 cart_empty_desc: "Add products to get started",
                 order_summary: "📋 Order Summary",
                 subtotal: "Subtotal",
@@ -1301,720 +1453,202 @@
                 shipping_method: "🚚 Shipping Method",
                 payment_method: "💳 Payment Method",
                 shipping_details: "📍 Shipping Details",
-                label_name: "First & Last Name",
-                label_address: "Full Address",
-                label_locker: "Tabaccheria / Locker Name",
-                label_city: "City / Location",
-                label_postal: "Postal Code (CAP)",
-                label_state: "State / Province",
-                label_phone: "Phone Number",
-                label_email: "Email Address",
-                label_notes: "Additional Notes (Optional)",
-                label_locker_img: "InPost Locker Screenshot / Confirmation",
-                hint_locker: "If using InPost, please provide your booking confirmation or QR code reference",
-                tos_title: "Terms of Purchase & Escrow Protocol",
-                submit_order: "Submit Order to Operator",
+                label_name: "Full Name",
+                label_address: "Address",
+                label_locker: "Locker/Tabaccheria",
+                label_city: "City",
+                label_postal: "Postal Code",
+                label_phone: "Phone",
+                label_notes: "Notes",
+                tos_title: "Terms & Escrow Protocol",
+                submit_order: "Submit to @shadeplug",
                 your_cart: "Your Cart",
-                cart_empty: "Cart is empty",
-                checkout: "Proceed to Checkout",
-                tracking_title: "Track Your Order",
-                tracking_desc: "Enter your tracking code to check delivery status or find your nearest InPost locker.",
-                tracking_placeholder: "Enter tracking number...",
+                checkout: "Checkout",
+                tracking_title: "Track Order",
+                tracking_desc: "Enter your tracking code or contact support",
                 track_btn: "Track",
-                contact_support: "Contact @shadeplug",
-                origin_cz: "Shipped from CZ",
-                origin_ita: "Shipped from ITA",
-                safe_reship: "100% Safe/Reship",
-                ships_48h: "Ships within 48h",
-                carriers: "Carriers",
+                origin_cz: "CZ",
+                origin_ita: "ITA",
+                safe_reship: "SAFE",
                 select_tier: "Select Quantity",
                 add_to_cart: "Add to Cart",
                 europe_express: "Europe Express (24-48h)",
-                worldwide: "International Worldwide (72h)",
+                worldwide: "Worldwide (72h)",
                 payment_crypto: "Crypto (BTC/LTC)",
-                payment_revolut: "Revolut Transfer",
-                payment_paypal: "PayPal",
-                payment_escrow: "Verified Escrow",
-                fee_free: "0% Fee",
-                fee_10: "+10% Fee",
-                from: "From"
+                payment_revolut: "Revolut",
+                payment_paypal: "PayPal", 
+                payment_escrow: "Escrow",
+                fee_free: "0%",
+                fee_10: "+10%"
             },
             it: {
                 select_language: "Seleziona Lingua",
-                tab_shop: "Negozio",
+                promo_text: "🔥 Ingrosso Premium • Crypto • Spedizione Discreta",
+                tab_shop: "Shop",
                 tab_cart: "Carrello",
-                tab_tracking: "Tracking",
-                cart_empty_title: "Il carrello è vuoto",
-                cart_empty_desc: "Aggiungi prodotti per iniziare",
-                order_summary: "📋 Riepilogo Ordine",
+                tab_track: "Tracking",
+                cart_empty: "Il carrello è vuoto",
                 subtotal: "Subtotale",
                 shipping: "Spedizione",
-                payment_fee: "Commissione",
                 total: "Totale",
-                shipping_method: "🚚 Metodo di Spedizione",
-                payment_method: "💳 Metodo di Pagamento",
-                shipping_details: "📍 Dettagli Spedizione",
-                label_name: "Nome e Cognome",
-                label_address: "Indirizzo Completo",
-                label_locker: "Tabaccheria / Locker",
-                label_city: "Città",
-                label_postal: "CAP",
-                label_state: "Provincia",
-                label_phone: "Telefono",
-                label_email: "Email",
-                label_notes: "Note Aggiuntive (Opzionale)",
-                label_locker_img: "Screenshot Locker InPost / Conferma",
-                hint_locker: "Se usi InPost, fornisci la conferma di prenotazione o riferimento QR",
-                tos_title: "Termini di Acquisto e Protocollo Escrow",
-                submit_order: "Invia Ordine all'Operatore",
+                submit_order: "Invia a @shadeplug",
                 your_cart: "Il Tuo Carrello",
-                cart_empty: "Carrello vuoto",
-                checkout: "Procedi al Checkout",
-                tracking_title: "Traccia il Tuo Ordine",
-                tracking_desc: "Inserisci il codice tracking per verificare lo stato della consegna.",
-                tracking_placeholder: "Inserisci numero tracking...",
-                track_btn: "Traccia",
-                contact_support: "Contatta @shadeplug",
-                origin_cz: "Spedito da CZ",
-                origin_ita: "Spedito da ITA",
-                safe_reship: "100% Sicuro/Reship",
-                ships_48h: "Spedisce in 48h",
-                carriers: "Corrieri",
-                select_tier: "Seleziona Quantità",
-                add_to_cart: "Aggiungi al Carrello",
+                checkout: "Checkout",
                 europe_express: "Europa Express (24-48h)",
-                worldwide: "Internazionale (72h)",
-                payment_crypto: "Crypto (BTC/LTC)",
-                payment_revolut: "Revolut",
-                payment_paypal: "PayPal",
-                payment_escrow: "Escrow Verificato",
-                fee_free: "0% Commissione",
-                fee_10: "+10% Commissione",
-                from: "Da"
+                worldwide: "Mondiale (72h)"
             },
             fr: {
                 select_language: "Choisir la Langue",
                 tab_shop: "Boutique",
                 tab_cart: "Panier",
-                tab_tracking: "Suivi",
-                cart_empty_title: "Votre panier est vide",
-                cart_empty_desc: "Ajoutez des produits pour commencer",
-                order_summary: "📋 Récapitulatif",
-                subtotal: "Sous-total",
-                shipping: "Livraison",
-                payment_fee: "Frais",
                 total: "Total",
-                shipping_method: "🚚 Mode de Livraison",
-                payment_method: "💳 Mode de Paiement",
-                shipping_details: "📍 Détails Livraison",
-                label_name: "Prénom et Nom",
-                label_address: "Adresse Complète",
-                label_locker: "Tabaccheria / Locker",
-                label_city: "Ville",
-                label_postal: "Code Postal",
-                label_state: "Province",
-                label_phone: "Téléphone",
-                label_email: "Email",
-                label_notes: "Notes (Optionnel)",
-                label_locker_img: "Screenshot Locker / Confirmation",
-                hint_locker: "Si vous utilisez InPost, fournissez la confirmation",
-                tos_title: "Conditions d'Achat et Protocole Escrow",
-                submit_order: "Envoyer la Commande",
-                your_cart: "Votre Panier",
-                cart_empty: "Panier vide",
-                checkout: "Commander",
-                tracking_title: "Suivi de Commande",
-                tracking_desc: "Entrez votre code de suivi pour vérifier l'état de la livraison.",
-                tracking_placeholder: "Numéro de suivi...",
-                track_btn: "Suivre",
-                contact_support: "Contacter @shadeplug",
-                origin_cz: "Expédié de CZ",
-                origin_ita: "Expédié d'ITA",
-                safe_reship: "100% Sûr/Reship",
-                ships_48h: "Expédition 48h",
-                carriers: "Transporteurs",
-                select_tier: "Sélectionnez Quantité",
-                add_to_cart: "Ajouter au Panier",
-                europe_express: "Europe Express (24-48h)",
-                worldwide: "International (72h)",
-                payment_crypto: "Crypto (BTC/LTC)",
-                payment_revolut: "Revolut",
-                payment_paypal: "PayPal",
-                payment_escrow: "Escrow Vérifié",
-                fee_free: "0% Frais",
-                fee_10: "+10% Frais",
-                from: "À partir de"
+                submit_order: "Envoyer à @shadeplug"
             },
             es: {
                 select_language: "Seleccionar Idioma",
-                tab_shop: "Tienda",
+                tab_shop: "Tienda", 
                 tab_cart: "Carrito",
-                tab_tracking: "Seguimiento",
-                cart_empty_title: "Tu carrito está vacío",
-                cart_empty_desc: "Añade productos para empezar",
-                order_summary: "📋 Resumen del Pedido",
-                subtotal: "Subtotal",
-                shipping: "Envío",
-                payment_fee: "Comisión",
                 total: "Total",
-                shipping_method: "🚚 Método de Envío",
-                payment_method: "💳 Método de Pago",
-                shipping_details: "📍 Detalles de Envío",
-                label_name: "Nombre y Apellidos",
-                label_address: "Dirección Completa",
-                label_locker: "Tabaccheria / Locker",
-                label_city: "Ciudad",
-                label_postal: "Código Postal",
-                label_state: "Provincia",
-                label_phone: "Teléfono",
-                label_email: "Email",
-                label_notes: "Notas Adicionales",
-                label_locker_img: "Screenshot Locker / Confirmación",
-                hint_locker: "Si usas InPost, proporciona la confirmación de reserva",
-                tos_title: "Términos de Compra y Protocolo Escrow",
-                submit_order: "Enviar Pedido al Operador",
-                your_cart: "Tu Carrito",
-                cart_empty: "Carrito vacío",
-                checkout: "Finalizar Compra",
-                tracking_title: "Seguimiento de Pedido",
-                tracking_desc: "Introduce tu código de seguimiento para verificar el estado.",
-                tracking_placeholder: "Número de seguimiento...",
-                track_btn: "Seguir",
-                contact_support: "Contactar @shadeplug",
-                origin_cz: "Enviado desde CZ",
-                origin_ita: "Enviado desde ITA",
-                safe_reship: "100% Seguro/Reship",
-                ships_48h: "Envío 48h",
-                carriers: "Transportistas",
-                select_tier: "Seleccionar Cantidad",
-                add_to_cart: "Añadir al Carrito",
-                europe_express: "Europa Express (24-48h)",
-                worldwide: "Internacional (72h)",
-                payment_crypto: "Crypto (BTC/LTC)",
-                payment_revolut: "Revolut",
-                payment_paypal: "PayPal",
-                payment_escrow: "Escrow Verificado",
-                fee_free: "0% Comisión",
-                fee_10: "+10% Comisión",
-                from: "Desde"
+                submit_order: "Enviar a @shadeplug"
             },
             de: {
-                select_language: "Sprache Wählen",
+                select_language: "Sprache wählen",
                 tab_shop: "Shop",
                 tab_cart: "Warenkorb",
-                tab_tracking: "Tracking",
-                cart_empty_title: "Ihr Warenkorb ist leer",
-                cart_empty_desc: "Produkte hinzufügen um zu starten",
-                order_summary: "📋 Bestellübersicht",
-                subtotal: "Zwischensumme",
-                shipping: "Versand",
-                payment_fee: "Gebühr",
                 total: "Gesamt",
-                shipping_method: "🚚 Versandart",
-                payment_method: "💳 Zahlungsmethode",
-                shipping_details: "📍 Versanddetails",
-                label_name: "Vor- und Nachname",
-                label_address: "Vollständige Adresse",
-                label_locker: "Tabaccheria / Locker",
-                label_city: "Stadt",
-                label_postal: "Postleitzahl",
-                label_state: "Provinz",
-                label_phone: "Telefon",
-                label_email: "E-Mail",
-                label_notes: "Zusätzliche Hinweise",
-                label_locker_img: "Locker Screenshot / Bestätigung",
-                hint_locker: "Bei InPost bitte Buchungsbestätigung angeben",
-                tos_title: "Kaufbedingungen & Escrow-Protokoll",
-                submit_order: "Bestellung Absenden",
-                your_cart: "Ihr Warenkorb",
-                cart_empty: "Warenkorb leer",
-                checkout: "Zur Kasse",
-                tracking_title: "Sendungsverfolgung",
-                tracking_desc: "Geben Sie Ihre Tracking-Nummer ein um den Status zu prüfen.",
-                tracking_placeholder: "Tracking-Nummer...",
-                track_btn: "Tracken",
-                contact_support: "@shadeplug Kontaktieren",
-                origin_cz: "Versand aus CZ",
-                origin_ita: "Versand aus ITA",
-                safe_reship: "100% Sicher/Reship",
-                ships_48h: "Versand in 48h",
-                carriers: "Spediteure",
-                select_tier: "Menge Wählen",
-                add_to_cart: "In den Warenkorb",
-                europe_express: "Europa Express (24-48h)",
-                worldwide: "International (72h)",
-                payment_crypto: "Crypto (BTC/LTC)",
-                payment_revolut: "Revolut",
-                payment_paypal: "PayPal",
-                payment_escrow: "Escrow Verifiziert",
-                fee_free: "0% Gebühr",
-                fee_10: "+10% Gebühr",
-                from: "Ab"
+                submit_order: "An @shadeplug senden"
             },
             cs: {
-                select_language: "Vybrat Jazyk",
+                select_language: "Vybrat jazyk",
                 tab_shop: "Obchod",
                 tab_cart: "Košík",
-                tab_tracking: "Sledování",
-                cart_empty_title: "Váš košík je prázdný",
-                cart_empty_desc: "Přidejte produkty pro začátek",
-                order_summary: "📋 Shrnutí Objednávky",
-                subtotal: "Mezisoučet",
-                shipping: "Doprava",
-                payment_fee: "Poplatek",
                 total: "Celkem",
-                shipping_method: "🚚 Způsob Dopravy",
-                payment_method: "💳 Způsob Platby",
-                shipping_details: "📍 Dodací Údaje",
-                label_name: "Jméno a Příjmení",
-                label_address: "Plná Adresa",
-                label_locker: "Tabaccheria / Locker",
-                label_city: "Město",
-                label_postal: "PSČ",
-                label_state: "Kraj",
-                label_phone: "Telefon",
-                label_email: "Email",
-                label_notes: "Poznámky",
-                label_locker_img: "Screenshot Locker / Potvrzení",
-                hint_locker: "Při použití InPost uveďte potvrzení rezervace",
-                tos_title: "Obchodní Podmínky a Escrow Protokol",
-                submit_order: "Odeslat Objednávku",
-                your_cart: "Váš Košík",
-                cart_empty: "Košík je prázdný",
-                checkout: "K Pokladně",
-                tracking_title: "Sledování Zásilky",
-                tracking_desc: "Zadejte sledovací číslo pro kontrolu stavu doručení.",
-                tracking_placeholder: "Sledovací číslo...",
-                track_btn: "Sledovat",
-                contact_support: "Kontaktovat @shadeplug",
-                origin_cz: "Odesláno z CZ",
-                origin_ita: "Odesláno z ITA",
-                safe_reship: "100% Bezpečné/Reship",
-                ships_48h: "Odeslání do 48h",
-                carriers: "Dopravci",
-                select_tier: "Vyberte Množství",
-                add_to_cart: "Přidat do Košíku",
-                europe_express: "Evropa Express (24-48h)",
-                worldwide: "Mezinárodní (72h)",
-                payment_crypto: "Crypto (BTC/LTC)",
-                payment_revolut: "Revolut",
-                payment_paypal: "PayPal",
-                payment_escrow: "Ověřený Escrow",
-                fee_free: "0% Poplatek",
-                fee_10: "+10% Poplatek",
-                from: "Od"
+                submit_order: "Odeslat @shadeplug"
             },
             ru: {
-                select_language: "Выбрать Язык",
+                select_language: "Выбрать язык",
                 tab_shop: "Магазин",
                 tab_cart: "Корзина",
-                tab_tracking: "Отслеживание",
-                cart_empty_title: "Ваша корзина пуста",
-                cart_empty_desc: "Добавьте товары чтобы начать",
-                order_summary: "📋 Сводка Заказа",
-                subtotal: "Подытог",
-                shipping: "Доставка",
-                payment_fee: "Комиссия",
                 total: "Итого",
-                shipping_method: "🚚 Способ Доставки",
-                payment_method: "💳 Способ Оплаты",
-                shipping_details: "📍 Детали Доставки",
-                label_name: "Имя и Фамилия",
-                label_address: "Полный Адрес",
-                label_locker: "Tabaccheria / Locker",
-                label_city: "Город",
-                label_postal: "Почтовый Индекс",
-                label_state: "Область",
-                label_phone: "Телефон",
-                label_email: "Email",
-                label_notes: "Дополнительные Примечания",
-                label_locker_img: "Скриншот Locker / Подтверждение",
-                hint_locker: "При использовании InPost укажите подтверждение бронирования",
-                tos_title: "Условия Покупки и Протокол Escrow",
-                submit_order: "Отправить Заказ Оператору",
-                your_cart: "Ваша Корзина",
-                cart_empty: "Корзина пуста",
-                checkout: "Оформить Заказ",
-                tracking_title: "Отслеживание Заказа",
-                tracking_desc: "Введите номер отслеживания для проверки статуса доставки.",
-                tracking_placeholder: "Номер отслеживания...",
-                track_btn: "Отследить",
-                contact_support: "Связаться с @shadeplug",
-                origin_cz: "Отправка из CZ",
-                origin_ita: "Отправка из ITA",
-                safe_reship: "100% Безопасно/Reship",
-                ships_48h: "Отправка за 48ч",
-                carriers: "Перевозчики",
-                select_tier: "Выберите Количество",
-                add_to_cart: "Добавить в Корзину",
-                europe_express: "Европа Экспресс (24-48ч)",
-                worldwide: "Международная (72ч)",
-                payment_crypto: "Crypto (BTC/LTC)",
-                payment_revolut: "Revolut",
-                payment_paypal: "PayPal",
-                payment_escrow: "Верифицированный Escrow",
-                fee_free: "0% Комиссия",
-                fee_10: "+10% Комиссия",
-                from: "От"
+                submit_order: "Отправить @shadeplug"
             }
         };
 
-        // Products Data (with 20% markup applied)
+        // Products with 20% markup
         const products = [
-            {
-                id: 1,
-                name: "Cali Cryo 🌿",
-                origin: "CZ",
-                shipping: 30,
-                safe: true,
-                carriers: "GLS/UPS/BRT",
-                image: "https://i.imgur.com/XZHzDvT.jpg",
-                tiers: [
-                    { amount: "500g", price: 2100 },
-                    { amount: "1000g", price: 3600 },
-                    { amount: "5000g", price: 15600 }
-                ]
-            },
-            {
-                id: 2,
-                name: "Cali Sour Lifter 🌿",
-                origin: "CZ",
-                shipping: 24,
-                safe: true,
-                carriers: "GLS/UPS/BRT",
-                tiers: [
-                    { amount: "100g", price: 420 },
-                    { amount: "200g", price: 720 },
-                    { amount: "500g", price: 1320 },
-                    { amount: "1000g", price: 2400 }
-                ]
-            },
-            {
-                id: 3,
-                name: "Cali Sweet Burger 🌿",
-                origin: "CZ",
-                shipping: 24,
-                safe: true,
-                carriers: "GLS/UPS/BRT",
-                tiers: [
-                    { amount: "100g", price: 480 },
-                    { amount: "300g", price: 1380 },
-                    { amount: "500g", price: 1680 },
-                    { amount: "1000g", price: 3600 }
-                ]
-            },
-            {
-                id: 4,
-                name: "Cali Gelato 🌿",
-                origin: "CZ",
-                shipping: 30,
-                safe: true,
-                carriers: "GLS/UPS/BRT",
-                tiers: [
-                    { amount: "1000g", price: 2400 }
-                ]
-            },
-            {
-                id: 5,
-                name: "Dry Frozen Sift Top 🍫",
-                origin: "ITA",
-                shipping: 12,
-                image: "https://i.imgur.com/rxOoCaf.jpg",
-                tiers: [
-                    { amount: "50g", price: 420 },
-                    { amount: "100g", price: 720 },
-                    { amount: "250g", price: 1650 },
-                    { amount: "500g", price: 3000 },
-                    { amount: "1000g", price: 4800 }
-                ]
-            },
-            {
-                id: 6,
-                name: "Cali Lemon Pop 🌿",
-                origin: "ITA",
-                shipping: 12,
-                tiers: [
-                    { amount: "25g", price: 150 },
-                    { amount: "50g", price: 240 },
-                    { amount: "100g", price: 396 },
-                    { amount: "250g", price: 930 },
-                    { amount: "500g", price: 1800 },
-                    { amount: "1000g", price: 3360 }
-                ]
-            },
-            {
-                id: 7,
-                name: "Cali Spain Amnesia 🌿",
-                origin: "ITA",
-                shipping: 12,
-                image: "https://i.imgur.com/lpcEt39.jpg",
-                tiers: [
-                    { amount: "25g", price: 180 },
-                    { amount: "50g", price: 300 },
-                    { amount: "100g", price: 480 },
-                    { amount: "250g", price: 1140 },
-                    { amount: "500g", price: 2040 },
-                    { amount: "1000g", price: 3720 }
-                ]
-            },
-            {
-                id: 8,
-                name: "MC Kennaiii 🍄",
-                origin: "ITA",
-                shipping: 12,
-                image: "https://i.imgur.com/fq1uFFm.jpg",
-                tiers: [
-                    { amount: "5g", price: 72 },
-                    { amount: "10g", price: 108 }
-                ]
-            },
-            {
-                id: 9,
-                name: "Dry Mimosa 🍫",
-                origin: "CZ",
-                shipping: 24,
-                safe: true,
-                image: "https://i.imgur.com/xQoPEbC.jpg",
-                tiers: [
-                    { amount: "100g", price: 456 },
-                    { amount: "200g", price: 864 },
-                    { amount: "500g", price: 1800 },
-                    { amount: "1000g", price: 3120 }
-                ]
-            },
-            {
-                id: 10,
-                name: "Vape THC 🚬",
-                origin: "CZ",
-                shipping: 30,
-                safe: true,
-                tiers: [
-                    { amount: "10pcs", price: 300 },
-                    { amount: "50pcs", price: 1200 },
-                    { amount: "100pcs", price: 1920 }
-                ]
-            },
-            {
-                id: 11,
-                name: "Cali Purple USA 🌿",
-                origin: "ITA",
-                shipping: 12,
-                tiers: [
-                    { amount: "25g", price: 224.40 },
-                    { amount: "50g", price: 420 },
-                    { amount: "100g", price: 720 },
-                    { amount: "250g", price: 1650 },
-                    { amount: "500g", price: 3000 },
-                    { amount: "1000g", price: 4800 }
-                ]
-            },
-            {
-                id: 12,
-                name: "Cali Critical Berry 🌿",
-                origin: "ITA",
-                shipping: 12,
-                tiers: [
-                    { amount: "25g", price: 150 },
-                    { amount: "50g", price: 240 },
-                    { amount: "100g", price: 396 },
-                    { amount: "250g", price: 930 },
-                    { amount: "500g", price: 1800 },
-                    { amount: "1000g", price: 3360 }
-                ]
-            },
-            {
-                id: 13,
-                name: "Cali Cherry 🌿",
-                origin: "CZ",
-                shipping: 30,
-                safe: true,
-                tiers: [
-                    { amount: "500g", price: 1440 },
-                    { amount: "1000g", price: 2400 },
-                    { amount: "5000g", price: 10800 }
-                ]
-            },
-            {
-                id: 14,
-                name: "Dry 🍫",
-                origin: "CZ",
-                shipping: 30,
-                safe: true,
-                tiers: [
-                    { amount: "1000g", price: 3480 }
-                ]
-            },
-            {
-                id: 15,
-                name: "Cali Fruit Joy 🌿",
-                origin: "CZ",
-                shipping: 30,
-                safe: true,
-                tiers: [
-                    { amount: "500g", price: 1800 },
-                    { amount: "1000g", price: 3000 },
-                    { amount: "5000g", price: 13200 }
-                ]
-            },
-            {
-                id: 16,
-                name: "Dry Frozen Top 🍫",
-                origin: "CZ",
-                shipping: 30,
-                safe: true,
-                image: "https://i.imgur.com/q3bnCcp.jpg",
-                tiers: [
-                    { amount: "1000g", price: 3960 }
-                ]
-            },
-            {
-                id: 17,
-                name: "Cali Spain Mimosa 🌿",
-                origin: "ITA",
-                shipping: 12,
-                tiers: [
-                    { amount: "25g", price: 194.40 },
-                    { amount: "50g", price: 360 },
-                    { amount: "100g", price: 600 },
-                    { amount: "250g", price: 1350 },
-                    { amount: "500g", price: 2520 },
-                    { amount: "1000g", price: 4560 }
-                ]
-            },
-            {
-                id: 18,
-                name: "Dry Biscotti Spagna 🍫",
-                origin: "ITA",
-                shipping: 12,
-                tiers: [
-                    { amount: "25g", price: 150 },
-                    { amount: "50g", price: 276 },
-                    { amount: "100g", price: 480 },
-                    { amount: "250g", price: 1140 },
-                    { amount: "500g", price: 2160 },
-                    { amount: "1000g", price: 3960 }
-                ]
-            }
+            { id: 1, name: "Cali Cryo 🌿", origin: "CZ", shipping: 30, safe: true, image: "https://i.imgur.com/XZHzDvT.jpg", tiers: [{amount: "500g", price: 2100}, {amount: "1000g", price: 3600}, {amount: "5000g", price: 15600}] },
+            { id: 2, name: "Cali Sour Lifter 🌿", origin: "CZ", shipping: 24, safe: true, tiers: [{amount: "100g", price: 420}, {amount: "200g", price: 720}, {amount: "500g", price: 1320}, {amount: "1000g", price: 2400}] },
+            { id: 3, name: "Cali Sweet Burger 🌿", origin: "CZ", shipping: 24, safe: true, tiers: [{amount: "100g", price: 480}, {amount: "300g", price: 1380}, {amount: "500g", price: 1680}, {amount: "1000g", price: 3600}] },
+            { id: 4, name: "Cali Gelato 🌿", origin: "CZ", shipping: 30, safe: true, tiers: [{amount: "1000g", price: 2400}] },
+            { id: 5, name: "Dry Frozen Sift Top 🍫", origin: "ITA", shipping: 12, image: "https://i.imgur.com/rxOoCaf.jpg", tiers: [{amount: "50g", price: 420}, {amount: "100g", price: 720}, {amount: "250g", price: 1650}, {amount: "500g", price: 3000}, {amount: "1000g", price: 4800}] },
+            { id: 6, name: "Cali Lemon Pop 🌿", origin: "ITA", shipping: 12, tiers: [{amount: "25g", price: 150}, {amount: "50g", price: 240}, {amount: "100g", price: 396}, {amount: "250g", price: 930}, {amount: "500g", price: 1800}, {amount: "1000g", price: 3360}] },
+            { id: 7, name: "Cali Spain Amnesia 🌿", origin: "ITA", shipping: 12, image: "https://i.imgur.com/lpcEt39.jpg", tiers: [{amount: "25g", price: 180}, {amount: "50g", price: 300}, {amount: "100g", price: 480}, {amount: "250g", price: 1140}, {amount: "500g", price: 2040}, {amount: "1000g", price: 3720}] },
+            { id: 8, name: "MC Kennaiii 🍄", origin: "ITA", shipping: 12, image: "https://i.imgur.com/fq1uFFm.jpg", tiers: [{amount: "5g", price: 72}, {amount: "10g", price: 108}] },
+            { id: 9, name: "Dry Mimosa 🍫", origin: "CZ", shipping: 24, safe: true, image: "https://i.imgur.com/xQoPEbC.jpg", tiers: [{amount: "100g", price: 456}, {amount: "200g", price: 864}, {amount: "500g", price: 1800}, {amount: "1000g", price: 3120}] },
+            { id: 10, name: "Vape THC 🚬", origin: "CZ", shipping: 30, safe: true, tiers: [{amount: "10pcs", price: 300}, {amount: "50pcs", price: 1200}, {amount: "100pcs", price: 1920}] },
+            { id: 11, name: "Cali Purple USA 🌿", origin: "ITA", shipping: 12, tiers: [{amount: "25g", price: 224.40}, {amount: "50g", price: 420}, {amount: "100g", price: 720}, {amount: "250g", price: 1650}, {amount: "500g", price: 3000}, {amount: "1000g", price: 4800}] },
+            { id: 12, name: "Cali Critical Berry 🌿", origin: "ITA", shipping: 12, tiers: [{amount: "25g", price: 150}, {amount: "50g", price: 240}, {amount: "100g", price: 396}, {amount: "250g", price: 930}, {amount: "500g", price: 1800}, {amount: "1000g", price: 3360}] },
+            { id: 13, name: "Cali Cherry 🌿", origin: "CZ", shipping: 30, safe: true, tiers: [{amount: "500g", price: 1440}, {amount: "1000g", price: 2400}, {amount: "5000g", price: 10800}] },
+            { id: 14, name: "Dry 🍫", origin: "CZ", shipping: 30, safe: true, tiers: [{amount: "1000g", price: 3480}] },
+            { id: 15, name: "Cali Fruit Joy 🌿", origin: "CZ", shipping: 30, safe: true, tiers: [{amount: "500g", price: 1800}, {amount: "1000g", price: 3000}, {amount: "5000g", price: 13200}] },
+            { id: 16, name: "Dry Frozen Top 🍫", origin: "CZ", shipping: 30, safe: true, image: "https://i.imgur.com/q3bnCcp.jpg", tiers: [{amount: "1000g", price: 3960}] },
+            { id: 17, name: "Cali Spain Mimosa 🌿", origin: "ITA", shipping: 12, tiers: [{amount: "25g", price: 194.40}, {amount: "50g", price: 360}, {amount: "100g", price: 600}, {amount: "250g", price: 1350}, {amount: "500g", price: 2520}, {amount: "1000g", price: 4560}] },
+            { id: 18, name: "Dry Biscotti Spagna 🍫", origin: "ITA", shipping: 12, tiers: [{amount: "25g", price: 150}, {amount: "50g", price: 276}, {amount: "100g", price: 480}, {amount: "250g", price: 1140}, {amount: "500g", price: 2160}, {amount: "1000g", price: 3960}] }
         ];
 
-        // Initialize
+        function t(key) {
+            return translations[state.lang]?.[key] || translations.en[key] || key;
+        }
+
         function init() {
-            renderLanguageModal();
+            renderLangModal();
             renderProducts();
             updateCartUI();
-            setupEventListeners();
         }
 
-        function t(key) {
-            return translations[state.lang][key] || key;
-        }
-
-        function renderLanguageModal() {
+        function renderLangModal() {
             const langs = [
-                { code: 'en', name: 'English', flag: '🇬🇧' },
-                { code: 'it', name: 'Italiano', flag: '🇮🇹' },
-                { code: 'fr', name: 'Français', flag: '🇫🇷' },
-                { code: 'es', name: 'Español', flag: '🇪🇸' },
-                { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-                { code: 'cs', name: 'Čeština', flag: '🇨🇿' },
-                { code: 'ru', name: 'Русский', flag: '🇷🇺' }
+                {code: 'en', name: 'English', flag: '🇬🇧'},
+                {code: 'it', name: 'Italiano', flag: '🇮🇹'},
+                {code: 'fr', name: 'Français', flag: '🇫🇷'},
+                {code: 'es', name: 'Español', flag: '🇪🇸'},
+                {code: 'de', name: 'Deutsch', flag: '🇩🇪'},
+                {code: 'cs', name: 'Čeština', flag: '🇨🇿'},
+                {code: 'ru', name: 'Русский', flag: '🇷🇺'}
             ];
-
-            const grid = document.getElementById('langGrid');
-            grid.innerHTML = langs.map(lang => `
-                <div class="lang-option ${state.lang === lang.code ? 'active' : ''}" onclick="setLanguage('${lang.code}')">
-                    <span class="lang-flag">${lang.flag}</span>
-                    <div class="lang-name">${lang.name}</div>
-                    <div class="lang-code">${lang.code.toUpperCase()}</div>
+            
+            document.getElementById('langGrid').innerHTML = langs.map(l => `
+                <div class="lang-option ${state.lang === l.code ? 'active' : ''}" onclick="setLang('${l.code}')">
+                    <span class="lang-flag">${l.flag}</span>
+                    <div class="lang-name">${l.name}</div>
                 </div>
             `).join('');
         }
 
-        function setLanguage(code) {
+        function setLang(code) {
             state.lang = code;
-            renderLanguageModal();
-            updateTranslations();
-            renderProducts();
-            updateCartUI();
-            toggleLanguageModal();
-        }
-
-        function updateTranslations() {
+            renderLangModal();
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[state.lang][key]) {
-                    el.textContent = translations[state.lang][key];
-                }
+                if (translations[code]?.[key]) el.textContent = translations[code][key];
             });
-            
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-i18n-placeholder');
-                if (translations[state.lang][key]) {
-                    el.placeholder = translations[state.lang][key];
-                }
-            });
+            toggleLanguageModal();
+            renderProducts();
         }
 
         function toggleLanguageModal() {
             document.getElementById('langModal').classList.toggle('active');
         }
 
-        function switchView(viewName) {
+        function switchView(view) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-            
-            document.getElementById(viewName + 'View').classList.add('active');
-            document.querySelector(`[data-view="${viewName}"]`).classList.add('active');
-            
-            if (viewName === 'cart') {
-                renderCheckout();
-            }
+            document.getElementById(view + 'View').classList.add('active');
+            document.querySelector(`[data-view="${view}"]`).classList.add('active');
+            if (view === 'cart') renderCheckout();
         }
 
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
-            grid.innerHTML = products.map(product => {
-                const originClass = product.origin === 'CZ' ? 'badge-cz' : 'badge-ita';
-                const originText = product.origin === 'CZ' ? t('origin_cz') : t('origin_ita');
-                const safeBadge = product.safe ? `<span style="background: rgba(16, 185, 129, 0.2); color: var(--accent-green); padding: 2px 8px; border-radius: 12px; font-size: 10px; margin-left: 8px;">${t('safe_reship')}</span>` : '';
+            grid.innerHTML = products.map(p => {
+                const originBadge = p.origin === 'CZ' ? 'badge-cz' : 'badge-ita';
+                const safeBadge = p.safe ? `<div class="safe-badge">✓ ${t('safe_reship')}</div>` : '';
                 
-                const tiersHtml = product.tiers.map((tier, idx) => `
-                    <button class="tier-btn" onclick="selectTier(${product.id}, ${idx}, this)">
-                        ${tier.amount}
-                        <span class="price">€${tier.price.toLocaleString()}</span>
+                const tiers = p.tiers.map((t, i) => `
+                    <button class="tier-btn" onclick="selectTier(${p.id}, ${i}, this)">
+                        ${t.amount}
+                        <span class="price">€${t.price.toLocaleString()}</span>
                     </button>
                 `).join('');
 
+                // Image with robust fallback
+                const imgUrl = p.image || '';
+                const fallbackGradient = `linear-gradient(135deg, #1a1f2e, #0f1419)`;
+                
                 return `
                     <div class="product-card">
-                        <div class="product-image" style="position: relative;">
-                            <img src="${product.image || 'https://via.placeholder.com/400x300/161C2C/3B82F6?text=Shade+Plug'}" 
-                                 alt="${product.name}"
-                                 onerror="this.src='https://via.placeholder.com/400x300/161C2C/3B82F6?text=Shade+Plug'">
-                            <span class="product-badge ${originClass}">${originText}</span>
+                        <div class="product-image" style="background: ${fallbackGradient};">
+                            ${imgUrl ? `
+                                <img src="${imgUrl}" 
+                                     alt="${p.name}" 
+                                     onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\\'image-fallback\\'>${p.name}</div>'"
+                                     style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;">
+                            ` : `<div class="image-fallback">${p.name}</div>`}
+                            <span class="product-badge ${originBadge}">${p.origin}</span>
                             ${safeBadge}
                         </div>
                         <div class="product-info">
                             <div class="product-header">
-                                <div class="product-title">${product.name}</div>
-                            </div>
-                            <div class="product-desc">
-                                ${product.carriers ? t('carriers') + ': ' + product.carriers + ' • ' : ''}
-                                ${product.safe ? t('ships_48h') : ''}
+                                <div class="product-title">${p.name}</div>
                             </div>
                             <div class="product-meta">
-                                <div class="meta-item">
-                                    <span>🚚</span>
-                                    <span>€${product.shipping}</span>
-                                </div>
+                                <div class="meta-item">🚚 €${p.shipping}</div>
                             </div>
                             <div class="tier-selector">
                                 <div class="tier-label">${t('select_tier')}</div>
-                                <div class="tier-options" id="tiers-${product.id}">
-                                    ${tiersHtml}
-                                </div>
+                                <div class="tier-options">${tiers}</div>
                             </div>
-                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})" id="btn-${product.id}" disabled>
+                            <button class="add-to-cart-btn" id="btn-${p.id}" onclick="addToCart(${p.id})" disabled>
                                 ${t('add_to_cart')}
                             </button>
                         </div>
@@ -2023,128 +1657,91 @@
             }).join('');
         }
 
-        function selectTier(productId, tierIndex, btn) {
-            // Remove selected from all tiers in this product
-            document.querySelectorAll(`#tiers-${productId} .tier-btn`).forEach(b => b.classList.remove('selected'));
+        function selectTier(pid, idx, btn) {
+            document.querySelectorAll(`#btn-${pid}`).forEach(b => {
+                b.dataset.tier = idx;
+                b.disabled = false;
+            });
+            btn.parentElement.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
-            
-            // Enable add to cart button
-            const addBtn = document.getElementById(`btn-${productId}`);
-            addBtn.disabled = false;
-            addBtn.dataset.tier = tierIndex;
         }
 
-        function addToCart(productId) {
-            const btn = document.getElementById(`btn-${productId}`);
-            const tierIndex = parseInt(btn.dataset.tier);
-            const product = products.find(p => p.id === productId);
-            const tier = product.tiers[tierIndex];
-
-            const existingItem = state.cart.find(item => item.id === productId && item.tierIndex === tierIndex);
+        function addToCart(pid) {
+            const btn = document.getElementById(`btn-${pid}`);
+            const tierIdx = parseInt(btn.dataset.tier || 0);
+            const p = products.find(x => x.id === pid);
+            const tier = p.tiers[tierIdx];
             
-            if (existingItem) {
-                existingItem.quantity++;
+            const existing = state.cart.find(i => i.id === pid && i.tierIdx === tierIdx);
+            if (existing) {
+                existing.qty++;
             } else {
-                state.cart.push({
-                    id: productId,
-                    name: product.name,
-                    tierIndex: tierIndex,
-                    amount: tier.amount,
-                    price: tier.price,
-                    shipping: product.shipping,
-                    origin: product.origin,
-                    quantity: 1
-                });
+                state.cart.push({id: pid, name: p.name, tierIdx, amount: tier.amount, price: tier.price, shipping: p.shipping, origin: p.origin, qty: 1});
             }
-
-            updateCartUI();
             
-            // Visual feedback
-            btn.textContent = '✓ Added';
+            btn.classList.add('added');
+            btn.innerHTML = '✓ Added';
             setTimeout(() => {
-                btn.textContent = t('add_to_cart');
+                btn.classList.remove('added');
+                btn.innerHTML = t('add_to_cart');
             }, 1000);
+            
+            updateCartUI();
         }
 
-        function removeFromCart(index) {
-            state.cart.splice(index, 1);
+        function removeFromCart(idx) {
+            state.cart.splice(idx, 1);
             updateCartUI();
         }
 
         function updateCartUI() {
-            const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+            const total = state.cart.reduce((s, i) => s + i.qty, 0);
+            const countEl = document.getElementById('cartCount');
+            const navCount = document.getElementById('navCartCount');
             
-            // Update badges
-            const cartCount = document.getElementById('cartCount');
-            const navCartCount = document.getElementById('navCartCount');
-            
-            if (totalItems > 0) {
-                cartCount.style.display = 'flex';
-                cartCount.textContent = totalItems;
-                navCartCount.style.display = 'flex';
-                navCartCount.textContent = totalItems;
+            if (total > 0) {
+                countEl.style.display = 'flex';
+                countEl.textContent = total;
+                navCount.style.display = 'flex';
+                navCount.textContent = total;
             } else {
-                cartCount.style.display = 'none';
-                navCartCount.style.display = 'none';
+                countEl.style.display = 'none';
+                navCount.style.display = 'none';
             }
 
-            // Update drawer
-            const drawerItems = document.getElementById('drawerCartItems');
-            const drawerFooter = document.getElementById('drawerFooter');
+            // Drawer
+            const drawer = document.getElementById('drawerCartItems');
+            const footer = document.getElementById('drawerFooter');
             
             if (state.cart.length === 0) {
-                drawerItems.innerHTML = `
-                    <div class="empty-state" style="padding: 40px 20px;">
-                        <div class="empty-icon">🛒</div>
-                        <div class="empty-title">${t('cart_empty')}</div>
-                    </div>
-                `;
-                drawerFooter.style.display = 'none';
+                drawer.innerHTML = `<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">${t('cart_empty')}</div></div>`;
+                footer.style.display = 'none';
             } else {
-                drawerItems.innerHTML = state.cart.map((item, idx) => `
+                drawer.innerHTML = state.cart.map((it, idx) => `
                     <div class="cart-item">
-                        <img src="${products.find(p => p.id === item.id).image || ''}" class="cart-item-image" onerror="this.style.display='none'">
+                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #1a1f2e, #0f1419); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+                            ${it.name.includes('🍄') ? '🍄' : it.name.includes('🍫') ? '🍫' : '🌿'}
+                        </div>
                         <div class="cart-item-details">
-                            <div class="cart-item-title">${item.name}</div>
-                            <div class="cart-item-variant">${item.amount} × ${item.quantity}</div>
-                            <div class="cart-item-price">€${(item.price * item.quantity).toLocaleString()}</div>
+                            <div class="cart-item-title">${it.name}</div>
+                            <div class="cart-item-variant">${it.amount} × ${it.qty}</div>
+                            <div class="cart-item-price">€${(it.price * it.qty).toLocaleString()}</div>
                         </div>
                         <button class="cart-item-remove" onclick="removeFromCart(${idx})">🗑</button>
                     </div>
                 `).join('');
                 
-                const total = calculateTotal();
-                document.getElementById('drawerTotal').textContent = `€${total.toLocaleString()}`;
-                drawerFooter.style.display = 'block';
-            }
-
-            // Update checkout view if active
-            if (document.getElementById('cartView').classList.contains('active')) {
-                renderCheckout();
+                const tot = calculateTotal();
+                document.getElementById('drawerTotal').textContent = `€${tot.toLocaleString()}`;
+                footer.style.display = 'block';
             }
         }
 
         function calculateTotal() {
-            const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            // Calculate shipping (max shipping cost from items)
-            const shippingCosts = state.cart.map(item => {
-                if (state.shipping === 'eu') {
-                    return item.shipping;
-                } else {
-                    // International shipping is 1.5x for CZ, 2x for ITA
-                    return item.origin === 'CZ' ? item.shipping * 1.5 : item.shipping * 2;
-                }
-            });
-            const shipping = shippingCosts.length > 0 ? Math.max(...shippingCosts) : 0;
-            
-            // Payment fee
-            let fee = 0;
-            if (state.payment !== 'crypto') {
-                fee = subtotal * 0.10;
-            }
-            
-            return subtotal + shipping + fee;
+            const sub = state.cart.reduce((s, i) => s + (i.price * i.qty), 0);
+            const shipping = state.cart.length ? Math.max(...state.cart.map(i => state.shipping === 'eu' ? i.shipping : i.origin === 'CZ' ? i.shipping * 1.5 : i.shipping * 2)) : 0;
+            const fee = state.payment === 'crypto' ? 0 : sub * 0.10;
+            return sub + shipping + fee;
         }
 
         function toggleCart() {
@@ -2152,86 +1749,69 @@
         }
 
         function renderCheckout() {
-            const container = document.getElementById('cartContent');
+            const hasItems = state.cart.length > 0;
+            document.getElementById('emptyCart').style.display = hasItems ? 'none' : 'block';
+            document.getElementById('checkoutContainer').style.display = hasItems ? 'block' : 'none';
             
-            if (state.cart.length === 0) {
-                document.getElementById('emptyCart').style.display = 'block';
-                document.getElementById('checkoutContainer').style.display = 'none';
-                return;
-            }
-            
-            document.getElementById('emptyCart').style.display = 'none';
-            document.getElementById('checkoutContainer').style.display = 'block';
+            if (!hasItems) return;
 
-            // Render cart items list
-            const itemsList = document.getElementById('cartItemsList');
-            itemsList.innerHTML = state.cart.map(item => `
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color);">
+            // Items
+            document.getElementById('cartItemsList').innerHTML = state.cart.map(it => `
+                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
                     <div>
-                        <div style="font-weight: 600;">${item.name}</div>
-                        <div style="font-size: 13px; color: var(--text-secondary);">${item.amount} × ${item.quantity}</div>
+                        <div style="font-weight: 600;">${it.name}</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">${it.amount} × ${it.qty}</div>
                     </div>
-                    <div style="font-weight: 700; color: var(--accent-green);">€${(item.price * item.quantity).toLocaleString()}</div>
+                    <div style="font-weight: 700; color: var(--accent-gold);">€${(it.price * it.qty).toLocaleString()}</div>
                 </div>
             `).join('');
 
-            // Calculate and display totals
-            const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            // Shipping options
+            const shipCost = state.cart.length ? Math.max(...state.cart.map(i => i.shipping)) : 0;
+            const wwCost = state.cart.length ? Math.max(...state.cart.map(i => i.origin === 'CZ' ? i.shipping * 1.5 : i.shipping * 2)) : 0;
             
-            // Determine shipping options based on cart contents
-            const hasCZ = state.cart.some(item => item.origin === 'CZ');
-            const hasITA = state.cart.some(item => item.origin === 'ITA');
-            
-            // Render shipping options
-            const shippingOptions = document.getElementById('shippingOptions');
-            const euPrice = Math.max(...state.cart.map(i => i.shipping));
-            const wwPrice = Math.max(...state.cart.map(i => i.origin === 'CZ' ? i.shipping * 1.5 : i.shipping * 2));
-            
-            shippingOptions.innerHTML = `
-                <div class="shipping-card ${state.shipping === 'eu' ? 'selected' : ''}" onclick="setShipping('eu')">
-                    <div class="shipping-info">
+            document.getElementById('shippingOptions').innerHTML = `
+                <div class="option-card ${state.shipping === 'eu' ? 'selected' : ''}" onclick="setShipping('eu')">
+                    <div class="option-info">
                         <h4>${t('europe_express')}</h4>
-                        <p>24-48h delivery window</p>
+                        <p>24-48h delivery</p>
                     </div>
-                    <div class="shipping-price">€${euPrice}</div>
+                    <div class="option-price">€${shipCost}</div>
                 </div>
-                <div class="shipping-card ${state.shipping === 'ww' ? 'selected' : ''}" onclick="setShipping('ww')">
-                    <div class="shipping-info">
+                <div class="option-card ${state.shipping === 'ww' ? 'selected' : ''}" onclick="setShipping('ww')">
+                    <div class="option-info">
                         <h4>${t('worldwide')}</h4>
-                        <p>72h international delivery</p>
+                        <p>72h delivery</p>
                     </div>
-                    <div class="shipping-price">€${wwPrice}</div>
+                    <div class="option-price">€${wwCost}</div>
                 </div>
             `;
 
-            // Render payment options
-            const paymentOptions = document.getElementById('paymentOptions');
-            const feePercent = state.payment === 'crypto' ? 0 : 0.10;
-            const feeAmount = subtotal * feePercent;
-            
-            paymentOptions.innerHTML = [
-                { id: 'crypto', name: t('payment_crypto'), fee: t('fee_free'), icon: '₿' },
-                { id: 'revolut', name: t('payment_revolut'), fee: t('fee_10'), icon: '💳' },
-                { id: 'paypal', name: t('payment_paypal'), fee: t('fee_10'), icon: '💰' },
-                { id: 'escrow', name: t('payment_escrow'), fee: t('fee_10'), icon: '🔒' }
-            ].map(pay => `
-                <div class="payment-card ${state.payment === pay.id ? 'selected' : ''}" onclick="setPayment('${pay.id}')">
-                    <div class="payment-icon">${pay.icon}</div>
-                    <div class="payment-details">
-                        <h4>${pay.name}</h4>
-                        <p>${pay.fee}</p>
+            // Payment
+            const sub = state.cart.reduce((s, i) => s + (i.price * i.qty), 0);
+            document.getElementById('paymentOptions').innerHTML = [
+                {id: 'crypto', name: t('payment_crypto'), fee: t('fee_free')},
+                {id: 'revolut', name: t('payment_revolut'), fee: t('fee_10')},
+                {id: 'paypal', name: t('payment_paypal'), fee: t('fee_10')},
+                {id: 'escrow', name: t('payment_escrow'), fee: t('fee_10')}
+            ].map(p => `
+                <div class="option-card ${state.payment === p.id ? 'selected' : ''}" onclick="setPayment('${p.id}')">
+                    <div class="option-info">
+                        <h4>${p.name}</h4>
+                        <p>${p.id === 'crypto' ? 'Bitcoin/Litecoin' : 'Fiat Payment'}</p>
                     </div>
-                    ${pay.id !== 'crypto' ? '<span class="payment-fee charge">+10%</span>' : '<span class="payment-fee">0%</span>'}
+                    <span class="fee-badge ${p.id === 'crypto' ? 'fee-free' : 'fee-charge'}">${p.fee}</span>
                 </div>
             `).join('');
 
-            // Update summary
-            const shippingCost = state.shipping === 'eu' ? euPrice : wwPrice;
-            const total = subtotal + shippingCost + feeAmount;
+            // Totals
+            const shipping = state.shipping === 'eu' ? shipCost : wwCost;
+            const fee = state.payment === 'crypto' ? 0 : sub * 0.10;
+            const total = sub + shipping + fee;
             
-            document.getElementById('summarySubtotal').textContent = `€${subtotal.toLocaleString()}`;
-            document.getElementById('summaryShipping').textContent = `€${shippingCost.toLocaleString()}`;
-            document.getElementById('summaryFee').textContent = `€${feeAmount.toLocaleString()}`;
+            document.getElementById('summarySubtotal').textContent = `€${sub.toLocaleString()}`;
+            document.getElementById('summaryShipping').textContent = `€${shipping.toLocaleString()}`;
+            document.getElementById('summaryFee').textContent = `€${fee.toLocaleString()}`;
             document.getElementById('summaryTotal').textContent = `€${total.toLocaleString()}`;
         }
 
@@ -2246,88 +1826,59 @@
         }
 
         function toggleTOS() {
-            const content = document.getElementById('tosContent');
-            const arrow = document.getElementById('tosArrow');
-            content.classList.toggle('open');
-            arrow.textContent = content.classList.contains('open') ? '▲' : '▼';
+            const c = document.getElementById('tosContent');
+            c.classList.toggle('open');
+            document.getElementById('tosArrow').textContent = c.classList.contains('open') ? '▲' : '▼';
         }
 
         function submitOrder() {
-            // Validate form
             const fields = ['shipName', 'shipAddress', 'shipCity', 'shipPostal', 'shipPhone'];
-            const emptyFields = fields.filter(id => !document.getElementById(id).value.trim());
-            
-            if (emptyFields.length > 0) {
-                alert('Please fill in all required fields');
+            const empty = fields.filter(f => !document.getElementById(f).value.trim());
+            if (empty.length) {
+                alert('Please fill all required fields');
                 return;
             }
 
-            // Compile order text
-            const subtotal = state.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const shippingCost = state.shipping === 'eu' 
+            const sub = state.cart.reduce((s, i) => s + (i.price * i.qty), 0);
+            const ship = state.shipping === 'eu' 
                 ? Math.max(...state.cart.map(i => i.shipping))
                 : Math.max(...state.cart.map(i => i.origin === 'CZ' ? i.shipping * 1.5 : i.shipping * 2));
-            const fee = state.payment === 'crypto' ? 0 : subtotal * 0.10;
-            const total = subtotal + shippingCost + fee;
+            const fee = state.payment === 'crypto' ? 0 : sub * 0.10;
+            const total = sub + ship + fee;
 
-            let orderText = `🛒 *NEW ORDER - SHADE PLUG*\n\n`;
-            orderText += `*Products:*\n`;
-            state.cart.forEach(item => {
-                orderText += `• ${item.name} - ${item.amount} × ${item.quantity} = €${(item.price * item.quantity).toLocaleString()}\n`;
+            let text = `🛒 *NEW ORDER - SHADE PLUG*\n\n`;
+            text += `*Products:*\n`;
+            state.cart.forEach(i => {
+                text += `• ${i.name} - ${i.amount} × ${i.qty} = €${(i.price * i.qty).toLocaleString()}\n`;
             });
-            
-            orderText += `\n*Shipping:* ${state.shipping === 'eu' ? 'Europe Express (24-48h)' : 'International (72h)'}\n`;
-            orderText += `*Payment:* ${state.payment.toUpperCase()}\n`;
-            orderText += `*Subtotal:* €${subtotal.toLocaleString()}\n`;
-            orderText += `*Shipping:* €${shippingCost.toLocaleString()}\n`;
-            orderText += `*Fee:* €${fee.toLocaleString()}\n`;
-            orderText += `*TOTAL:* €${total.toLocaleString()}\n\n`;
-            
-            orderText += `*Shipping Details:*\n`;
-            orderText += `Name: ${document.getElementById('shipName').value}\n`;
-            orderText += `Address: ${document.getElementById('shipAddress').value}\n`;
-            orderText += `Locker: ${document.getElementById('shipLocker').value || 'N/A'}\n`;
-            orderText += `City: ${document.getElementById('shipCity').value}\n`;
-            orderText += `Postal: ${document.getElementById('shipPostal').value}\n`;
-            orderText += `State: ${document.getElementById('shipState').value || 'N/A'}\n`;
-            orderText += `Phone: ${document.getElementById('shipPhone').value}\n`;
-            orderText += `Email: ${document.getElementById('shipEmail').value || 'N/A'}\n`;
-            orderText += `Notes: ${document.getElementById('shipNotes').value || 'N/A'}\n`;
-            orderText += `Locker Img: ${document.getElementById('shipLockerImg').value || 'N/A'}\n\n`;
-            
-            orderText += `📱 Contact: @shadeplug`;
+            text += `\n*Shipping:* ${state.shipping === 'eu' ? 'EU 24-48h' : 'WW 72h'}\n`;
+            text += `*Payment:* ${state.payment.toUpperCase()}\n`;
+            text += `*Subtotal:* €${sub.toLocaleString()}\n`;
+            text += `*Shipping:* €${ship.toLocaleString()}\n`;
+            text += `*Fee:* €${fee.toLocaleString()}\n`;
+            text += `*TOTAL:* €${total.toLocaleString()}\n\n`;
+            text += `*Delivery Details:*\n`;
+            text += `Name: ${document.getElementById('shipName').value}\n`;
+            text += `Address: ${document.getElementById('shipAddress').value}\n`;
+            text += `City: ${document.getElementById('shipCity').value}\n`;
+            text += `Postal: ${document.getElementById('shipPostal').value}\n`;
+            text += `Phone: ${document.getElementById('shipPhone').value}\n`;
+            text += `Notes: ${document.getElementById('shipNotes').value || 'None'}\n\n`;
+            text += `📱 @shadeplug`;
 
-            // Copy to clipboard
-            navigator.clipboard.writeText(orderText).then(() => {
-                // Open Telegram
-                window.open(`https://t.me/shadeplug?text=${encodeURIComponent(orderText)}`, '_blank');
-            }).catch(() => {
-                // Fallback
-                window.open(`https://t.me/shadeplug?text=${encodeURIComponent(orderText)}`, '_blank');
+            navigator.clipboard.writeText(text).then(() => {
+                window.open(`https://t.me/shadeplug?text=${encodeURIComponent(text)}`, '_blank');
             });
         }
 
         function trackOrder() {
-            const code = document.getElementById('trackingCode').value.trim();
-            if (!code) {
-                alert('Please enter a tracking code');
-                return;
-            }
-            window.open(`https://t.me/shadeplug?text=Track my order: ${encodeURIComponent(code)}`, '_blank');
+            const code = document.getElementById('trackCode').value.trim();
+            if (!code) return alert('Enter tracking code');
+            window.open(`https://t.me/shadeplug?text=Track: ${encodeURIComponent(code)}`, '_blank');
         }
 
-        function setupEventListeners() {
-            // Close modal on backdrop click
-            document.getElementById('langModal').addEventListener('click', (e) => {
-                if (e.target === document.getElementById('langModal')) {
-                    toggleLanguageModal();
-                }
-            });
-        }
-
-        // Start
+        // Init
         init();
-        updateTranslations();
     </script>
 </body>
 </html>
