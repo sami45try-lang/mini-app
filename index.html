@@ -27,6 +27,10 @@
             --text-secondary: #a0a0a0;
         }
         
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg-primary);
@@ -34,6 +38,23 @@
             min-height: 100vh;
             padding-bottom: 100px;
             overflow-x: hidden;
+        }
+        
+        /* ===== SCROLL-RESPONSIVE HEADER ===== */
+        .header-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-container.scrolled {
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(212, 175, 55, 0.15);
         }
         
         /* Animated Background Particles */
@@ -105,19 +126,22 @@
             100% { transform: translateX(10%); }
         }
         
-        /* Enhanced Header */
+        /* Enhanced Header - Now part of scroll container */
         .header {
             background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
             padding: 20px;
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
             border-bottom: 3px solid var(--accent-gold);
             box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* New Arrivals Banner */
+        .header-container.scrolled .header {
+            padding: 10px 20px;
+            border-bottom-width: 2px;
+        }
+        
+        /* New Arrivals Banner - Hide on scroll */
         .new-arrivals-banner {
             background: linear-gradient(90deg, var(--cannabis-green), var(--cannabis-dark), var(--cannabis-green));
             background-size: 200% 100%;
@@ -133,6 +157,16 @@
             justify-content: center;
             gap: 10px;
             border-bottom: 2px solid var(--accent-gold);
+            transition: all 0.4s ease;
+            overflow: hidden;
+            height: 48px;
+        }
+        
+        .header-container.scrolled .new-arrivals-banner {
+            height: 0;
+            padding: 0;
+            opacity: 0;
+            margin: 0 -20px;
         }
         
         @keyframes shimmer {
@@ -147,6 +181,7 @@
             border-radius: 20px;
             font-size: 11px;
             animation: pulse-badge 1.5s infinite;
+            box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
         }
         
         @keyframes pulse-badge {
@@ -159,6 +194,11 @@
             position: relative;
             display: inline-block;
             padding: 20px;
+            transition: all 0.4s ease;
+        }
+        
+        .header-container.scrolled .logo-container {
+            padding: 5px;
         }
         
         .logo-glow {
@@ -171,6 +211,13 @@
             background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%);
             border-radius: 50%;
             animation: glow-pulse 3s ease-in-out infinite;
+            transition: all 0.4s ease;
+        }
+        
+        .header-container.scrolled .logo-glow {
+            width: 80px;
+            height: 80px;
+            opacity: 0.5;
         }
         
         @keyframes glow-pulse {
@@ -188,6 +235,13 @@
             border: 2px solid rgba(212, 175, 55, 0.3);
             border-radius: 50%;
             animation: ring-spin 10s linear infinite;
+            transition: all 0.4s ease;
+        }
+        
+        .header-container.scrolled .logo-ring {
+            width: 70px;
+            height: 70px;
+            opacity: 0.3;
         }
         
         .logo-ring:nth-child(2) {
@@ -196,6 +250,11 @@
             border-color: rgba(76, 175, 80, 0.2);
             animation-duration: 15s;
             animation-direction: reverse;
+        }
+        
+        .header-container.scrolled .logo-ring:nth-child(2) {
+            width: 90px;
+            height: 90px;
         }
         
         @keyframes ring-spin {
@@ -211,6 +270,12 @@
             z-index: 10;
             filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.5));
             animation: logo-float 4s ease-in-out infinite;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-container.scrolled .logo {
+            width: 50px;
+            height: 50px;
         }
         
         @keyframes logo-float {
@@ -218,12 +283,17 @@
             50% { transform: translateY(-10px); }
         }
         
-        /* Floating Icons Around Logo */
+        /* Floating Icons Around Logo - Hide on scroll */
         .floating-icon {
             position: absolute;
             font-size: 24px;
             animation: orbit 8s linear infinite;
             opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        
+        .header-container.scrolled .floating-icon {
+            opacity: 0;
         }
         
         .floating-icon:nth-child(4) { top: 10%; left: 20%; animation-delay: 0s; }
@@ -238,7 +308,7 @@
             75% { transform: translate(-10px, -10px) rotate(270deg); }
         }
         
-        /* Premium Badge */
+        /* Premium Badge - Shrink on scroll */
         .premium-badge {
             display: inline-flex;
             align-items: center;
@@ -254,6 +324,13 @@
             margin-top: 15px;
             box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
             animation: badge-shine 3s infinite;
+            transition: all 0.4s ease;
+        }
+        
+        .header-container.scrolled .premium-badge {
+            padding: 4px 12px;
+            font-size: 9px;
+            margin-top: 5px;
         }
         
         @keyframes badge-shine {
@@ -261,7 +338,7 @@
             50% { box-shadow: 0 5px 30px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.6); }
         }
         
-        /* Instagram Badge Enhanced */
+        /* Instagram Badge - Hide on scroll */
         .instagram-badge {
             display: inline-flex;
             align-items: center;
@@ -275,8 +352,16 @@
             text-decoration: none;
             color: white;
             box-shadow: 0 5px 20px rgba(225, 48, 108, 0.4);
-            transition: all 0.3s;
+            transition: all 0.4s ease;
             position: relative;
+            overflow: hidden;
+        }
+        
+        .header-container.scrolled .instagram-badge {
+            height: 0;
+            padding: 0;
+            margin: 0;
+            opacity: 0;
             overflow: hidden;
         }
         
@@ -315,7 +400,7 @@
             font-weight: 900;
         }
         
-        /* Stats Bar */
+        /* Stats Bar - Compact on scroll */
         .stats-bar {
             display: flex;
             justify-content: center;
@@ -325,10 +410,18 @@
             background: rgba(212, 175, 55, 0.1);
             border-radius: 15px;
             border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.4s ease;
+        }
+        
+        .header-container.scrolled .stats-bar {
+            margin-top: 8px;
+            padding: 8px 15px;
+            gap: 20px;
         }
         
         .stat-item {
             text-align: center;
+            transition: transform 0.3s ease;
         }
         
         .stat-number {
@@ -336,6 +429,11 @@
             font-weight: 800;
             color: var(--accent-gold);
             display: block;
+            transition: font-size 0.4s ease;
+        }
+        
+        .header-container.scrolled .stat-number {
+            font-size: 16px;
         }
         
         .stat-label {
@@ -343,6 +441,21 @@
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: font-size 0.4s ease;
+        }
+        
+        .header-container.scrolled .stat-label {
+            font-size: 9px;
+        }
+        
+        /* Spacer for fixed header */
+        .header-spacer {
+            height: 520px;
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .header-spacer.compact {
+            height: 200px;
         }
         
         /* Welcome Section */
@@ -368,15 +481,20 @@
             font-size: 16px;
         }
         
-        /* Category Filter */
+        /* Category Filter - Sticky below header */
         .category-filter {
             display: flex;
             gap: 12px;
             overflow-x: auto;
             padding: 25px 20px;
             scrollbar-width: none;
-            position: relative;
-            z-index: 5;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
         
         .category-filter::-webkit-scrollbar { display: none; }
@@ -936,7 +1054,7 @@
         .tracking-btn {
             width: 100%;
             padding: 22px;
-            background: var(--info-blue);
+            background: #0088cc;
             color: white;
             border: none;
             border-radius: 20px;
@@ -1055,6 +1173,17 @@
             transform: translateX(-50%) translateY(0);
             opacity: 1;
         }
+        
+        /* Hide on scroll utility */
+        .hide-on-scroll {
+            transition: all 0.4s ease;
+        }
+        
+        .header-container.scrolled .hide-on-scroll {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+        }
     </style>
 </head>
 <body>
@@ -1065,65 +1194,71 @@
     <!-- Toast -->
     <div class="toast" id="toast">✓ Added to cart</div>
     
-    <!-- Enhanced Header -->
-    <header class="header">
-        <!-- New Arrivals Banner -->
-        <div class="new-arrivals-banner">
-            <span>🔥</span>
-            <span>Nuovi Arrivi / New Arrivals / Nouveautés</span>
-            <span class="new-badge">NEW</span>
-            <span>🔥</span>
-        </div>
-        
-        <!-- Logo Section with Effects -->
-        <div class="logo-container">
-            <!-- Glow Effect -->
-            <div class="logo-glow"></div>
-            
-            <!-- Rotating Rings -->
-            <div class="logo-ring"></div>
-            <div class="logo-ring"></div>
-            
-            <!-- Floating Icons -->
-            <div class="floating-icon">🌿</div>
-            <div class="floating-icon">✨</div>
-            <div class="floating-icon">💨</div>
-            <div class="floating-icon">⭐</div>
-            
-            <!-- Logo -->
-            <img src="https://i.imgur.com/jNug6cl.jpeg" alt="SHADE PLUG" class="logo" onerror="this.style.display='none'">
-        </div>
-        
-        <!-- Premium Badge -->
-        <div class="premium-badge">
-            <span>👑</span>
-            <span>Premium Quality</span>
-            <span>👑</span>
-        </div>
-        
-        <!-- Stats Bar -->
-        <div class="stats-bar">
-            <div class="stat-item">
-                <span class="stat-number">18+</span>
-                <span class="stat-label">Products</span>
+    <!-- Scroll-Responsive Header Container -->
+    <div class="header-container" id="headerContainer">
+        <!-- Enhanced Header -->
+        <header class="header">
+            <!-- New Arrivals Banner -->
+            <div class="new-arrivals-banner">
+                <span>🔥</span>
+                <span>Nuovi Arrivi / New Arrivals / Nouveautés</span>
+                <span class="new-badge">NEW</span>
+                <span>🔥</span>
             </div>
-            <div class="stat-item">
-                <span class="stat-number">24h</span>
-                <span class="stat-label">Shipping</span>
+            
+            <!-- Logo Section with Effects -->
+            <div class="logo-container">
+                <!-- Glow Effect -->
+                <div class="logo-glow"></div>
+                
+                <!-- Rotating Rings -->
+                <div class="logo-ring"></div>
+                <div class="logo-ring"></div>
+                
+                <!-- Floating Icons -->
+                <div class="floating-icon">🌿</div>
+                <div class="floating-icon">✨</div>
+                <div class="floating-icon">💨</div>
+                <div class="floating-icon">⭐</div>
+                
+                <!-- Logo -->
+                <img src="https://i.imgur.com/jNug6cl.jpeg" alt="SHADE PLUG" class="logo" onerror="this.style.display='none'">
             </div>
-            <div class="stat-item">
-                <span class="stat-number">100%</span>
-                <span class="stat-label">Safe</span>
+            
+            <!-- Premium Badge -->
+            <div class="premium-badge">
+                <span>👑</span>
+                <span>Premium Quality</span>
+                <span>👑</span>
             </div>
-        </div>
-        
-        <!-- Instagram Badge -->
-        <a href="https://www.instagram.com/shade.plug" target="_blank" class="instagram-badge">
-            <span>📷</span>
-            <span>@shade.plug</span>
-            <span class="verified-icon">✓</span>
-        </a>
-    </header>
+            
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number">18+</span>
+                    <span class="stat-label">Products</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24h</span>
+                    <span class="stat-label">Shipping</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Safe</span>
+                </div>
+            </div>
+            
+            <!-- Instagram Badge -->
+            <a href="https://www.instagram.com/shade.plug" target="_blank" class="instagram-badge">
+                <span>📷</span>
+                <span>@shade.plug</span>
+                <span class="verified-icon">✓</span>
+            </a>
+        </header>
+    </div>
+    
+    <!-- Spacer for fixed header -->
+    <div class="header-spacer" id="headerSpacer"></div>
     
     <!-- Welcome Section -->
     <div class="welcome" id="welcome-section">
@@ -1131,8 +1266,8 @@
         <p id="welcome-subtitle">Premium Cannabis Shop - Quality Guaranteed</p>
     </div>
     
-    <!-- Categories -->
-    <div class="category-filter">
+    <!-- Categories - Sticky below header -->
+    <div class="category-filter" id="categoryNav">
         <button class="category-btn active" data-category="all">🏠 All</button>
         <button class="category-btn" data-category="flower">🌿 Flowers</button>
         <button class="category-btn" data-category="hash">🍫 Hash</button>
@@ -1301,6 +1436,39 @@
         tg.ready();
         tg.expand();
         
+        // ===== SCROLL-RESPONSIVE HEADER =====
+        function initScrollHeader() {
+            const headerContainer = document.getElementById('headerContainer');
+            const headerSpacer = document.getElementById('headerSpacer');
+            let lastScroll = 0;
+            let ticking = false;
+            
+            function updateHeader() {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 50) {
+                    headerContainer.classList.add('scrolled');
+                    headerSpacer.classList.add('compact');
+                } else {
+                    headerContainer.classList.remove('scrolled');
+                    headerSpacer.classList.remove('compact');
+                }
+                
+                lastScroll = currentScroll;
+                ticking = false;
+            }
+            
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(updateHeader);
+                    ticking = true;
+                }
+            }, { passive: true });
+        }
+        
+        // Initialize scroll header
+        initScrollHeader();
+        
         // Translations
         const translations = {
             en: {
@@ -1335,7 +1503,8 @@
                 origin_cz: "🇨🇿 Czech Republic",
                 origin_it: "🇮🇹 Italy",
                 reship: "100% Reship",
-                new: "NEW"
+                new: "NEW",
+                select_payment: "Select Payment"
             },
             it: {
                 welcome: "Benvenuti in SHADE PLUG",
@@ -1369,7 +1538,8 @@
                 origin_cz: "🇨🇿 Repubblica Ceca",
                 origin_it: "🇮🇹 Italia",
                 reship: "100% Reship",
-                new: "NUOVO"
+                new: "NUOVO",
+                select_payment: "Seleziona Pagamento"
             },
             fr: {
                 welcome: "Bienvenue chez SHADE PLUG",
@@ -1403,7 +1573,8 @@
                 origin_cz: "🇨🇿 République Tchèque",
                 origin_it: "🇮🇹 Italie",
                 reship: "100% Reship",
-                new: "NOUVEAU"
+                new: "NOUVEAU",
+                select_payment: "Choisir Paiement"
             },
             es: {
                 welcome: "Bienvenido a SHADE PLUG",
@@ -1437,7 +1608,8 @@
                 origin_cz: "🇨🇿 República Checa",
                 origin_it: "🇮🇹 Italia",
                 reship: "100% Reship",
-                new: "NUEVO"
+                new: "NUEVO",
+                select_payment: "Seleccionar Pago"
             },
             de: {
                 welcome: "Willkommen bei SHADE PLUG",
@@ -1471,7 +1643,8 @@
                 origin_cz: "🇨🇿 Tschechische Republik",
                 origin_it: "🇮🇹 Italien",
                 reship: "100% Reship",
-                new: "NEU"
+                new: "NEU",
+                select_payment: "Zahlung wählen"
             },
             cs: {
                 welcome: "Vítejte v SHADE PLUG",
@@ -1505,7 +1678,8 @@
                 origin_cz: "🇨🇿 Česká Republika",
                 origin_it: "🇮🇹 Itálie",
                 reship: "100% Reship",
-                new: "NOVÉ"
+                new: "NOVÉ",
+                select_payment: "Vybrat Platbu"
             },
             ru: {
                 welcome: "Добро пожаловать в SHADE PLUG",
@@ -1539,7 +1713,8 @@
                 origin_cz: "🇨🇿 Чехия",
                 origin_it: "🇮🇹 Италия",
                 reship: "100% Reship",
-                new: "НОВИНКА"
+                new: "НОВИНКА",
+                select_payment: "Выбрать Оплату"
             }
         };
         
@@ -2000,7 +2175,7 @@
                 
                 <div class="payment-section" style="margin-top: 30px;">
                     <div style="margin-bottom: 20px; text-transform: uppercase; font-weight: 700; color: var(--text-secondary);">
-                        💳 ${t.select_payment || 'Select Payment'}
+                        💳 ${t.select_payment}
                     </div>
                     <div class="payment-methods">${paymentHtml}</div>
                 </div>
@@ -2212,4 +2387,5 @@
             }
         });
     </script>
-</body
+</body>
+</html>
