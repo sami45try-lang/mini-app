@@ -1,8 +1,9 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="SHADE PLUG - Premium Cannabis Shop">
     <title>SHADE PLUG</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -11,162 +12,130 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
         }
         
         :root {
             --bg-primary: #0a0a0a;
-            --bg-secondary: #1a1a1a;
-            --bg-card: #242424;
+            --bg-secondary: #141414;
+            --bg-card: #1e1e1e;
+            --bg-hover: #2a2a2a;
             --accent: #d4af37;
             --accent-hover: #b8941f;
+            --accent-glow: rgba(212, 175, 55, 0.3);
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
+            --text-muted: #666666;
             --success: #4caf50;
             --danger: #f44336;
             --warning: #ff9800;
+            --info: #2196f3;
+        }
+        
+        @font-face {
+            font-family: 'Inter';
+            src: local('Inter'), local('SF Pro Display'), local('Roboto');
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
         }
         
         /* Header */
         .header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            padding: 20px;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            padding: 25px 20px;
             text-align: center;
-            border-bottom: 1px solid var(--accent);
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
         
         .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
         }
         
         .logo {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             object-fit: contain;
-            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+            filter: drop-shadow(0 0 30px var(--accent-glow));
+            animation: logoPulse 3s ease-in-out infinite;
         }
         
-        .brand-title {
-            font-size: 14px;
-            color: var(--accent);
-            letter-spacing: 3px;
-            text-transform: uppercase;
+        @keyframes logoPulse {
+            0%, 100% { filter: drop-shadow(0 0 20px var(--accent-glow)); }
+            50% { filter: drop-shadow(0 0 40px var(--accent-glow)); }
         }
         
         .instagram-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-top: 10px;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 15px;
             text-decoration: none;
             color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
         
-        /* Navigation */
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-secondary);
-            border-top: 1px solid #333;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 99;
+        .instagram-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(225, 48, 108, 0.4);
         }
         
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            padding: 5px 15px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 10px;
-            transition: color 0.3s;
-        }
-        
-        .nav-item.active, .nav-item:hover {
-            color: var(--accent);
-        }
-        
-        .nav-icon {
-            font-size: 20px;
-        }
-        
-        /* Floating Telegram Button */
-        .telegram-float {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: #0088cc;
+        .verified-icon {
+            background: white;
+            color: #e1306c;
             border-radius: 50%;
+            width: 16px;
+            height: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
-            z-index: 98;
-            cursor: pointer;
-            transition: transform 0.3s;
+            font-size: 10px;
         }
         
-        .telegram-float:hover {
-            transform: scale(1.1);
-        }
-        
-        .telegram-float svg {
-            width: 28px;
-            height: 28px;
-            fill: white;
-        }
-        
-        /* Content Sections */
-        .section {
-            display: none;
-            padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .section.active {
-            display: block;
-        }
-        
-        /* Welcome */
+        /* Welcome Section */
         .welcome {
             text-align: center;
             padding: 30px 20px;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-            border-radius: 15px;
-            margin: 20px;
-            border: 1px solid #333;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
         
         .welcome h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 22px;
+            margin-bottom: 8px;
             color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 1px;
         }
         
         .welcome p {
@@ -179,65 +148,112 @@
             display: flex;
             gap: 10px;
             overflow-x: auto;
-            padding: 15px 20px;
+            padding: 20px;
             -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        
+        .category-filter::-webkit-scrollbar {
+            display: none;
         }
         
         .category-btn {
             flex-shrink: 0;
-            padding: 10px 20px;
+            padding: 12px 24px;
             background: var(--bg-card);
             border: 1px solid #333;
-            border-radius: 25px;
+            border-radius: 30px;
             color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.3s;
             font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
         }
         
-        .category-btn.active, .category-btn:hover {
+        .category-btn.active {
             background: var(--accent);
             color: #000;
             border-color: var(--accent);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+        
+        .category-btn:hover:not(.active) {
+            border-color: var(--accent);
+            color: var(--accent);
         }
         
         /* Products Grid */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
-            padding: 20px;
+            padding: 0 15px 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 900px;
+                margin: 0 auto;
+            }
         }
         
         .product-card {
             background: var(--bg-card);
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            border: 1px solid #333;
-            transition: transform 0.3s, border-color 0.3s;
+            border: 1px solid #2a2a2a;
+            transition: all 0.3s;
             cursor: pointer;
         }
         
         .product-card:hover {
             transform: translateY(-5px);
             border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .product-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            background: var(--bg-secondary);
         }
         
         .product-image {
             width: 100%;
-            height: 150px;
+            height: 100%;
             object-fit: cover;
-            background: var(--bg-secondary);
+            transition: transform 0.3s;
+            pointer-events: none;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent);
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
         }
         
         .product-info {
-            padding: 12px;
+            padding: 15px;
         }
         
         .product-name {
             font-size: 14px;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -245,30 +261,40 @@
         
         .product-price {
             color: var(--accent);
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .product-price small {
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 400;
         }
         
         .product-origin {
             font-size: 11px;
             color: var(--text-secondary);
-            margin-top: 5px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         /* Product Modal */
-        .modal {
+        .modal-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 200;
             overflow-y: auto;
+            backdrop-filter: blur(10px);
         }
         
-        .modal.active {
+        .modal-overlay.active {
             display: block;
         }
         
@@ -278,66 +304,141 @@
             max-width: 600px;
             margin: 0 auto;
             position: relative;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
         }
         
         .modal-close {
             position: absolute;
             top: 15px;
             right: 15px;
-            width: 40px;
-            height: 40px;
-            background: rgba(0,0,0,0.7);
+            width: 44px;
+            height: 44px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #333;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
             z-index: 10;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .modal-close:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+        }
+        
+        .modal-image-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            background: var(--bg-primary);
+            overflow: hidden;
         }
         
         .modal-image {
             width: 100%;
-            height: 300px;
+            height: 100%;
             object-fit: cover;
+            pointer-events: none;
+        }
+        
+        .image-expand-hint {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-secondary);
         }
         
         .modal-body {
             padding: 25px;
         }
         
+        .modal-header {
+            margin-bottom: 20px;
+        }
+        
         .modal-title {
-            font-size: 24px;
+            font-size: 26px;
             margin-bottom: 10px;
             color: var(--accent);
+            font-weight: 700;
+        }
+        
+        .modal-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .meta-tag {
+            background: var(--bg-card);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            border: 1px solid #333;
+        }
+        
+        .meta-tag.reship {
+            background: rgba(76, 175, 80, 0.1);
+            border-color: var(--success);
+            color: var(--success);
         }
         
         .modal-description {
             color: var(--text-secondary);
-            margin-bottom: 20px;
-            line-height: 1.6;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+        
+        .quantity-section {
+            margin-bottom: 25px;
+        }
+        
+        .section-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .quantity-options {
             display: grid;
             gap: 10px;
-            margin-bottom: 20px;
         }
         
         .quantity-option {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
+            padding: 18px;
             background: var(--bg-card);
-            border-radius: 10px;
-            border: 1px solid #333;
+            border-radius: 12px;
+            border: 2px solid transparent;
             cursor: pointer;
             transition: all 0.3s;
         }
         
         .quantity-option:hover {
             border-color: var(--accent);
+            background: var(--bg-hover);
         }
         
         .quantity-option.selected {
@@ -345,39 +446,153 @@
             background: rgba(212, 175, 55, 0.1);
         }
         
+        .qty-amount {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .qty-price {
+            text-align: right;
+        }
+        
+        .qty-total {
+            color: var(--accent);
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .qty-per-unit {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+        
         .add-to-cart-btn {
             width: 100%;
-            padding: 18px;
+            padding: 20px;
             background: var(--accent);
             color: #000;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .add-to-cart-btn:hover {
             background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--accent-glow);
         }
         
-        /* Cart */
+        .add-to-cart-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Image Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 300;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
+        
+        /* Cart Section */
+        .section {
+            display: none;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .empty-cart-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
         .cart-item {
             display: flex;
             gap: 15px;
-            padding: 15px;
+            padding: 20px;
             background: var(--bg-card);
-            border-radius: 12px;
+            border-radius: 16px;
             margin-bottom: 15px;
-            border: 1px solid #333;
+            border: 1px solid #2a2a2a;
+            transition: all 0.3s;
+        }
+        
+        .cart-item:hover {
+            border-color: var(--accent);
         }
         
         .cart-item-image {
             width: 80px;
             height: 80px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 10px;
+            background: var(--bg-secondary);
         }
         
         .cart-item-details {
@@ -387,60 +602,107 @@
         .cart-item-name {
             font-weight: 600;
             margin-bottom: 5px;
+            font-size: 15px;
+        }
+        
+        .cart-item-qty {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 8px;
         }
         
         .cart-item-price {
             color: var(--accent);
             font-size: 18px;
+            font-weight: 700;
         }
         
-        .cart-total {
+        .cart-item-shipping {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+        
+        .remove-btn {
+            width: 36px;
+            height: 36px;
+            background: transparent;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            align-self: center;
+        }
+        
+        .remove-btn:hover {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .cart-summary {
             background: var(--bg-card);
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 25px;
             border: 1px solid var(--accent);
         }
         
-        .cart-total-row {
+        .summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
         }
         
-        .cart-total-final {
+        .summary-row.total {
             font-size: 24px;
+            font-weight: 700;
             color: var(--accent);
-            font-weight: bold;
             border-top: 1px solid #333;
-            padding-top: 10px;
-            margin-top: 10px;
+            padding-top: 15px;
+            margin-top: 15px;
         }
         
-        /* Checkout */
+        .payment-section {
+            margin-top: 30px;
+        }
+        
         .payment-methods {
             display: grid;
-            gap: 10px;
-            margin: 20px 0;
+            gap: 12px;
+            margin-top: 15px;
         }
         
         .payment-method {
-            padding: 15px;
+            padding: 18px;
             background: var(--bg-card);
-            border-radius: 10px;
-            border: 2px solid #333;
+            border-radius: 12px;
+            border: 2px solid transparent;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 15px;
+            transition: all 0.3s;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--accent);
+            background: var(--bg-hover);
         }
         
         .payment-method.selected {
             border-color: var(--accent);
+            background: rgba(212, 175, 55, 0.1);
         }
         
         .payment-icon {
-            font-size: 24px;
+            font-size: 28px;
+            width: 40px;
+            text-align: center;
         }
         
         .payment-info {
@@ -449,24 +711,83 @@
         
         .payment-name {
             font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 3px;
+        }
+        
+        .payment-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
         }
         
         .payment-fee {
+            background: var(--bg-secondary);
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 12px;
-            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        .payment-fee.free {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+        
+        .payment-fee.charge {
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--warning);
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 22px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+        
+        .checkout-btn:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+        
+        .checkout-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         
         /* TOS Section */
         .tos-content {
             background: var(--bg-card);
-            padding: 20px;
-            border-radius: 12px;
+            padding: 25px;
+            border-radius: 16px;
             line-height: 1.8;
+            font-size: 14px;
         }
         
         .tos-content h3 {
             color: var(--accent);
-            margin: 20px 0 10px;
+            margin: 25px 0 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .tos-content h3:first-child {
+            margin-top: 0;
+        }
+        
+        .tos-content p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
         }
         
         .tos-content ul {
@@ -475,301 +796,519 @@
         }
         
         .tos-content li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
         }
         
-        /* Language Selector */
+        .tos-content strong {
+            color: var(--text-primary);
+        }
+        
+        .shipping-form {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid #333;
+        }
+        
+        .form-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .form-field {
+            margin-bottom: 10px;
+            font-family: monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        /* Language Section */
         .language-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            padding: 20px;
+            gap: 15px;
         }
         
-        .language-btn {
-            padding: 20px;
+        .language-card {
+            padding: 25px;
             background: var(--bg-card);
-            border: 2px solid #333;
-            border-radius: 12px;
-            color: var(--text-primary);
+            border: 2px solid transparent;
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.3s;
             text-align: center;
+            transition: all 0.3s;
         }
         
-        .language-btn.active, .language-btn:hover {
+        .language-card:hover {
+            border-color: var(--accent);
+            background: var(--bg-hover);
+        }
+        
+        .language-card.active {
             border-color: var(--accent);
             background: rgba(212, 175, 55, 0.1);
         }
         
         .lang-flag {
-            font-size: 30px;
-            margin-bottom: 8px;
+            font-size: 40px;
+            margin-bottom: 10px;
         }
         
-        /* Tracking */
-        .tracking-input {
-            width: 100%;
-            padding: 15px;
-            background: var(--bg-card);
-            border: 1px solid #333;
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 16px;
-            margin-bottom: 15px;
+        .lang-name {
+            font-weight: 600;
+            font-size: 15px;
         }
         
-        .tracking-btn {
-            width: 100%;
-            padding: 15px;
-            background: var(--accent);
-            color: #000;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        /* Community Links */
-        .community-links {
+        /* Community Section */
+        .community-grid {
             display: grid;
             gap: 15px;
-            padding: 20px;
         }
         
         .community-card {
             background: var(--bg-card);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #333;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #2a2a2a;
             text-decoration: none;
             color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 15px;
-            transition: border-color 0.3s;
+            gap: 20px;
+            transition: all 0.3s;
         }
         
         .community-card:hover {
             border-color: var(--accent);
+            transform: translateX(5px);
         }
         
         .community-icon {
-            font-size: 30px;
+            font-size: 40px;
+            width: 60px;
+            height: 60px;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .community-info h3 {
             margin-bottom: 5px;
+            font-size: 18px;
         }
         
         .community-info p {
-            font-size: 12px;
             color: var(--text-secondary);
+            font-size: 13px;
+        }
+        
+        .community-arrow {
+            margin-left: auto;
+            color: var(--accent);
+            font-size: 20px;
+        }
+        
+        /* Tracking Section */
+        .tracking-box {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+        }
+        
+        .tracking-input {
+            width: 100%;
+            padding: 18px;
+            background: var(--bg-secondary);
+            border: 1px solid #333;
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .tracking-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .tracking-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        
+        .tracking-btn:hover {
+            background: var(--accent-hover);
+        }
+        
+        .locker-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        /* Floating Telegram Button */
+        .telegram-float {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: #0088cc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 136, 204, 0.4);
+            z-index: 98;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .telegram-float:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 6px 30px rgba(0, 136, 204, 0.6);
+        }
+        
+        .telegram-float svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+        
+        .telegram-tooltip {
+            position: absolute;
+            right: 65px;
+            background: var(--bg-card);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            border: 1px solid #333;
+        }
+        
+        .telegram-float:hover .telegram-tooltip {
+            opacity: 1;
+        }
+        
+        /* Bottom Navigation */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid #2a2a2a;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+            z-index: 99;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 11px;
+            transition: all 0.3s;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .nav-item.active {
+            color: var(--accent);
+        }
+        
+        .nav-icon {
+            font-size: 22px;
+            transition: transform 0.3s;
+        }
+        
+        .nav-item:hover .nav-icon {
+            transform: translateY(-3px);
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            background: var(--danger);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 1px solid var(--accent);
+            z-index: 400;
+            opacity: 0;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        
+        .toast-icon {
+            font-size: 20px;
+        }
+        
+        /* Loading State */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-hover) 50%, var(--bg-card) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
         
         /* Responsive */
-        @media (max-width: 480px) {
+        @media (max-width: 380px) {
             .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-                padding: 10px;
                 gap: 10px;
+                padding: 0 10px;
             }
-            
-            .category-filter {
-                padding: 10px;
+            .product-image-wrapper {
+                height: 140px;
+            }
+            .category-btn {
+                padding: 10px 18px;
+                font-size: 13px;
             }
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✓</span>
+        <span id="toast-message">Added to cart</span>
+    </div>
+    
     <!-- Header -->
     <header class="header">
         <div class="logo-container">
-            <img src="https://i.imgur.com/jNug6cl.jpeg" alt="SHADE PLUG" class="logo" onerror="this.src='https://via.placeholder.com/120x120/d4af37/000000?text=SP'">
+            <img src="https://i.imgur.com/jNug6cl.jpeg" alt="SHADE PLUG" class="logo" 
+                 onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🌿</text></svg>'">
         </div>
-        <div class="brand-title">Premium Cannabis</div>
-        <a href="https://instagram.com/shade.plug" target="_blank" class="instagram-badge">
+        <a href="https://www.instagram.com/shade.plug" target="_blank" class="instagram-badge">
             <span>📷</span>
-            <span>@shade.plug Verified</span>
+            <span>@shade.plug</span>
+            <span class="verified-icon">✓</span>
         </a>
     </header>
     
     <!-- Welcome Section -->
-    <div class="welcome">
-        <h1 id="welcome-title">Welcome to SHADE PLUG</h1>
-        <p id="welcome-subtitle">Find all available products in our shop</p>
+    <div class="welcome" id="welcome-section">
+        <h1 data-i18n="welcome">Welcome to SHADE PLUG</h1>
+        <p data-i18n="subtitle">Find all available products in our premium shop</p>
     </div>
     
     <!-- Category Filter -->
-    <div class="category-filter">
-        <button class="category-btn active" data-category="all">All</button>
-        <button class="category-btn" data-category="flower">🌿 Flowers</button>
-        <button class="category-btn" data-category="hash">🍫 Hash</button>
-        <button class="category-btn" data-category="mushroom">🍄 Mushrooms</button>
-        <button class="category-btn" data-category="vape">🚬 Vapes</button>
+    <div class="category-filter" id="category-filter">
+        <button class="category-btn active" data-category="all" data-i18n="cat_all">All</button>
+        <button class="category-btn" data-category="flower">🌿 <span data-i18n="cat_flowers">Flowers</span></button>
+        <button class="category-btn" data-category="hash">🍫 <span data-i18n="cat_hash">Hash</span></button>
+        <button class="category-btn" data-category="mushroom">🍄 <span data-i18n="cat_mushrooms">Mushrooms</span></button>
+        <button class="category-btn" data-category="vape">🚬 <span data-i18n="cat_vapes">Vapes</span></button>
     </div>
     
     <!-- Products Grid -->
     <div class="products-grid" id="products-container"></div>
     
     <!-- Product Modal -->
-    <div class="modal" id="product-modal">
+    <div class="modal-overlay" id="product-modal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeModal()">×</div>
-            <img class="modal-image" id="modal-image" src="" alt="">
+            <div class="modal-image-container" onclick="openLightbox()">
+                <img class="modal-image" id="modal-image" src="" alt="">
+                <div class="image-expand-hint">🔍 Tap to expand</div>
+            </div>
             <div class="modal-body">
-                <h2 class="modal-title" id="modal-title"></h2>
-                <p class="modal-description" id="modal-description"></p>
-                <div id="modal-quantities"></div>
-                <button class="add-to-cart-btn" onclick="addToCart()">Add to Cart</button>
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modal-title"></h2>
+                    <div class="modal-meta" id="modal-meta"></div>
+                    <p class="modal-description" id="modal-description"></p>
+                </div>
+                <div class="quantity-section">
+                    <div class="section-label" data-i18n="select_qty">Select Quantity</div>
+                    <div class="quantity-options" id="modal-quantities"></div>
+                </div>
+                <button class="add-to-cart-btn" onclick="addToCart()" data-i18n="add_to_cart">Add to Cart</button>
             </div>
         </div>
     </div>
     
-    <!-- Sections -->
+    <!-- Image Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-close">×</div>
+        <img id="lightbox-image" src="" alt="">
+    </div>
+    
+    <!-- Cart Section -->
     <div class="section" id="cart-section">
-        <h2 style="text-align: center; margin-bottom: 20px;">🛒 Shopping Cart</h2>
+        <h2 class="section-title" data-i18n="cart_title">Shopping Cart</h2>
         <div id="cart-items"></div>
-        <div class="cart-total">
-            <div class="cart-total-row">
-                <span>Subtotal:</span>
-                <span id="cart-subtotal">€0.00</span>
-            </div>
-            <div class="cart-total-row">
-                <span>Shipping:</span>
-                <span id="cart-shipping">€0.00</span>
-            </div>
-            <div class="cart-total-row cart-total-final">
-                <span>Total:</span>
-                <span id="cart-total">€0.00</span>
-            </div>
-        </div>
-        <div class="payment-methods">
-            <h3 style="margin-bottom: 15px;">Select Payment Method</h3>
-            <div class="payment-method" data-fee="0" onclick="selectPayment(this)">
-                <span class="payment-icon">₿</span>
-                <div class="payment-info">
-                    <div class="payment-name">BTC / LTC</div>
-                    <div class="payment-fee">0% fee</div>
-                </div>
-            </div>
-            <div class="payment-method" data-fee="10" onclick="selectPayment(this)">
-                <span class="payment-icon">💳</span>
-                <div class="payment-info">
-                    <div class="payment-name">Revolut / PayPal</div>
-                    <div class="payment-fee">+10% fee</div>
-                </div>
-            </div>
-            <div class="payment-method" data-fee="10" onclick="selectPayment(this)">
-                <span class="payment-icon">🔒</span>
-                <div class="payment-info">
-                    <div class="payment-name">Escrow</div>
-                    <div class="payment-fee">+10% fee</div>
-                </div>
-            </div>
-        </div>
-        <button class="add-to-cart-btn" onclick="checkout()" style="margin-top: 20px;">
-            Complete Order
-        </button>
+        <div id="cart-summary"></div>
     </div>
     
+    <!-- TOS Section -->
     <div class="section" id="tos-section">
-        <h2 style="text-align: center; margin-bottom: 20px;">📋 Terms of Service</h2>
-        <div class="tos-content" id="tos-content">
-            <!-- Content loaded via JS -->
-        </div>
+        <h2 class="section-title" data-i18n="tos_title">Terms of Service</h2>
+        <div class="tos-content" id="tos-content"></div>
     </div>
     
-    <div class="section" id="language-section">
-        <h2 style="text-align: center; margin-bottom: 20px;">🌍 Select Language</h2>
-        <div class="language-grid">
-            <button class="language-btn active" onclick="setLanguage('en')">
-                <div class="lang-flag">🇬🇧</div>
-                <div>English</div>
-            </button>
-            <button class="language-btn" onclick="setLanguage('it')">
-                <div class="lang-flag">🇮🇹</div>
-                <div>Italiano</div>
-            </button>
-            <button class="language-btn" onclick="setLanguage('fr')">
-                <div class="lang-flag">🇫🇷</div>
-                <div>Français</div>
-            </button>
-            <button class="language-btn" onclick="setLanguage('es')">
-                <div class="lang-flag">🇪🇸</div>
-                <div>Español</div>
-            </button>
-            <button class="language-btn" onclick="setLanguage('de')">
-                <div class="lang-flag">🇩🇪</div>
-                <div>Deutsch</div>
-            </button>
-            <button class="language-btn" onclick="setLanguage('cs')">
-                <div class="lang-flag">🇨🇿</div>
-                <div>Čeština</div>
-            </button>
-            <button class="language-btn" onclick="setLanguage('ru')">
-                <div class="lang-flag">🇷🇺</div>
-                <div>Русский</div>
-            </button>
-        </div>
-    </div>
-    
+    <!-- Community Section -->
     <div class="section" id="community-section">
-        <h2 style="text-align: center; margin-bottom: 20px;">👥 Community</h2>
-        <div class="community-links">
+        <h2 class="section-title" data-i18n="community_title">Community</h2>
+        <div class="community-grid">
             <a href="https://t.me/+ktWkgnNc7zAzMDJk" class="community-card">
-                <span class="community-icon">⭐</span>
+                <div class="community-icon">⭐</div>
                 <div class="community-info">
-                    <h3>Reviews Channel</h3>
-                    <p>Customer reviews and feedback</p>
+                    <h3 data-i18n="reviews_channel">Reviews Channel</h3>
+                    <p data-i18n="reviews_desc">Customer reviews and feedback</p>
                 </div>
+                <span class="community-arrow">→</span>
             </a>
             <a href="https://t.me/+1xyYvIBZKYI4YmQ0" class="community-card">
-                <span class="community-icon">💬</span>
+                <div class="community-icon">💬</div>
                 <div class="community-info">
-                    <h3>Community Talk</h3>
-                    <p>Join the discussion</p>
+                    <h3 data-i18n="talk_group">Community Talk</h3>
+                    <p data-i18n="talk_desc">Join the discussion</p>
                 </div>
+                <span class="community-arrow">→</span>
             </a>
         </div>
     </div>
     
+    <!-- Language Section -->
+    <div class="section" id="language-section">
+        <h2 class="section-title" data-i18n="language_title">Select Language</h2>
+        <div class="language-grid">
+            <div class="language-card active" onclick="setLanguage('en')">
+                <div class="lang-flag">🇬🇧</div>
+                <div class="lang-name">English</div>
+            </div>
+            <div class="language-card" onclick="setLanguage('it')">
+                <div class="lang-flag">🇮🇹</div>
+                <div class="lang-name">Italiano</div>
+            </div>
+            <div class="language-card" onclick="setLanguage('fr')">
+                <div class="lang-flag">🇫🇷</div>
+                <div class="lang-name">Français</div>
+            </div>
+            <div class="language-card" onclick="setLanguage('es')">
+                <div class="lang-flag">🇪🇸</div>
+                <div class="lang-name">Español</div>
+            </div>
+            <div class="language-card" onclick="setLanguage('de')">
+                <div class="lang-flag">🇩🇪</div>
+                <div class="lang-name">Deutsch</div>
+            </div>
+            <div class="language-card" onclick="setLanguage('cs')">
+                <div class="lang-flag">🇨🇿</div>
+                <div class="lang-name">Čeština</div>
+            </div>
+            <div class="language-card" onclick="setLanguage('ru')">
+                <div class="lang-flag">🇷🇺</div>
+                <div class="lang-name">Русский</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tracking Section -->
     <div class="section" id="track-section">
-        <h2 style="text-align: center; margin-bottom: 20px;">📦 Track Order</h2>
-        <input type="text" class="tracking-input" placeholder="Enter tracking number..." id="tracking-input">
-        <button class="tracking-btn" onclick="trackOrder()">Track Package</button>
-        <div style="margin-top: 20px; text-align: center;">
-            <a href="https://inpost.it" target="_blank" style="color: var(--accent);">Find Nearest Locker →</a>
+        <h2 class="section-title" data-i18n="track_title">Track Order</h2>
+        <div class="tracking-box">
+            <input type="text" class="tracking-input" id="tracking-input" placeholder="ENTER TRACKING CODE" data-i18n-placeholder="tracking_placeholder">
+            <button class="tracking-btn" onclick="trackOrder()" data-i18n="track_btn">Track Package</button>
+            <a href="https://inpost.it/trova-punto" target="_blank" class="locker-link">
+                📍 <span data-i18n="find_locker">Find Nearest Locker</span>
+            </a>
         </div>
     </div>
     
     <!-- Floating Telegram Button -->
     <a href="https://t.me/shadeplug" class="telegram-float" target="_blank">
         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        <span class="telegram-tooltip">Chat with @shadeplug</span>
     </a>
     
     <!-- Bottom Navigation -->
     <nav class="nav-bar">
-        <a href="#" class="nav-item active" onclick="showSection('home')">
+        <button class="nav-item active" onclick="showSection('home')">
             <span class="nav-icon">🏠</span>
-            <span>Home</span>
-        </a>
-        <a href="#" class="nav-item" onclick="showSection('cart')">
+            <span data-i18n="nav_home">Home</span>
+        </button>
+        <button class="nav-item" onclick="showSection('cart')">
             <span class="nav-icon">🛒</span>
-            <span>Cart</span>
-        </a>
-        <a href="#" class="nav-item" onclick="showSection('tos')">
+            <span data-i18n="nav_cart">Cart</span>
+            <span class="cart-badge" id="cart-badge" style="display: none;">0</span>
+        </button>
+        <button class="nav-item" onclick="showSection('tos')">
             <span class="nav-icon">📋</span>
-            <span>TOS</span>
-        </a>
-        <a href="#" class="nav-item" onclick="showSection('community')">
+            <span data-i18n="nav_tos">TOS</span>
+        </button>
+        <button class="nav-item" onclick="showSection('community')">
             <span class="nav-icon">👥</span>
-            <span>Community</span>
-        </a>
-        <a href="#" class="nav-item" onclick="showSection('language')">
+            <span data-i18n="nav_community">Community</span>
+        </button>
+        <button class="nav-item" onclick="showSection('language')">
             <span class="nav-icon">🌍</span>
-            <span>Language</span>
-        </a>
+            <span data-i18n="nav_lang">Language</span>
+        </button>
     </nav>
     
     <script>
@@ -778,22 +1317,365 @@
         tg.ready();
         tg.expand();
         
-        // Product Data (Prices already +20%)
+        // Translations
+        const translations = {
+            en: {
+                welcome: "Welcome to SHADE PLUG",
+                subtitle: "Find all available products in our premium shop",
+                cat_all: "All",
+                cat_flowers: "Flowers",
+                cat_hash: "Hash",
+                cat_mushrooms: "Mushrooms",
+                cat_vapes: "Vapes",
+                select_qty: "Select Quantity",
+                add_to_cart: "Add to Cart",
+                cart_title: "Shopping Cart",
+                cart_empty: "Your cart is empty",
+                cart_empty_desc: "Browse our premium products and add items to your cart",
+                subtotal: "Subtotal",
+                shipping: "Shipping",
+                payment_fee: "Payment Fee",
+                total: "Total",
+                select_payment: "Select Payment Method",
+                checkout: "Complete Order",
+                tos_title: "Terms of Service",
+                community_title: "Community",
+                reviews_channel: "Reviews Channel",
+                reviews_desc: "Customer reviews and feedback",
+                talk_group: "Community Talk",
+                talk_desc: "Join the discussion",
+                language_title: "Select Language",
+                track_title: "Track Order",
+                tracking_placeholder: "ENTER TRACKING CODE",
+                track_btn: "Track Package",
+                find_locker: "Find Nearest Locker",
+                nav_home: "Home",
+                nav_cart: "Cart",
+                nav_tos: "TOS",
+                nav_community: "Community",
+                nav_lang: "Language",
+                from: "From",
+                origin_cz: "🇨🇿 Czech Republic",
+                origin_it: "🇮🇹 Italy",
+                reship: "100% Reship",
+                shipping_time: "Shipping",
+                crypto: "Cryptocurrency",
+                bank_transfer: "Bank Transfer",
+                card: "Card Payment",
+                escrow: "Escrow",
+                fee_free: "0% fee",
+                fee_10: "+10% fee",
+                tos_escrow_title: "Escrow Terms & Conditions",
+                tos_shipping_title: "Shipping Information",
+                tos_payment_title: "Payment Methods",
+                pickup_store: "Pickup Store",
+                locker: "Locker",
+                shipping_form: "Shipping Form Template",
+                escrow_rules: "Escrow Rules",
+                video_requirements: "Video Requirements for Reship",
+                package_policy: "Package Loss Policy",
+                order_summary: "Order Summary"
+            },
+            it: {
+                welcome: "Benvenuti in SHADE PLUG",
+                subtitle: "Troverete tutti i prodotti disponibili dello shop",
+                cat_all: "Tutti",
+                cat_flowers: "Fiori",
+                cat_hash: "Hash",
+                cat_mushrooms: "Funghi",
+                cat_vapes: "Vape",
+                select_qty: "Seleziona Quantità",
+                add_to_cart: "Aggiungi al Carrello",
+                cart_title: "Carrello",
+                cart_empty: "Il tuo carrello è vuoto",
+                cart_empty_desc: "Sfoglia i nostri prodotti premium e aggiungi articoli al carrello",
+                subtotal: "Subtotale",
+                shipping: "Spedizione",
+                payment_fee: "Commissione",
+                total: "Totale",
+                select_payment: "Seleziona Metodo di Pagamento",
+                checkout: "Completa Ordine",
+                tos_title: "Termini di Servizio",
+                community_title: "Community",
+                reviews_channel: "Canale Recensioni",
+                reviews_desc: "Recensioni e feedback dei clienti",
+                talk_group: "Community Talk",
+                talk_desc: "Unisciti alla discussione",
+                language_title: "Seleziona Lingua",
+                track_title: "Traccia Ordine",
+                tracking_placeholder: "INSERISCI CODICE TRACKING",
+                track_btn: "Traccia Pacco",
+                find_locker: "Trova Locker Vicino",
+                nav_home: "Home",
+                nav_cart: "Carrello",
+                nav_tos: "TOS",
+                nav_community: "Community",
+                nav_lang: "Lingua",
+                from: "Da",
+                origin_cz: "🇨🇿 Repubblica Ceca",
+                origin_it: "🇮🇹 Italia",
+                reship: "100% Reship",
+                shipping_time: "Spedizione",
+                crypto: "Criptovaluta",
+                bank_transfer: "Bonifico Bancario",
+                card: "Carta di Credito",
+                escrow: "Escrow",
+                fee_free: "0% commissione",
+                fee_10: "+10% commissione",
+                tos_escrow_title: "Termini e Condizioni Escrow",
+                tos_shipping_title: "Informazioni Spedizione",
+                tos_payment_title: "Metodi di Pagamento",
+                pickup_store: "Tabacchino",
+                locker: "Locker",
+                shipping_form: "Modulo Spedizione",
+                escrow_rules: "Regole Escrow",
+                video_requirements: "Requisiti Video per Reship",
+                package_policy: "Politica Pacco Perso",
+                order_summary: "Riepilogo Ordine"
+            },
+            fr: {
+                welcome: "Bienvenue chez SHADE PLUG",
+                subtitle: "Trouvez tous les produits disponibles dans notre boutique premium",
+                cat_all: "Tous",
+                cat_flowers: "Fleurs",
+                cat_hash: "Hash",
+                cat_mushrooms: "Champignons",
+                cat_vapes: "Vapes",
+                select_qty: "Sélectionnez la Quantité",
+                add_to_cart: "Ajouter au Panier",
+                cart_title: "Panier",
+                cart_empty: "Votre panier est vide",
+                subtotal: "Sous-total",
+                shipping: "Livraison",
+                payment_fee: "Frais de Paiement",
+                total: "Total",
+                select_payment: "Sélectionnez le Mode de Paiement",
+                checkout: "Commander",
+                tos_title: "Conditions Générales",
+                community_title: "Communauté",
+                reviews_channel: "Canal Avis",
+                talk_group: "Discussion",
+                language_title: "Choisir la Langue",
+                track_title: "Suivre la Commande",
+                tracking_placeholder: "ENTREZ LE NUMÉRO",
+                track_btn: "Suivre",
+                find_locker: "Trouver un Point de Retrait",
+                nav_home: "Accueil",
+                nav_cart: "Panier",
+                nav_tos: "CGV",
+                nav_community: "Communauté",
+                nav_lang: "Langue",
+                from: "À partir de",
+                origin_cz: "🇨🇿 République Tchèque",
+                origin_it: "🇮🇹 Italie",
+                reship: "100% Reship",
+                crypto: "Crypto-monnaie",
+                bank_transfer: "Virement Bancaire",
+                card: "Carte Bancaire",
+                escrow: "Escrow",
+                fee_free: "0% frais",
+                fee_10: "+10% frais",
+                pickup_store: "Bureau de tabac",
+                locker: "Point de retrait"
+            },
+            es: {
+                welcome: "Bienvenido a SHADE PLUG",
+                subtitle: "Encuentra todos los productos disponibles en nuestra tienda premium",
+                cat_all: "Todos",
+                cat_flowers: "Flores",
+                cat_hash: "Hash",
+                cat_mushrooms: "Setas",
+                cat_vapes: "Vapes",
+                select_qty: "Seleccionar Cantidad",
+                add_to_cart: "Añadir al Carrito",
+                cart_title: "Carrito",
+                cart_empty: "Tu carrito está vacío",
+                subtotal: "Subtotal",
+                shipping: "Envío",
+                payment_fee: "Comisión",
+                total: "Total",
+                select_payment: "Seleccionar Método de Pago",
+                checkout: "Completar Pedido",
+                tos_title: "Términos y Condiciones",
+                community_title: "Comunidad",
+                reviews_channel: "Canal de Reseñas",
+                talk_group: "Chat Comunitario",
+                language_title: "Seleccionar Idioma",
+                track_title: "Rastrear Pedido",
+                tracking_placeholder: "INTRODUCE EL CÓDIGO",
+                track_btn: "Rastrear",
+                find_locker: "Encontrar Punto de Recogida",
+                nav_home: "Inicio",
+                nav_cart: "Carrito",
+                nav_tos: "Términos",
+                nav_community: "Comunidad",
+                nav_lang: "Idioma",
+                from: "Desde",
+                origin_cz: "🇨🇿 República Checa",
+                origin_it: "🇮🇹 Italia",
+                reship: "100% Reship",
+                crypto: "Criptomoneda",
+                bank_transfer: "Transferencia Bancaria",
+                card: "Tarjeta",
+                escrow: "Escrow",
+                fee_free: "0% comisión",
+                fee_10: "+10% comisión",
+                pickup_store: "Estanco",
+                locker: "Punto de recogida"
+            },
+            de: {
+                welcome: "Willkommen bei SHADE PLUG",
+                subtitle: "Finden Sie alle verfügbaren Produkte in unserem Premium-Shop",
+                cat_all: "Alle",
+                cat_flowers: "Blüten",
+                cat_hash: "Hash",
+                cat_mushrooms: "Pilze",
+                cat_vapes: "Vapes",
+                select_qty: "Menge Wählen",
+                add_to_cart: "In den Warenkorb",
+                cart_title: "Warenkorb",
+                cart_empty: "Ihr Warenkorb ist leer",
+                subtotal: "Zwischensumme",
+                shipping: "Versand",
+                payment_fee: "Zahlungsgebühr",
+                total: "Gesamt",
+                select_payment: "Zahlungsmethode Wählen",
+                checkout: "Bestellung Abschließen",
+                tos_title: "AGB",
+                community_title: "Community",
+                reviews_channel: "Bewertungen",
+                talk_group: "Community-Chat",
+                language_title: "Sprache Wählen",
+                track_title: "Bestellung Verfolgen",
+                tracking_placeholder: "TRACKING-NUMMER EINGEBEN",
+                track_btn: "Verfolgen",
+                find_locker: "Abholstelle Finden",
+                nav_home: "Start",
+                nav_cart: "Warenkorb",
+                nav_tos: "AGB",
+                nav_community: "Community",
+                nav_lang: "Sprache",
+                from: "Ab",
+                origin_cz: "🇨🇿 Tschechische Republik",
+                origin_it: "🇮🇹 Italien",
+                reship: "100% Reship",
+                crypto: "Kryptowährung",
+                bank_transfer: "Banküberweisung",
+                card: "Kartenzahlung",
+                escrow: "Escrow",
+                fee_free: "0% gebühr",
+                fee_10: "+10% gebühr",
+                pickup_store: "Tabakladen",
+                locker: "Abholstelle"
+            },
+            cs: {
+                welcome: "Vítejte v SHADE PLUG",
+                subtitle: "Najděte všechny dostupné produkty v našem prémiovém obchodě",
+                cat_all: "Vše",
+                cat_flowers: "Květy",
+                cat_hash: "Hash",
+                cat_mushrooms: "Houby",
+                cat_vapes: "Vape",
+                select_qty: "Vyberte Množství",
+                add_to_cart: "Přidat do Košíku",
+                cart_title: "Košík",
+                cart_empty: "Váš košík je prázdný",
+                subtotal: "Mezisoučet",
+                shipping: "Doprava",
+                payment_fee: "Poplatek",
+                total: "Celkem",
+                select_payment: "Vyberte Způsob Platby",
+                checkout: "Dokončit Objednávku",
+                tos_title: "Obchodní Podmínky",
+                community_title: "Komunita",
+                reviews_channel: "Recenze",
+                talk_group: "Komunitní Chat",
+                language_title: "Vyberte Jazyk",
+                track_title: "Sledovat Zásilku",
+                tracking_placeholder: "ZADEJTE ČÍSLO ZÁSILKY",
+                track_btn: "Sledovat",
+                find_locker: "Najít Výdejní Místo",
+                nav_home: "Domů",
+                nav_cart: "Košík",
+                nav_tos: "Podmínky",
+                nav_community: "Komunita",
+                nav_lang: "Jazyk",
+                from: "Od",
+                origin_cz: "🇨🇿 Česká Republika",
+                origin_it: "🇮🇹 Itálie",
+                reship: "100% Reship",
+                crypto: "Kryptoměna",
+                bank_transfer: "Bankovní Převod",
+                card: "Kartou",
+                escrow: "Escrow",
+                fee_free: "0% poplatek",
+                fee_10: "+10% poplatek",
+                pickup_store: "Tabák",
+                locker: "Výdejní místo"
+            },
+            ru: {
+                welcome: "Добро пожаловать в SHADE PLUG",
+                subtitle: "Найдите все доступные товары в нашем премиум-магазине",
+                cat_all: "Все",
+                cat_flowers: "Цветы",
+                cat_hash: "Гашиш",
+                cat_mushrooms: "Грибы",
+                cat_vapes: "Вейпы",
+                select_qty: "Выберите Количество",
+                add_to_cart: "Добавить в Корзину",
+                cart_title: "Корзина",
+                cart_empty: "Ваша корзина пуста",
+                subtotal: "Промежуточный итог",
+                shipping: "Доставка",
+                payment_fee: "Комиссия",
+                total: "Итого",
+                select_payment: "Выберите Способ Оплаты",
+                checkout: "Оформить Заказ",
+                tos_title: "Условия Обслуживания",
+                community_title: "Сообщество",
+                reviews_channel: "Канал Отзывов",
+                talk_group: "Чат Сообщества",
+                language_title: "Выберите Язык",
+                track_title: "Отследить Заказ",
+                tracking_placeholder: "ВВЕДИТЕ НОМЕР ОТСЛЕЖИВАНИЯ",
+                track_btn: "Отследить",
+                find_locker: "Найти Пункт Выдачи",
+                nav_home: "Главная",
+                nav_cart: "Корзина",
+                nav_tos: "Условия",
+                nav_community: "Сообщество",
+                nav_lang: "Язык",
+                from: "От",
+                origin_cz: "🇨🇿 Чехия",
+                origin_it: "🇮🇹 Италия",
+                reship: "100% Reship",
+                crypto: "Криптовалюта",
+                bank_transfer: "Банковский Перевод",
+                card: "Карта",
+                escrow: "Escrow",
+                fee_free: "0% комиссия",
+                fee_10: "+10% комиссия",
+                pickup_store: "Табачный магазин",
+                locker: "Пункт выдачи"
+            }
+        };
+        
+        // Product Data (Prices +20%)
         const products = [
             {
                 id: 1,
                 name: "Cali Cryo",
                 category: "flower",
                 emoji: "🌿",
-                origin: "Czech Republic",
+                origin: "cz",
                 shipping: 25,
                 reship: true,
                 images: ["https://i.imgur.com/XZHzDvT.jpeg"],
-                description: "100% safe with reship guarantee. Recommended for bulk sellers. Ships via GLS/UPS/BRT.",
+                description: "100% safe with reship guarantee. Recommended for bulk sellers. Ships via GLS/UPS/BRT within 48h.",
                 quantities: [
-                    { amount: "500g", price: 2100, perGram: 4.20 },
-                    { amount: "1000g", price: 3600, perGram: 3.60 },
-                    { amount: "5000g", price: 15600, perGram: 3.12 }
+                    { amount: "500g", price: 2100, perUnit: 4.20 },
+                    { amount: "1000g", price: 3600, perUnit: 3.60 },
+                    { amount: "5000g", price: 15600, perUnit: 3.12 }
                 ]
             },
             {
@@ -801,75 +1683,111 @@
                 name: "Cali Sour Lifter",
                 category: "flower",
                 emoji: "🌿",
-                origin: "Czech Republic",
+                origin: "cz",
                 shipping: 20,
                 reship: true,
                 images: ["https://i.imgur.com/bxeYk0K.jpeg", "https://i.imgur.com/DrRBUlb.jpeg"],
                 description: "100% safe with reship guarantee. Ships within 48 hours.",
                 quantities: [
-                    { amount: "100g", price: 420, perGram: 4.20 },
-                    { amount: "200g", price: 720, perGram: 3.60 },
-                    { amount: "500g", price: 1320, perGram: 2.64 },
-                    { amount: "1000g", price: 2400, perGram: 2.40 }
+                    { amount: "100g", price: 420, perUnit: 4.20 },
+                    { amount: "200g", price: 720, perUnit: 3.60 },
+                    { amount: "500g", price: 1320, perUnit: 2.64 },
+                    { amount: "1000g", price: 2400, perUnit: 2.40 }
                 ]
             },
             {
                 id: 3,
-                name: "Cali Gelato",
+                name: "Cali Sweet Burger",
                 category: "flower",
                 emoji: "🌿",
-                origin: "Czech Republic",
-                shipping: 25,
+                origin: "cz",
+                shipping: 20,
                 reship: true,
-                images: ["https://i.imgur.com/boYbhV4.jpeg", "https://i.imgur.com/2syH6aY.jpeg"],
-                description: "Premium Cali Gelato. 100% reship guarantee.",
+                images: ["https://i.imgur.com/boYbhV4.jpeg"],
+                description: "100% safe with reship guarantee. Ships within 48 hours.",
                 quantities: [
-                    { amount: "1000g", price: 2400, perGram: 2.40 }
+                    { amount: "100g", price: 480, perUnit: 4.80 },
+                    { amount: "300g", price: 1380, perUnit: 4.60 },
+                    { amount: "500g", price: 1680, perUnit: 3.36 },
+                    { amount: "1000g", price: 3600, perUnit: 3.60 }
                 ]
             },
             {
                 id: 4,
+                name: "Cali Gelato",
+                category: "flower",
+                emoji: "🌿",
+                origin: "cz",
+                shipping: 25,
+                reship: true,
+                images: ["https://i.imgur.com/boYbhV4.jpeg", "https://i.imgur.com/2syH6aY.jpeg"],
+                description: "Premium Cali Gelato. 100% reship guarantee. Ships via GLS/UPS/BRT.",
+                quantities: [
+                    { amount: "1000g", price: 2400, perUnit: 2.40 }
+                ]
+            },
+            {
+                id: 5,
                 name: "Dry Frozen Sift Top",
                 category: "hash",
                 emoji: "🍫",
-                origin: "Italy",
+                origin: "it",
                 shipping: 10,
                 reship: false,
                 images: ["https://i.imgur.com/rxOoCaf.jpeg", "https://i.imgur.com/fxzTmBs.jpeg"],
                 description: "Premium dry sift hash. Ships from Italy.",
                 quantities: [
-                    { amount: "50g", price: 420, perGram: 8.40 },
-                    { amount: "100g", price: 720, perGram: 7.20 },
-                    { amount: "250g", price: 1650, perGram: 6.60 },
-                    { amount: "500g", price: 3000, perGram: 6.00 },
-                    { amount: "1000g", price: 4800, perGram: 4.80 }
+                    { amount: "50g", price: 420, perUnit: 8.40 },
+                    { amount: "100g", price: 720, perUnit: 7.20 },
+                    { amount: "250g", price: 1650, perUnit: 6.60 },
+                    { amount: "500g", price: 3000, perUnit: 6.00 },
+                    { amount: "1000g", price: 4800, perUnit: 4.80 }
                 ]
             },
             {
-                id: 5,
+                id: 6,
                 name: "Cali Lemon Pop",
                 category: "flower",
                 emoji: "🌿",
-                origin: "Italy",
+                origin: "it",
                 shipping: 10,
                 reship: false,
                 images: ["https://i.imgur.com/jTjCkgf.jpeg"],
                 description: "Fresh Cali Lemon Pop. Ships from Italy.",
                 quantities: [
-                    { amount: "25g", price: 150, perGram: 6.00 },
-                    { amount: "50g", price: 240, perGram: 4.80 },
-                    { amount: "100g", price: 396, perGram: 3.96 },
-                    { amount: "250g", price: 930, perGram: 3.72 },
-                    { amount: "500g", price: 1800, perGram: 3.60 },
-                    { amount: "1000g", price: 3360, perGram: 3.36 }
+                    { amount: "25g", price: 150, perUnit: 6.00 },
+                    { amount: "50g", price: 240, perUnit: 4.80 },
+                    { amount: "100g", price: 396, perUnit: 3.96 },
+                    { amount: "250g", price: 930, perUnit: 3.72 },
+                    { amount: "500g", price: 1800, perUnit: 3.60 },
+                    { amount: "1000g", price: 3360, perUnit: 3.36 }
                 ]
             },
             {
-                id: 6,
+                id: 7,
+                name: "Cali Spain Amnesia",
+                category: "flower",
+                emoji: "🌿",
+                origin: "it",
+                shipping: 10,
+                reship: false,
+                images: ["https://i.imgur.com/z4v3zJ2.jpeg"],
+                description: "Spanish Amnesia strain. Ships from Italy.",
+                quantities: [
+                    { amount: "25g", price: 180, perUnit: 7.20 },
+                    { amount: "50g", price: 300, perUnit: 6.00 },
+                    { amount: "100g", price: 480, perUnit: 4.80 },
+                    { amount: "250g", price: 1140, perUnit: 4.56 },
+                    { amount: "500g", price: 2040, perUnit: 4.08 },
+                    { amount: "1000g", price: 3720, perUnit: 3.72 }
+                ]
+            },
+            {
+                id: 8,
                 name: "MC Kennaiii",
                 category: "mushroom",
                 emoji: "🍄",
-                origin: "Italy",
+                origin: "it",
                 shipping: 10,
                 reship: false,
                 images: ["https://i.imgur.com/fq1uFFm.jpeg"],
@@ -880,223 +1798,247 @@
                 ]
             },
             {
-                id: 7,
+                id: 9,
                 name: "Dry Mimosa",
                 category: "hash",
                 emoji: "🍫",
-                origin: "Czech Republic",
+                origin: "cz",
                 shipping: 20,
                 reship: true,
                 images: ["https://i.imgur.com/xQoPEbC.jpeg", "https://i.imgur.com/fh7Gz8d.jpeg"],
                 description: "100% safe with reship guarantee. Ships within 48 hours.",
                 quantities: [
-                    { amount: "100g", price: 456, perGram: 4.56 },
-                    { amount: "200g", price: 864, perGram: 4.32 },
-                    { amount: "500g", price: 1800, perGram: 3.60 },
-                    { amount: "1000g", price: 3120, perGram: 3.12 }
+                    { amount: "100g", price: 456, perUnit: 4.56 },
+                    { amount: "200g", price: 864, perUnit: 4.32 },
+                    { amount: "500g", price: 1800, perUnit: 3.60 },
+                    { amount: "1000g", price: 3120, perUnit: 3.12 }
                 ]
             },
             {
-                id: 8,
+                id: 10,
                 name: "Vape THC",
                 category: "vape",
                 emoji: "🚬",
-                origin: "Czech Republic",
+                origin: "cz",
                 shipping: 25,
                 reship: true,
                 images: ["https://i.imgur.com/nfpUHWp.jpeg", "https://i.imgur.com/NYg3JQo.jpeg", "https://i.imgur.com/qvXqAjg.jpeg"],
-                description: "THC Vapes. Can be combined with weed/hash orders. Edibles available as add-on.",
+                description: "THC Vapes. Can combine with weed/hash orders. Edibles available as add-on.",
                 quantities: [
-                    { amount: "10pcs", price: 300, perPiece: 30 },
-                    { amount: "50pcs", price: 1200, perPiece: 24 },
-                    { amount: "100pcs", price: 1920, perPiece: 19.20 }
+                    { amount: "10pcs", price: 300, perUnit: 30 },
+                    { amount: "50pcs", price: 1200, perUnit: 24 },
+                    { amount: "100pcs", price: 1920, perUnit: 19.20 }
                 ]
             },
             {
-                id: 9,
+                id: 11,
                 name: "Cali Purple USA",
                 category: "flower",
                 emoji: "🌿",
-                origin: "Italy",
+                origin: "it",
                 shipping: 10,
                 reship: false,
                 images: ["https://i.imgur.com/nb7hHCQ.jpeg"],
                 description: "Premium Cali Purple. Ships from Italy.",
                 quantities: [
-                    { amount: "25g", price: 224, perGram: 8.96 },
-                    { amount: "50g", price: 420, perGram: 8.40 },
-                    { amount: "100g", price: 720, perGram: 7.20 },
-                    { amount: "250g", price: 1650, perGram: 6.60 },
-                    { amount: "500g", price: 3000, perGram: 6.00 },
-                    { amount: "1000g", price: 4800, perGram: 4.80 }
+                    { amount: "25g", price: 224, perUnit: 8.96 },
+                    { amount: "50g", price: 420, perUnit: 8.40 },
+                    { amount: "100g", price: 720, perUnit: 7.20 },
+                    { amount: "250g", price: 1650, perUnit: 6.60 },
+                    { amount: "500g", price: 3000, perUnit: 6.00 },
+                    { amount: "1000g", price: 4800, perUnit: 4.80 }
                 ]
             },
             {
-                id: 10,
+                id: 12,
                 name: "Cali Critical Berry",
                 category: "flower",
                 emoji: "🌿",
-                origin: "Italy",
+                origin: "it",
                 shipping: 10,
                 reship: false,
                 images: ["https://i.imgur.com/rqfIr8q.jpeg"],
                 description: "Sweet berry flavor. Ships from Italy.",
                 quantities: [
-                    { amount: "25g", price: 150, perGram: 6.00 },
-                    { amount: "50g", price: 240, perGram: 4.80 },
-                    { amount: "100g", price: 396, perGram: 3.96 },
-                    { amount: "250g", price: 930, perGram: 3.72 },
-                    { amount: "500g", price: 1800, perGram: 3.60 },
-                    { amount: "1000g", price: 3360, perGram: 3.36 }
+                    { amount: "25g", price: 150, perUnit: 6.00 },
+                    { amount: "50g", price: 240, perUnit: 4.80 },
+                    { amount: "100g", price: 396, perUnit: 3.96 },
+                    { amount: "250g", price: 930, perUnit: 3.72 },
+                    { amount: "500g", price: 1800, perUnit: 3.60 },
+                    { amount: "1000g", price: 3360, perUnit: 3.36 }
                 ]
             },
             {
-                id: 11,
+                id: 13,
                 name: "Cali Cherry",
                 category: "flower",
                 emoji: "🌿",
-                origin: "Czech Republic",
+                origin: "cz",
                 shipping: 25,
                 reship: true,
                 images: ["https://i.imgur.com/rEhVlF6.jpeg", "https://i.imgur.com/WRuu6ma.jpeg"],
                 description: "100% safe with reship guarantee. Recommended for bulk sellers.",
                 quantities: [
-                    { amount: "500g", price: 1440, perGram: 2.88 },
-                    { amount: "1000g", price: 2400, perGram: 2.40 },
-                    { amount: "5000g", price: 10800, perGram: 2.16 }
+                    { amount: "500g", price: 1440, perUnit: 2.88 },
+                    { amount: "1000g", price: 2400, perUnit: 2.40 },
+                    { amount: "5000g", price: 10800, perUnit: 2.16 }
                 ]
             },
             {
-                id: 12,
+                id: 14,
                 name: "Dry Space",
                 category: "hash",
                 emoji: "🍫",
-                origin: "Czech Republic",
+                origin: "cz",
                 shipping: 25,
                 reship: true,
                 images: ["https://i.imgur.com/ilGU1NS.jpeg", "https://i.imgur.com/1CX1ONF.jpeg"],
                 description: "Premium dry hash. 100% reship guarantee.",
                 quantities: [
-                    { amount: "1000g", price: 3480, perGram: 3.48 }
+                    { amount: "1000g", price: 3480, perUnit: 3.48 }
                 ]
             },
             {
-                id: 13,
+                id: 15,
                 name: "Cali Fruit Joy",
                 category: "flower",
                 emoji: "🌿",
-                origin: "Czech Republic",
+                origin: "cz",
                 shipping: 25,
                 reship: true,
                 images: ["https://i.imgur.com/9Pqzkie.jpeg"],
                 description: "100% safe with reship guarantee. Recommended for bulk sellers.",
                 quantities: [
-                    { amount: "500g", price: 1800, perGram: 3.60 },
-                    { amount: "1000g", price: 3000, perGram: 3.00 },
-                    { amount: "5000g", price: 13200, perGram: 2.64 }
+                    { amount: "500g", price: 1800, perUnit: 3.60 },
+                    { amount: "1000g", price: 3000, perUnit: 3.00 },
+                    { amount: "5000g", price: 13200, perUnit: 2.64 }
                 ]
             },
             {
-                id: 14,
+                id: 16,
                 name: "Dry Frozen Top",
                 category: "hash",
                 emoji: "🍫",
-                origin: "Czech Republic",
+                origin: "cz",
                 shipping: 25,
                 reship: true,
                 images: ["https://i.imgur.com/q3bnCcp.jpeg"],
                 description: "Premium frozen top hash. 100% reship guarantee.",
                 quantities: [
-                    { amount: "1000g", price: 3960, perGram: 3.96 }
+                    { amount: "1000g", price: 3960, perUnit: 3.96 }
                 ]
             },
             {
-                id: 15,
+                id: 17,
                 name: "Cali Spain Mimosa",
                 category: "flower",
                 emoji: "🌿",
-                origin: "Italy",
+                origin: "it",
                 shipping: 10,
                 reship: false,
                 images: ["https://i.imgur.com/z4v3zJ2.jpeg"],
                 description: "Spanish Mimosa strain. Ships from Italy.",
                 quantities: [
-                    { amount: "25g", price: 194, perGram: 7.76 },
-                    { amount: "50g", price: 360, perGram: 7.20 },
-                    { amount: "100g", price: 600, perGram: 6.00 },
-                    { amount: "250g", price: 1350, perGram: 5.40 },
-                    { amount: "500g", price: 2520, perGram: 5.04 },
-                    { amount: "1000g", price: 4560, perGram: 4.56 }
+                    { amount: "25g", price: 194, perUnit: 7.76 },
+                    { amount: "50g", price: 360, perUnit: 7.20 },
+                    { amount: "100g", price: 600, perUnit: 6.00 },
+                    { amount: "250g", price: 1350, perUnit: 5.40 },
+                    { amount: "500g", price: 2520, perUnit: 5.04 },
+                    { amount: "1000g", price: 4560, perUnit: 4.56 }
                 ]
             },
             {
-                id: 16,
+                id: 18,
                 name: "Dry Biscotti Spain",
                 category: "hash",
                 emoji: "🍫",
-                origin: "Italy",
+                origin: "it",
                 shipping: 10,
                 reship: false,
                 images: ["https://i.imgur.com/lpcEt39.jpeg", "https://i.imgur.com/Cz4uHG8.jpeg", "https://i.imgur.com/LOrG8Lc.jpeg"],
                 description: "Spanish Biscotti hash. Additional photos/videos available via private message.",
                 quantities: [
-                    { amount: "25g", price: 150, perGram: 6.00 },
-                    { amount: "50g", price: 276, perGram: 5.52 },
-                    { amount: "100g", price: 480, perGram: 4.80 },
-                    { amount: "250g", price: 1140, perGram: 4.56 },
-                    { amount: "500g", price: 2160, perGram: 4.32 },
-                    { amount: "1000g", price: 3960, perGram: 3.96 }
+                    { amount: "25g", price: 150, perUnit: 6.00 },
+                    { amount: "50g", price: 276, perUnit: 5.52 },
+                    { amount: "100g", price: 480, perUnit: 4.80 },
+                    { amount: "250g", price: 1140, perUnit: 4.56 },
+                    { amount: "500g", price: 2160, perUnit: 4.32 },
+                    { amount: "1000g", price: 3960, perUnit: 3.96 }
                 ]
             }
         ];
         
         // State
-        let cart = [];
+        let cart = JSON.parse(localStorage.getItem('shadeplug_cart')) || [];
         let currentProduct = null;
         let selectedQuantity = null;
-        let currentLanguage = 'en';
+        let currentLanguage = localStorage.getItem('shadeplug_lang') || 'en';
         let selectedPaymentMethod = null;
         
-        // Translations
-        const translations = {
-            en: {
-                welcome: "Welcome to SHADE PLUG",
-                subtitle: "Find all available products in our shop",
-                addToCart: "Add to Cart",
-                checkout: "Complete Order",
-                cart: "Shopping Cart",
-                tos: "Terms of Service",
-                shipping: "Shipping",
-                total: "Total",
-                subtotal: "Subtotal",
-                escrow: "Escrow Terms",
-                pickupStore: "Pickup Store",
-                locker: "Locker",
-                tracking: "Track Order",
-                community: "Community"
-            },
-            it: {
-                welcome: "Benvenuti in SHADE PLUG",
-                subtitle: "Troverete tutti i prodotti disponibili dello shop",
-                addToCart: "Aggiungi al Carrello",
-                checkout: "Completa Ordine",
-                cart: "Carrello",
-                tos: "Termini di Servizio",
-                shipping: "Spedizione",
-                total: "Totale",
-                subtotal: "Subtotale",
-                escrow: "Termini Escrow",
-                pickupStore: "Tabacchino",
-                locker: "Locker",
-                tracking: "Traccia Ordine",
-                community: "Community"
-            }
-        };
-        
         // Initialize
-        function init() {
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage(currentLanguage, false);
             renderProducts('all');
             setupCategoryFilters();
+            updateCartUI();
+            
+            // Prevent image download
+            document.addEventListener('contextmenu', (e) => {
+                if (e.target.tagName === 'IMG') {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            
+            // Prevent drag on images
+            document.addEventListener('dragstart', (e) => {
+                if (e.target.tagName === 'IMG') {
+                    e.preventDefault();
+                }
+            });
+        });
+        
+        // Translation function
+        function setLanguage(lang, save = true) {
+            currentLanguage = lang;
+            if (save) {
+                localStorage.setItem('shadeplug_lang', lang);
+            }
+            
+            const t = translations[lang];
+            
+            // Update all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    el.textContent = t[key];
+                }
+            });
+            
+            // Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (t[key]) {
+                    el.placeholder = t[key];
+                }
+            });
+            
+            // Update language cards
+            document.querySelectorAll('.language-card').forEach(card => {
+                card.classList.remove('active');
+                if (card.getAttribute('onclick').includes(lang)) {
+                    card.classList.add('active');
+                }
+            });
+            
+            // Update TOS content
+            updateTOS();
+            
+            // Re-render products to update text
+            const activeCategory = document.querySelector('.category-btn.active');
+            if (activeCategory) {
+                renderProducts(activeCategory.dataset.category);
+            }
         }
         
         // Render Products
@@ -1108,20 +2050,26 @@
                 ? products 
                 : products.filter(p => p.category === category);
             
+            const t = translations[currentLanguage];
+            
             filtered.forEach(product => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.onclick = () => openProductModal(product);
                 
-                const imageUrl = product.images[0] || 'https://via.placeholder.com/150';
+                const imageUrl = product.images[0];
+                const originText = product.origin === 'cz' ? t.origin_cz : t.origin_it;
                 
                 card.innerHTML = `
-                    <img class="product-image" src="${imageUrl}" alt="${product.name}" 
-                         onerror="this.src='https://via.placeholder.com/150/333/fff?text=${product.emoji}'">
+                    <div class="product-image-wrapper">
+                        <img class="product-image" src="${imageUrl}" alt="${product.name}" 
+                             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text y=%22.5em%22 x=%2250%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2240%22>${product.emoji}</text></svg>'">
+                        ${product.reship ? '<span class="product-badge">Reship</span>' : ''}
+                    </div>
                     <div class="product-info">
                         <div class="product-name">${product.emoji} ${product.name}</div>
-                        <div class="product-price">From €${product.quantities[0].price}</div>
-                        <div class="product-origin">📍 ${product.origin}</div>
+                        <div class="product-price">${t.from} €${product.quantities[0].price.toLocaleString()} <small>(${product.quantities[0].perUnit ? '€' + product.quantities[0].perUnit.toFixed(2) + '/g' : ''})</small></div>
+                        <div class="product-origin">${originText}</div>
                     </div>
                 `;
                 
@@ -1145,14 +2093,20 @@
             currentProduct = product;
             selectedQuantity = product.quantities[0];
             
+            const t = translations[currentLanguage];
+            
             document.getElementById('modal-image').src = product.images[0];
             document.getElementById('modal-title').textContent = `${product.emoji} ${product.name}`;
-            document.getElementById('modal-description').innerHTML = `
-                <strong>Origin:</strong> ${product.origin}<br>
-                <strong>Shipping:</strong> €${product.shipping}<br>
-                ${product.reship ? '✅ 100% Reship Guarantee' : ''}<br><br>
-                ${product.description}
+            
+            const originText = product.origin === 'cz' ? t.origin_cz : t.origin_it;
+            const metaHtml = `
+                <span class="meta-tag">${originText}</span>
+                <span class="meta-tag">${t.shipping_time}: €${product.shipping}</span>
+                ${product.reship ? `<span class="meta-tag reship">✓ ${t.reship}</span>` : ''}
             `;
+            document.getElementById('modal-meta').innerHTML = metaHtml;
+            
+            document.getElementById('modal-description').textContent = product.description;
             
             const qtyContainer = document.getElementById('modal-quantities');
             qtyContainer.innerHTML = '';
@@ -1162,14 +2116,14 @@
                 div.className = `quantity-option ${idx === 0 ? 'selected' : ''}`;
                 div.onclick = () => selectQuantity(div, qty);
                 
-                const perUnit = qty.perGram ? `€${qty.perGram}/g` : 
-                               qty.perPiece ? `€${qty.perPiece}/pc` : '';
+                const perUnitText = qty.perUnit ? `€${qty.perUnit.toFixed(2)}/g` : '';
                 
                 div.innerHTML = `
-                    <span><strong>${qty.amount}</strong></span>
-                    <span style="color: var(--accent); font-weight: bold;">
-                        €${qty.price} <small style="color: var(--text-secondary);">(${perUnit})</small>
-                    </span>
+                    <span class="qty-amount">${qty.amount}</span>
+                    <div class="qty-price">
+                        <div class="qty-total">€${qty.price.toLocaleString()}</div>
+                        <div class="qty-per-unit">${perUnitText}</div>
+                    </div>
                 `;
                 
                 qtyContainer.appendChild(div);
@@ -1190,6 +2144,17 @@
             document.body.style.overflow = '';
         }
         
+        // Lightbox
+        function openLightbox() {
+            const img = document.getElementById('modal-image').src;
+            document.getElementById('lightbox-image').src = img;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+        
         // Cart Functions
         function addToCart() {
             if (!currentProduct || !selectedQuantity) return;
@@ -1201,126 +2166,209 @@
             };
             
             cart.push(item);
+            saveCart();
             updateCartUI();
             closeModal();
+            showToast('Added to cart');
             
-            // Show notification
-            tg.showPopup({
-                title: 'Added to Cart',
-                message: `${currentProduct.name} (${selectedQuantity.amount}) added successfully!`
-            });
+            // Update badge
+            updateCartBadge();
+        }
+        
+        function saveCart() {
+            localStorage.setItem('shadeplug_cart', JSON.stringify(cart));
+        }
+        
+        function updateCartBadge() {
+            const badge = document.getElementById('cart-badge');
+            if (cart.length > 0) {
+                badge.textContent = cart.length;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
         }
         
         function updateCartUI() {
+            const t = translations[currentLanguage];
             const cartItems = document.getElementById('cart-items');
-            cartItems.innerHTML = '';
+            const cartSummary = document.getElementById('cart-summary');
             
+            updateCartBadge();
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="empty-cart">
+                        <div class="empty-cart-icon">🛒</div>
+                        <h3>${t.cart_empty}</h3>
+                        <p>${t.cart_empty_desc}</p>
+                    </div>
+                `;
+                cartSummary.innerHTML = '';
+                return;
+            }
+            
+            cartItems.innerHTML = '';
             let subtotal = 0;
-            let shipping = 0;
+            let maxShipping = 0;
             
             cart.forEach((item, idx) => {
                 subtotal += item.selectedQty.price;
-                shipping = Math.max(shipping, item.shipping);
+                maxShipping = Math.max(maxShipping, item.shipping);
                 
                 const div = document.createElement('div');
                 div.className = 'cart-item';
+                
+                const originText = item.origin === 'cz' ? t.origin_cz : t.origin_it;
+                
                 div.innerHTML = `
-                    <img class="cart-item-image" src="${item.images[0]}" 
-                         onerror="this.src='https://via.placeholder.com/80'">
+                    <img class="cart-item-image" src="${item.images[0]}" onerror="this.style.display='none'">
                     <div class="cart-item-details">
                         <div class="cart-item-name">${item.emoji} ${item.name}</div>
-                        <div style="color: var(--text-secondary); font-size: 12px;">
-                            ${item.selectedQty.amount}
-                        </div>
-                        <div class="cart-item-price">€${item.selectedQty.price}</div>
+                        <div class="cart-item-qty">${item.selectedQty.amount}</div>
+                        <div class="cart-item-price">€${item.selectedQty.price.toLocaleString()}</div>
+                        <div class="cart-item-shipping">${originText} • ${t.shipping_time}: €${item.shipping}</div>
                     </div>
-                    <button onclick="removeFromCart(${idx})" style="background: var(--danger); border: none; color: white; padding: 8px 12px; border-radius: 6px; cursor: pointer;">✕</button>
+                    <button class="remove-btn" onclick="removeFromCart(${idx})">✕</button>
                 `;
                 cartItems.appendChild(div);
             });
             
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px;">Your cart is empty</p>';
-            }
+            // Payment methods
+            const paymentMethods = [
+                { id: 'crypto', name: t.crypto, desc: 'BTC / LTC', fee: 0, icon: '₿' },
+                { id: 'bank', name: t.bank_transfer, desc: 'SEPA / Wire', fee: 0, icon: '🏦' },
+                { id: 'card', name: t.card, desc: 'Revolut / PayPal', fee: 10, icon: '💳' },
+                { id: 'escrow', name: t.escrow, desc: 'Verified only', fee: 10, icon: '🔒' }
+            ];
             
-            document.getElementById('cart-subtotal').textContent = `€${subtotal.toFixed(2)}`;
-            document.getElementById('cart-shipping').textContent = `€${shipping.toFixed(2)}`;
-            document.getElementById('cart-total').textContent = `€${(subtotal + shipping).toFixed(2)}`;
+            const paymentHtml = paymentMethods.map(method => `
+                <div class="payment-method" data-fee="${method.fee}" onclick="selectPayment(this, '${method.id}')">
+                    <span class="payment-icon">${method.icon}</span>
+                    <div class="payment-info">
+                        <div class="payment-name">${method.name}</div>
+                        <div class="payment-desc">${method.desc}</div>
+                    </div>
+                    <span class="payment-fee ${method.fee === 0 ? 'free' : 'charge'}">
+                        ${method.fee === 0 ? t.fee_free : t.fee_10}
+                    </span>
+                </div>
+            `).join('');
+            
+            const feeAmount = selectedPaymentMethod ? (subtotal + maxShipping) * (paymentMethods.find(m => m.id === selectedPaymentMethod)?.fee || 0) / 100 : 0;
+            const total = subtotal + maxShipping + feeAmount;
+            
+            cartSummary.innerHTML = `
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>${t.subtotal}</span>
+                        <span>€${subtotal.toLocaleString()}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>${t.shipping}</span>
+                        <span>€${maxShipping}</span>
+                    </div>
+                    ${selectedPaymentMethod ? `
+                    <div class="summary-row">
+                        <span>${t.payment_fee}</span>
+                        <span>€${feeAmount.toFixed(2)}</span>
+                    </div>
+                    ` : ''}
+                    <div class="summary-row total">
+                        <span>${t.total}</span>
+                        <span>€${total.toLocaleString()}</span>
+                    </div>
+                </div>
+                
+                <div class="payment-section">
+                    <div class="section-label">${t.select_payment}</div>
+                    <div class="payment-methods">
+                        ${paymentHtml}
+                    </div>
+                </div>
+                
+                <button class="checkout-btn" onclick="checkout()" ${!selectedPaymentMethod ? 'disabled' : ''}>
+                    ${t.checkout}
+                </button>
+            `;
+            
+            // Restore selected payment
+            if (selectedPaymentMethod) {
+                const methods = document.querySelectorAll('.payment-method');
+                methods.forEach(m => {
+                    if (m.getAttribute('onclick').includes(selectedPaymentMethod)) {
+                        m.classList.add('selected');
+                    }
+                });
+            }
         }
         
         function removeFromCart(index) {
             cart.splice(index, 1);
+            saveCart();
             updateCartUI();
         }
         
-        // Payment Selection
-        function selectPayment(element) {
+        function selectPayment(element, methodId) {
             document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('selected'));
             element.classList.add('selected');
-            selectedPaymentMethod = element;
-            
-            const fee = parseInt(element.dataset.fee);
-            const subtotal = cart.reduce((sum, item) => sum + item.selectedQty.price, 0);
-            const shipping = cart.length > 0 ? Math.max(...cart.map(i => i.shipping)) : 0;
-            const feeAmount = (subtotal + shipping) * (fee / 100);
-            const total = subtotal + shipping + feeAmount;
-            
-            document.getElementById('cart-total').textContent = `€${total.toFixed(2)}`;
+            selectedPaymentMethod = methodId;
+            updateCartUI();
         }
         
-        // Checkout
         function checkout() {
-            if (cart.length === 0) {
-                tg.showAlert('Your cart is empty!');
-                return;
-            }
+            if (cart.length === 0) return;
             
-            if (!selectedPaymentMethod) {
-                tg.showAlert('Please select a payment method');
-                return;
-            }
+            const t = translations[currentLanguage];
             
-            // Generate order message
-            const subtotal = cart.reduce((sum, item) => sum + item.selectedQty.price, 0);
-            const shipping = Math.max(...cart.map(i => i.shipping));
-            const fee = parseInt(selectedPaymentMethod.dataset.fee);
-            const feeAmount = (subtotal + shipping) * (fee / 100);
-            const total = subtotal + shipping + feeAmount;
+            const feePercent = selectedPaymentMethod === 'crypto' || selectedPaymentMethod === 'bank' ? 0 : 10;
             
-            const paymentName = selectedPaymentMethod.querySelector('.payment-name').textContent;
-            
-            let message = `🛒 NEW ORDER - SHADE PLUG\n\n`;
-            message += `Products:\n`;
+            let subtotal = 0;
+            let maxShipping = 0;
             cart.forEach(item => {
-                message += `- ${item.name} ${item.selectedQty.amount} = €${item.selectedQty.price}\n`;
+                subtotal += item.selectedQty.price;
+                maxShipping = Math.max(maxShipping, item.shipping);
             });
-            message += `\nSubtotal: €${subtotal.toFixed(2)}\n`;
-            message += `Shipping: €${shipping.toFixed(2)}\n`;
-            message += `Payment: ${paymentName} (${fee}% fee: €${feeAmount.toFixed(2)})\n`;
-            message += `\n💰 TOTAL: €${total.toFixed(2)}\n\n`;
-            message += `Customer: @${tg.initDataUnsafe?.user?.username || 'Unknown'}\n`;
-            message += `User ID: ${tg.initDataUnsafe?.user?.id || 'N/A'}`;
             
-            // Send to Telegram
+            const feeAmount = (subtotal + maxShipping) * feePercent / 100;
+            const total = subtotal + maxShipping + feeAmount;
+            
+            // Build order message
+            let message = `🛒 NEW ORDER - SHADE PLUG\n\n`;
+            message += `📦 Products:\n`;
+            cart.forEach(item => {
+                const origin = item.origin === 'cz' ? 'CZ' : 'IT';
+                message += `- ${item.name} ${item.selectedQty.amount} = €${item.selectedQty.price} [${origin}]\n`;
+            });
+            message += `\n💰 ${t.subtotal}: €${subtotal.toLocaleString()}\n`;
+            message += `🚚 ${t.shipping}: €${maxShipping}\n`;
+            message += `💳 ${t.payment_fee}: ${feePercent}% (€${feeAmount.toFixed(2)})\n`;
+            message += `\n🔥 TOTAL: €${total.toLocaleString()}\n\n`;
+            message += `👤 Customer: @${tg.initDataUnsafe?.user?.username || 'Unknown'}\n`;
+            message += `🆔 User ID: ${tg.initDataUnsafe?.user?.id || 'N/A'}\n\n`;
+            message += `📋 ${t.shipping_form}:\n`;
+            message += `Name:\nAddress:\n${t.pickup_store}/${t.locker}:\nCity:\nZIP:\nPhone:\nEmail:\n\n`;
+            message += `✅ I agree to the TOS and Escrow terms`;
+            
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://t.me/shadeplug?text=${encodedMessage}`, '_blank');
             
-            tg.showPopup({
-                title: 'Order Submitted',
-                message: 'Your order has been sent to @shadeplug. Please complete payment to proceed.'
-            });
-            
+            // Clear cart
             cart = [];
+            saveCart();
+            selectedPaymentMethod = null;
             updateCartUI();
+            
+            showToast('Order sent to @shadeplug');
         }
         
         // Navigation
         function showSection(section) {
-            // Hide all sections
+            // Hide all
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelector('.products-grid').style.display = 'none';
-            document.querySelector('.category-filter').style.display = 'none';
-            document.querySelector('.welcome').style.display = 'none';
+            document.getElementById('products-container').style.display = 'none';
+            document.getElementById('category-filter').style.display = 'none';
+            document.getElementById('welcome-section').style.display = 'none';
             
             // Update nav
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -1328,47 +2376,216 @@
             
             // Show selected
             if (section === 'home') {
-                document.querySelector('.products-grid').style.display = 'grid';
-                document.querySelector('.category-filter').style.display = 'flex';
-                document.querySelector('.welcome').style.display = 'block';
+                document.getElementById('products-container').style.display = 'grid';
+                document.getElementById('category-filter').style.display = 'flex';
+                document.getElementById('welcome-section').style.display = 'block';
             } else {
                 document.getElementById(`${section}-section`).classList.add('active');
             }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
         }
         
-        // Language
-        function setLanguage(lang) {
-            currentLanguage = lang;
-            const t = translations[lang] || translations.en;
+        // TOS Content
+        function updateTOS() {
+            const t = translations[currentLanguage];
+            const content = document.getElementById('tos-content');
             
-            document.getElementById('welcome-title').textContent = t.welcome;
-            document.getElementById('welcome-subtitle').textContent = t.subtitle;
+            const tosData = {
+                en: `
+                    <h3>🏆 SHADEPLUG SHOP</h3>
+                    <p>Welcome to SHADE PLUG. By using our services, you agree to the following terms and conditions.</p>
+                    
+                    <h3>📋 ${t.tos_escrow_title}</h3>
+                    <ul>
+                        <li>Verified escrow only accepted</li>
+                        <li>+10% fee on total transaction for escrow</li>
+                        <li>Payment acceptance = automatic agreement to terms</li>
+                        <li>Shipping dispatched 1-3 days after payment</li>
+                        <li>Tracking provided within 48 hours</li>
+                    </ul>
+                    
+                    <div class="shipping-form">
+                        <div class="form-title">${t.shipping_form}</div>
+                        <div class="form-field">Full Name:</div>
+                        <div class="form-field">Additional Instructions: (optional)</div>
+                        <div class="form-field">Address:</div>
+                        <div class="form-field">${t.pickup_store}/${t.locker}:</div>
+                        <div class="form-field">City:</div>
+                        <div class="form-field">ZIP Code:</div>
+                        <div class="form-field">Province:</div>
+                        <div class="form-field">Phone:</div>
+                        <div class="form-field">Email:</div>
+                    </div>
+                    
+                    <h3>⏰ Pickup Rules</h3>
+                    <ul>
+                        <li><strong>6-hour pickup window</strong> after delivery to locker/store</li>
+                        <li><strong>3-hour verification window</strong> after package retrieval</li>
+                        <li>Escrow releases funds automatically after time expires</li>
+                        <li>No spamming - wait for tracking updates</li>
+                    </ul>
+                    
+                    <h3>🎥 ${t.video_requirements}</h3>
+                    <p><strong>Locker Pickup:</strong></p>
+                    <ol>
+                        <li>Start recording BEFORE opening locker</li>
+                        <li>Show all locker doors closed</li>
+                        <li>Open with code/QR (using separate device)</li>
+                        <li>Record opening sound</li>
+                        <li>Take package to safe location</li>
+                        <li>Show all sides, shake to confirm contents</li>
+                        <li>Open and show contents</li>
+                        <li><strong>NO EDITS ALLOWED - continuous video required</strong></li>
+                    </ol>
+                    
+                    <p><strong>${t.pickup_store} Pickup:</strong></p>
+                    <ol>
+                        <li>Start recording BEFORE entering</li>
+                        <li>Enter with phone visible</li>
+                        <li>Retrieve with code/QR</li>
+                        <li>Take to safe location</li>
+                        <li>Show all sides, shake to confirm</li>
+                        <li>Open and show contents</li>
+                        <li><strong>NO EDITS ALLOWED</strong></li>
+                    </ol>
+                    
+                    <h3>📦 ${t.package_policy}</h3>
+                    <ul>
+                        <li><strong>External factors</strong> (seizure/lost by carrier): Reship arranged</li>
+                        <li><strong>Customer error</strong> (wrong address, not home): No reship, escrow releases funds</li>
+                        <li><strong>InPost Bentivoglio</strong>: 0% coverage (theft risk)</li>
+                    </ul>
+                    
+                    <h3>💳 ${t.tos_payment_title}</h3>
+                    <ul>
+                        <li>BTC / LTC: 0% fee</li>
+                        <li>Bank Transfer: 0% fee</li>
+                        <li>Revolut / PayPal: +10% fee</li>
+                        <li>Escrow: +10% fee</li>
+                    </ul>
+                    
+                    <h3>🚚 ${t.tos_shipping_title}</h3>
+                    <p><strong>EU:</strong> 24-48 hours<br>
+                    <strong>Worldwide:</strong> 72 hours</p>
+                    
+                    <p><strong>Italy:</strong> InPost €10, BRT €20, GLS €20, UPS €25<br>
+                    <strong>Czech Republic:</strong> GLS €25, BRT €25</p>
+                `,
+                it: `
+                    <h3>🏆 SHADEPLUG SHOP</h3>
+                    <p>Benvenuti in SHADE PLUG. Utilizzando i nostri servizi, accettate i seguenti termini e condizioni.</p>
+                    
+                    <h3>📋 ${t.tos_escrow_title}</h3>
+                    <ul>
+                        <li>Solo escrow verificati accettati</li>
+                        <li>+10% sul totale per escrow</li>
+                        <li>Accettazione pagamento = accettazione automatica termini</li>
+                        <li>Spedizione 1-3 giorni dopo pagamento</li>
+                        <li>Tracking entro 48 ore</li>
+                    </ul>
+                    
+                    <div class="shipping-form">
+                        <div class="form-title">${t.shipping_form}</div>
+                        <div class="form-field">Nome e cognome:</div>
+                        <div class="form-field">Indicazioni aggiuntive: (facoltativo)</div>
+                        <div class="form-field">Indirizzo:</div>
+                        <div class="form-field">${t.pickup_store}/${t.locker}:</div>
+                        <div class="form-field">Località:</div>
+                        <div class="form-field">CAP:</div>
+                        <div class="form-field">Provincia:</div>
+                        <div class="form-field">Telefono:</div>
+                        <div class="form-field">Email:</div>
+                    </div>
+                    
+                    <h3>⏰ Tempi di Ritiro</h3>
+                    <ul>
+                        <li><strong>6 ore</strong> per ritirare dal tabacchino/locker</li>
+                        <li><strong>3 ore</strong> per verificare il contenuto</li>
+                        <li>L'escrow sblocca i soldi automaticamente dopo scadenza</li>
+                        <li>Non spammare - aspettare aggiornamenti tracking</li>
+                    </ul>
+                    
+                    <h3>🎥 Requisiti Video per Reship</h3>
+                    <p><strong>Ritiro Locker:</strong></p>
+                    <ol>
+                        <li>Iniziate a registrare PRIMA di aprire</li>
+                        <li>Mostrate tutti gli sportelli chiusi</li>
+                        <li>Aprire con codice/QR da altro dispositivo</li>
+                        <li>Registrare il suono di apertura</li>
+                        <li>Portare il pacco in un posto sicuro</li>
+                        <li>Mostrare tutti i lati, scuotere per confermare</li>
+                        <li>Aprire e mostrare il contenuto</li>
+                        <li><strong>NESSUN TAGLIO AMMESSO - video continuo richiesto</strong></li>
+                    </ol>
+                    
+                    <p><strong>Ritiro Tabacchino:</strong></p>
+                    <ol>
+                        <li>Iniziate a registrare PRIMA di entrare</li>
+                        <li>Entrare con telefono in mano visibile</li>
+                        <li>Ritirare con codice/QR</li>
+                        <li>Portare in un posto sicuro</li>
+                        <li>Mostrare tutti i lati, scuotere</li>
+                        <li>Aprire e mostrare contenuto</li>
+                        <li><strong>NESSUN TAGLIO AMMESSO</strong></li>
+                    </ol>
+                    
+                    <h3>📦 Politica Pacco Perso</h3>
+                    <ul>
+                        <li><strong>Fattori esterni</strong> (sequestro/smarrimento): Reship effettuato</li>
+                        <li><strong>Errore cliente</strong> (indirizzo sbagliato, non in casa): No reship, escrow sblocca</li>
+                        <li><strong>InPost Bentivoglio</strong>: 0% copertura (rischio furto)</li>
+                    </ul>
+                    
+                    <h3>💳 Metodi di Pagamento</h3>
+                    <ul>
+                        <li>BTC / LTC: 0% commissione</li>
+                        <li>Bonifico Bancario: 0% commissione</li>
+                        <li>Revolut / PayPal: +10% commissione</li>
+                        <li>Escrow: +10% commissione</li>
+                    </ul>
+                    
+                    <h3>🚚 Informazioni Spedizione</h3>
+                    <p><strong>EU:</strong> 24-48 ore<br>
+                    <strong>Mondiale:</strong> 72 ore</p>
+                    
+                    <p><strong>Italia:</strong> InPost €10, BRT €20, GLS €20, UPS €25<br>
+                    <strong>Repubblica Ceca:</strong> GLS €25, BRT €25</p>
+                `
+            };
             
-            document.querySelectorAll('.language-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.onclick.toString().includes(lang)) btn.classList.add('active');
-            });
-            
-            tg.showPopup({
-                title: 'Language Changed',
-                message: `Language set to ${lang.toUpperCase()}`
-            });
+            // Default to English if translation not available
+            content.innerHTML = tosData[currentLanguage] || tosData.en;
         }
         
         // Tracking
         function trackOrder() {
             const code = document.getElementById('tracking-input').value.trim();
             if (!code) {
-                tg.showAlert('Please enter a tracking number');
+                showToast('Please enter tracking code');
                 return;
             }
             
-            // Open tracking in browser
-            window.open(`https://gls-group.eu/IT/it/servizi-online/verifica-stato-spedizione.html?match=${code}`, '_blank');
+            // Open GLS tracking
+            window.open(`https://www.gls-group.eu/IT/it/servizi-online/verifica-stato-spedizione.html?match=${code}`, '_blank');
         }
         
-        // Initialize app
-        init();
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        
+        // Close modals on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closeLightbox();
+            }
+        });
     </script>
 </body>
 </html>
