@@ -9,16 +9,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0B0F19;
-            --bg-secondary: #161C2C;
-            --bg-glass: rgba(22, 28, 44, 0.85);
-            --accent-green: #00FFA3;
-            --accent-blue: #3B82F6;
-            --accent-gold: #F59E0B;
-            --accent-danger: #EF4444;
-            --text-primary: #FFFFFF;
-            --text-secondary: #9CA3AF;
-            --text-muted: #6B7280;
+            --bg-primary: #0a0c10;
+            --bg-secondary: rgba(20, 25, 40, 0.9);
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --accent-green: #00ffa3;
+            --accent-blue: #00d4ff;
+            --accent-purple: #a855f7;
+            --accent-gold: #fbbf24;
+            --accent-danger: #ef4444;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
             --border: rgba(255, 255, 255, 0.08);
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             --shadow-glow: 0 0 30px rgba(0, 255, 163, 0.15);
@@ -37,6 +38,7 @@
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
         /* Animated Background */
@@ -50,34 +52,39 @@
 
         .leaf {
             position: absolute;
-            font-size: 30px;
-            opacity: 0.03;
-            animation: float 20s infinite linear;
+            font-size: 24px;
+            opacity: 0.04;
+            animation: fall linear infinite;
         }
 
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.04; }
+            90% { opacity: 0.04; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
 
         .orb {
-            position: absolute;
+            position: fixed;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.08;
+            filter: blur(100px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .orb-1 { width: 400px; height: 400px; background: var(--accent-green); top: -100px; right: -100px; }
-        .orb-2 { width: 300px; height: 300px; background: var(--accent-blue); bottom: -50px; left: -50px; }
+        .orb-1 { width: 500px; height: 500px; background: var(--accent-green); top: -200px; right: -200px; }
+        .orb-2 { width: 400px; height: 400px; background: var(--accent-blue); bottom: -100px; left: -100px; }
+        .orb-3 { width: 300px; height: 300px; background: var(--accent-purple); top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
-        /* Layout */
+        /* App Container */
         .app {
             position: relative;
             z-index: 1;
-            max-width: 480px;
+            max-width: 500px;
             margin: 0 auto;
             min-height: 100vh;
-            padding-bottom: 100px;
+            padding-bottom: 90px;
         }
 
         /* Header */
@@ -85,23 +92,52 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(11, 15, 25, 0.95);
+            background: rgba(10, 12, 16, 0.95);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            padding: 16px;
+            padding: 20px;
             text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .icon-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-glass);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            transform: translateY(-2px);
         }
 
         .logo-container {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 12px;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
             border-radius: 50%;
             overflow: hidden;
             border: 3px solid transparent;
             background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
                         linear-gradient(135deg, var(--accent-green), var(--accent-blue)) border-box;
             box-shadow: var(--shadow-glow);
+            position: relative;
         }
 
         .logo-container img {
@@ -113,61 +149,22 @@
         .instagram-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
+            gap: 8px;
+            padding: 10px 20px;
             background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            border-radius: 20px;
+            border-radius: 25px;
             color: white;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             text-decoration: none;
-            margin-bottom: 12px;
+            margin-top: 16px;
             box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3);
-        }
-
-        .header-actions {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: var(--bg-glass);
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
             transition: all 0.3s;
-            font-size: 18px;
         }
 
-        .icon-btn:hover {
-            border-color: var(--accent-green);
-            color: var(--accent-green);
+        .instagram-badge:hover {
             transform: translateY(-2px);
-        }
-
-        .badge-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--accent-gold);
-            color: #000;
-            font-size: 10px;
-            font-weight: 800;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 8px 25px rgba(220, 39, 67, 0.4);
         }
 
         /* Navigation */
@@ -176,7 +173,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(11, 15, 25, 0.98);
+            background: rgba(10, 12, 16, 0.98);
             backdrop-filter: blur(20px);
             border-top: 1px solid var(--border);
             display: flex;
@@ -207,13 +204,29 @@
         }
 
         .nav-item .icon {
-            font-size: 22px;
+            font-size: 24px;
         }
 
-        /* Content Views */
+        .badge {
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            background: var(--accent-gold);
+            color: #000;
+            font-size: 10px;
+            font-weight: 800;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Views */
         .view {
             display: none;
-            padding: 16px;
+            padding: 20px;
             animation: fadeIn 0.4s ease;
         }
 
@@ -226,29 +239,34 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Section Headers */
         .section-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             background: linear-gradient(135deg, #fff, var(--accent-green));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Product Cards */
+        /* Product Grid */
         .products-grid {
             display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 16px;
         }
 
+        @media (max-width: 400px) {
+            .products-grid { grid-template-columns: 1fr; }
+        }
+
         .product-card {
-            background: var(--bg-glass);
+            background: var(--bg-secondary);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border);
             border-radius: 20px;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -259,10 +277,9 @@
 
         .product-image {
             width: 100%;
-            height: 200px;
+            height: 160px;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
             background: linear-gradient(135deg, #1a1f2e, #0f1419);
         }
 
@@ -279,136 +296,203 @@
 
         .product-badges {
             position: absolute;
-            top: 12px;
-            left: 12px;
+            top: 10px;
+            left: 10px;
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
 
-        .badge {
+        .badge-origin {
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
         }
 
-        .badge-origin-cz {
-            background: rgba(239, 68, 68, 0.9);
-            color: white;
-        }
-
-        .badge-origin-ita {
-            background: rgba(0, 255, 163, 0.9);
-            color: #000;
-        }
+        .badge-cz { background: rgba(239, 68, 68, 0.9); color: white; }
+        .badge-ita { background: rgba(0, 255, 163, 0.9); color: #000; }
 
         .badge-safe {
             background: rgba(0, 0, 0, 0.7);
             color: var(--accent-green);
             border: 1px solid rgba(0, 255, 163, 0.3);
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             gap: 4px;
         }
 
         .product-info {
-            padding: 20px;
+            padding: 16px;
         }
 
         .product-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             margin-bottom: 8px;
+            line-height: 1.3;
         }
 
         .product-meta {
             display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-            font-size: 13px;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 12px;
             color: var(--text-muted);
         }
 
         .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
             padding: 4px 10px;
-            background: rgba(255,255,255,0.05);
+            background: var(--bg-glass);
             border-radius: 8px;
+            border: 1px solid var(--border);
         }
 
-        /* Tier Selector */
-        .tier-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
+        .product-price-from {
+            font-size: 14px;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .view-details-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 13px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-details-btn:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        /* Product Modal */
+        .product-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 200;
+            display: none;
+            overflow-y: auto;
+        }
+
+        .product-modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 201;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .modal-desc {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 24px;
         }
 
         .tier-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .tier-btn {
-            padding: 12px 8px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            padding: 16px;
+            background: var(--bg-glass);
+            border: 2px solid var(--border);
+            border-radius: 12px;
             color: var(--text-secondary);
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
         }
 
-        .tier-btn:hover {
-            border-color: var(--accent-blue);
-            color: var(--text-primary);
+        .tier-btn.selected {
+            border-color: var(--accent-green);
+            background: rgba(0, 255, 163, 0.1);
+            color: var(--accent-green);
         }
 
-        .tier-btn.selected {
-            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
-            border-color: transparent;
-            color: #000;
-            box-shadow: 0 4px 15px rgba(0, 255, 163, 0.3);
+        .tier-amount {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 4px;
         }
 
         .tier-price {
             display: block;
-            font-size: 11px;
-            margin-top: 4px;
-            opacity: 0.9;
+            font-size: 14px;
+            color: var(--accent-gold);
         }
 
         .add-cart-btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: linear-gradient(135deg, var(--accent-green), #00cc88);
             border: none;
             border-radius: 12px;
             color: #000;
-            font-weight: 700;
-            font-size: 15px;
+            font-weight: 800;
+            font-size: 16px;
             cursor: pointer;
             transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .add-cart-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            background: var(--bg-secondary);
+            background: var(--bg-glass);
             color: var(--text-muted);
         }
 
@@ -423,7 +507,7 @@
             inset: 0;
             background: rgba(0,0,0,0.8);
             backdrop-filter: blur(5px);
-            z-index: 200;
+            z-index: 150;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s;
@@ -444,7 +528,7 @@
             max-height: 85vh;
             transform: translateY(100%);
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 201;
+            z-index: 151;
             display: flex;
             flex-direction: column;
         }
@@ -454,7 +538,7 @@
         }
 
         .drawer-header {
-            padding: 20px;
+            padding: 24px;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
@@ -467,13 +551,16 @@
         }
 
         .drawer-close {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 1px solid var(--border);
             background: transparent;
             color: var(--text-secondary);
             font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
         }
 
@@ -487,7 +574,7 @@
             display: flex;
             gap: 16px;
             padding: 16px;
-            background: rgba(255,255,255,0.03);
+            background: var(--bg-glass);
             border-radius: 16px;
             margin-bottom: 12px;
             border: 1px solid var(--border);
@@ -518,7 +605,6 @@
         .cart-item-price {
             font-weight: 700;
             color: var(--accent-gold);
-            font-size: 16px;
         }
 
         .cart-item-actions {
@@ -528,13 +614,13 @@
         }
 
         .qty-btn {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             border: 1px solid var(--border);
             background: transparent;
             color: var(--text-primary);
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
         }
 
@@ -549,7 +635,7 @@
         }
 
         .drawer-footer {
-            padding: 20px;
+            padding: 24px;
             border-top: 1px solid var(--border);
             background: rgba(0,0,0,0.2);
         }
@@ -572,18 +658,14 @@
         }
 
         .summary-row .value {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .summary-row.total .value {
             color: var(--accent-green);
+            font-weight: 700;
         }
 
         .checkout-btn {
             width: 100%;
-            margin-top: 16px;
-            padding: 16px;
+            margin-top: 20px;
+            padding: 18px;
             background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
             border: none;
             border-radius: 12px;
@@ -591,27 +673,25 @@
             font-weight: 800;
             font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s;
         }
 
         /* Checkout Form */
         .form-section {
-            background: var(--bg-glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
+            background: var(--bg-secondary);
             border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
         }
 
         .form-title {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             color: var(--accent-green);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .form-group {
@@ -620,18 +700,18 @@
 
         .form-label {
             display: block;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--text-muted);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .form-input, .form-textarea {
             width: 100%;
-            padding: 14px;
-            background: rgba(255,255,255,0.05);
+            padding: 16px;
+            background: var(--bg-glass);
             border: 1px solid var(--border);
             border-radius: 12px;
             color: var(--text-primary);
@@ -648,14 +728,12 @@
         .form-textarea {
             min-height: 100px;
             resize: vertical;
-            font-family: monospace;
-            font-size: 13px;
         }
 
         .option-card {
             padding: 16px;
-            background: rgba(255,255,255,0.03);
-            border: 2px solid var(--border);
+            background: var(--bg-glass);
+            border: 2px solid transparent;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
@@ -671,12 +749,12 @@
         }
 
         .option-info h4 {
-            font-size: 14px;
+            font-size: 15px;
             margin-bottom: 4px;
         }
 
         .option-info p {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-muted);
         }
 
@@ -687,31 +765,25 @@
 
         .fee-tag {
             font-size: 11px;
-            padding: 4px 8px;
-            border-radius: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
             font-weight: 700;
         }
 
-        .fee-tag.free {
-            background: rgba(0, 255, 163, 0.2);
-            color: var(--accent-green);
-        }
+        .fee-free { background: rgba(0, 255, 163, 0.2); color: var(--accent-green); }
+        .fee-charge { background: rgba(251, 191, 36, 0.2); color: var(--accent-gold); }
 
-        .fee-tag.charge {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--accent-gold);
-        }
-
-        /* TOS Section */
+        /* TOS */
         .tos-container {
             border: 1px solid var(--border);
             border-radius: 16px;
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
         .tos-header {
             padding: 20px;
-            background: rgba(255,255,255,0.03);
+            background: var(--bg-glass);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -742,20 +814,20 @@
             color: var(--accent-gold);
         }
 
-        /* Links Section */
+        /* Links Page */
         .links-grid {
             display: grid;
-            gap: 12px;
+            gap: 16px;
         }
 
         .link-card {
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 20px;
-            background: var(--bg-glass);
+            gap: 20px;
+            padding: 24px;
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 20px;
             text-decoration: none;
             color: var(--text-primary);
             transition: all 0.3s;
@@ -763,65 +835,65 @@
 
         .link-card:hover {
             border-color: var(--accent-blue);
-            transform: translateX(5px);
+            transform: translateX(10px);
         }
 
         .link-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 28px;
         }
 
         .link-icon.telegram { background: rgba(0, 136, 204, 0.2); }
         .link-icon.reviews { background: rgba(0, 255, 163, 0.2); }
-        .link-icon.community { background: rgba(59, 130, 246, 0.2); }
+        .link-icon.community { background: rgba(168, 85, 247, 0.2); }
 
         .link-info h3 {
-            font-size: 16px;
-            margin-bottom: 4px;
+            font-size: 18px;
+            margin-bottom: 6px;
         }
 
         .link-info p {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-muted);
         }
 
         /* Tracking */
         .tracking-box {
-            background: var(--bg-glass);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            padding: 40px 30px;
             text-align: center;
+            border: 1px solid var(--border);
         }
 
         .tracking-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
             background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 50px;
             box-shadow: var(--shadow-glow);
         }
 
         .tracking-input-group {
             display: flex;
             gap: 12px;
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .tracking-input {
             flex: 1;
-            padding: 14px;
-            background: rgba(255,255,255,0.05);
+            padding: 16px;
+            background: var(--bg-glass);
             border: 1px solid var(--border);
             border-radius: 12px;
             color: var(--text-primary);
@@ -829,13 +901,13 @@
             outline: none;
         }
 
-        /* Floating Telegram Button */
+        /* Floating Telegram */
         .fab-telegram {
             position: fixed;
             bottom: 100px;
             right: 20px;
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
             background: #0088cc;
             border-radius: 50%;
             display: flex;
@@ -853,44 +925,6 @@
             transform: scale(1.1) rotate(10deg);
         }
 
-        /* Lightbox */
-        .lightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 300;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .lightbox.active {
-            display: flex;
-        }
-
-        .lightbox img {
-            max-width: 100%;
-            max-height: 90vh;
-            border-radius: 12px;
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 44px;
-            height: 44px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
         /* Empty State */
         .empty-state {
             text-align: center;
@@ -900,28 +934,28 @@
 
         .empty-icon {
             font-size: 60px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         /* Language Modal */
-        .modal {
+        .lang-modal {
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.9);
-            z-index: 400;
+            z-index: 300;
             display: none;
             align-items: flex-end;
         }
 
-        .modal.active {
+        .lang-modal.active {
             display: flex;
         }
 
-        .modal-content {
+        .lang-content {
             width: 100%;
             background: var(--bg-secondary);
             border-radius: 24px 24px 0 0;
-            padding: 24px;
+            padding: 30px;
             animation: slideUp 0.3s;
         }
 
@@ -938,8 +972,8 @@
         }
 
         .lang-btn {
-            padding: 16px;
-            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            background: var(--bg-glass);
             border: 2px solid var(--border);
             border-radius: 12px;
             color: var(--text-primary);
@@ -953,28 +987,30 @@
             background: rgba(0, 255, 163, 0.1);
         }
 
-        /* Responsive */
-        @media (max-width: 380px) {
-            .tier-grid { grid-template-columns: repeat(2, 1fr); }
+        .lang-flag {
+            font-size: 28px;
+            margin-bottom: 8px;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <!-- Background Animation -->
+    <!-- Background -->
     <div class="bg-animation" id="bgAnimation"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <div class="lightbox-close">×</div>
-        <img id="lightboxImg" src="" onclick="event.stopPropagation()">
+    <!-- Product Detail Modal -->
+    <div class="product-modal" id="productModal">
+        <button class="modal-close" onclick="closeProductModal()">×</button>
+        <div class="modal-content" id="modalContent"></div>
     </div>
 
     <!-- Language Modal -->
-    <div class="modal" id="langModal" onclick="closeLangModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h3 style="margin-bottom: 8px;">Select Language</h3>
+    <div class="lang-modal" id="langModal" onclick="closeLangModal()">
+        <div class="lang-content" onclick="event.stopPropagation()">
+            <h3 style="margin-bottom: 10px;">Select Language</h3>
             <div class="lang-grid" id="langGrid"></div>
         </div>
     </div>
@@ -994,19 +1030,19 @@
         </div>
         <div class="drawer-footer" id="cartDrawerFooter" style="display: none;">
             <div class="summary-row">
-                <span>Subtotal</span>
+                <span data-i18n="subtotal">Subtotal</span>
                 <span class="value" id="drawerSubtotal">€0</span>
             </div>
             <div class="summary-row">
-                <span>Shipping</span>
+                <span data-i18n="shipping">Shipping</span>
                 <span class="value" id="drawerShipping">€0</span>
             </div>
             <div class="summary-row">
-                <span>Fee</span>
+                <span data-i18n="fee">Fee</span>
                 <span class="value" id="drawerFee">€0</span>
             </div>
             <div class="summary-row total">
-                <span>Total</span>
+                <span data-i18n="total">Total</span>
                 <span class="value" id="drawerTotal">€0</span>
             </div>
             <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
@@ -1016,25 +1052,20 @@
     <div class="app">
         <!-- Header -->
         <header class="header">
-            <div class="header-actions" style="left: 16px; right: auto;">
+            <div class="header-top">
                 <button class="icon-btn" onclick="openLangModal()">🌐</button>
-            </div>
-            
-            <div class="logo-container">
-                <img src="https://i.imgur.com/jNug6cl.jpg" alt="Shade Plug" onerror="this.style.display='none'; this.parentNode.style.background='linear-gradient(135deg, var(--accent-green), var(--accent-blue))'">
-            </div>
-            
-            <a href="https://www.instagram.com/shade.plug" target="_blank" class="instagram-badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                @shade.plug
-            </a>
-            
-            <div class="header-actions">
                 <button class="icon-btn" onclick="openCart()" style="position: relative;">
                     🛒
-                    <span class="badge-count" id="headerCartCount" style="display: none;">0</span>
+                    <span class="badge" id="cartBadge" style="display: none;">0</span>
                 </button>
             </div>
+            <div class="logo-container">
+                <img src="https://i.imgur.com/jNug6cl.jpg" alt="Shade Plug" onerror="this.style.display='none'">
+            </div>
+            <a href="https://www.instagram.com/shade.plug" target="_blank" class="instagram-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                @shade.plug
+            </a>
         </header>
 
         <!-- Views -->
@@ -1049,21 +1080,21 @@
             <div class="form-section">
                 <div class="form-title">📋 Order Summary</div>
                 <div id="checkoutItems"></div>
-                <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
                     <div class="summary-row">
-                        <span>Subtotal</span>
+                        <span data-i18n="subtotal">Subtotal</span>
                         <span class="value" id="checkoutSubtotal">€0</span>
                     </div>
                     <div class="summary-row">
-                        <span>Shipping</span>
+                        <span data-i18n="shipping">Shipping</span>
                         <span class="value" id="checkoutShipping">€0</span>
                     </div>
                     <div class="summary-row">
-                        <span>Payment Fee</span>
+                        <span data-i18n="fee">Payment Fee</span>
                         <span class="value" id="checkoutFee">€0</span>
                     </div>
                     <div class="summary-row total">
-                        <span>Total</span>
+                        <span data-i18n="total">Total</span>
                         <span class="value" id="checkoutTotal">€0</span>
                     </div>
                 </div>
@@ -1081,58 +1112,67 @@
 
             <div class="form-section">
                 <div class="form-title">📍 Shipping Details</div>
+                
                 <div class="form-group">
-                    <label class="form-label">Full Name</label>
+                    <label class="form-label" data-i18n="label_name">Full Name *</label>
                     <input type="text" class="form-input" id="shipName" placeholder="John Doe">
                 </div>
+
                 <div class="form-group">
-                    <label class="form-label">Address</label>
-                    <input type="text" class="form-input" id="shipAddress" placeholder="Street name and number">
+                    <label class="form-label" data-i18n="label_address">Address *</label>
+                    <input type="text" class="form-input" id="shipAddress" placeholder="Via Roma 123">
                 </div>
+
                 <div class="form-group">
-                    <label class="form-label">Locker / Tabaccheria</label>
+                    <label class="form-label" data-i18n="label_locker">Locker / Tabaccheria</label>
                     <input type="text" class="form-input" id="shipLocker" placeholder="InPost Locker #1234">
                 </div>
+
                 <div class="form-group">
-                    <label class="form-label">City</label>
+                    <label class="form-label" data-i18n="label_city">City *</label>
                     <input type="text" class="form-input" id="shipCity" placeholder="Milano">
                 </div>
+
                 <div class="form-group">
-                    <label class="form-label">Postal Code</label>
+                    <label class="form-label" data-i18n="label_postal">Postal Code (CAP) *</label>
                     <input type="text" class="form-input" id="shipPostal" placeholder="20100">
                 </div>
+
                 <div class="form-group">
-                    <label class="form-label">Phone</label>
+                    <label class="form-label" data-i18n="label_phone">Phone *</label>
                     <input type="tel" class="form-input" id="shipPhone" placeholder="+39 333 123 4567">
                 </div>
+
                 <div class="form-group">
-                    <label class="form-label">Notes (Optional)</label>
+                    <label class="form-label" data-i18n="label_notes">Notes (Optional)</label>
                     <textarea class="form-textarea" id="shipNotes" placeholder="Additional instructions..."></textarea>
                 </div>
+
                 <div class="form-group">
-                    <label class="form-label">Locker Screenshot</label>
-                    <textarea class="form-textarea" id="shipScreenshot" placeholder="Paste image URL or description..."></textarea>
+                    <label class="form-label">Locker Screenshot URL</label>
+                    <textarea class="form-textarea" id="shipScreenshot" placeholder="Paste Imgur or other image link..."></textarea>
                 </div>
             </div>
 
-            <div class="tos-container" style="margin-bottom: 16px;">
+            <div class="tos-container">
                 <div class="tos-header" onclick="toggleTOS()">
                     <span>📜 Terms of Purchase & Escrow Protocol</span>
                     <span id="tosArrow">▼</span>
                 </div>
                 <div class="tos-content" id="tosContent">
-                    <p><strong>1. Escrow Policy:</strong> Verified agents only. +10% fee applies. Payment confirms automatic acceptance of terms.</p>
+                    <p><strong>1. Escrow Policy:</strong> Verified agents only. +10% fee on total. Payment confirms automatic acceptance of terms.</p>
                     <p><strong>2. Shipping:</strong> 1-3 days preparation. Tracking within 48h. EU: 24-48h, WW: 72h.</p>
                     <p><strong>3. Retrieval:</strong> 6-hour window to collect from locker/tabacchino. 3-hour verification window after collection.</p>
-                    <p><strong>4. Video Rules (NO CUTS):</strong> 
-                    <br>• Locker: Record before opening, show closed lockers, open with code, show all sides in car, unbox continuously.
-                    <br>• Tabacchino: Record entering, collect with code, show all sides, unbox continuously.
-                    <br>Any edit voids reship guarantee.</p>
-                    <p><strong>5. Liability:</strong> Wrong address = buyer liability. Bentivoglio InPost Point = 0% coverage (theft zone). Seizures = reship covered.</p>
+                    <p><strong>4. Video Reship Rules (NO CUTS ALLOWED):</strong></p>
+                    <p><strong>Locker:</strong> 1) Record before opening, show closed lockers 2) Open with code, take to safe location, show all sides 3) Unbox continuously. Any edit voids guarantee.</p>
+                    <p><strong>Tabacchino:</strong> 1) Record entering, collect with code 2) Show all sides in safe location 3) Unbox continuously.</p>
+                    <p><strong>5. Liability:</strong> Wrong address = buyer liability. Bentivoglio InPost Point = 0% coverage (theft zone). Seizures/reship covered.</p>
                 </div>
             </div>
 
-            <button class="checkout-btn" onclick="submitOrder()" style="margin-bottom: 40px;">Submit Order to @shadeplug</button>
+            <button class="checkout-btn" onclick="submitOrder()" style="margin-bottom: 40px;">
+                Submit Order to @shadeplug
+            </button>
         </div>
 
         <div class="view" id="linksView">
@@ -1166,13 +1206,16 @@
             <h2 class="section-title">Track Order</h2>
             <div class="tracking-box">
                 <div class="tracking-icon">📦</div>
-                <h3 style="margin-bottom: 8px;">Enter Tracking Code</h3>
-                <p style="color: var(--text-muted); margin-bottom: 20px;">Track your shipment or find nearest locker</p>
+                <h3 style="margin-bottom: 10px;">Track Your Shipment</h3>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Enter tracking code or find nearest locker</p>
+                
                 <div class="tracking-input-group">
                     <input type="text" class="tracking-input" id="trackCode" placeholder="TRK-123456789">
-                    <button class="checkout-btn" style="margin: 0; width: auto; padding: 14px 20px;" onclick="trackOrder()">Track</button>
+                    <button class="checkout-btn" style="margin: 0; width: auto; padding: 16px 24px;" onclick="trackOrder()">Track</button>
                 </div>
-                <button class="checkout-btn" onclick="findLocker()" style="margin-top: 12px; background: var(--accent-blue);">Find Nearest Locker</button>
+                <button class="checkout-btn" onclick="findLocker()" style="margin-top: 12px; background: var(--accent-blue);">
+                    Find Nearest Locker
+                </button>
             </div>
         </div>
     </div>
@@ -1180,10 +1223,10 @@
     <!-- Floating Telegram Button -->
     <a href="https://t.me/shadeplug" target="_blank" class="fab-telegram">✈️</a>
 
-    <!-- Bottom Navigation -->
+    <!-- Navigation -->
     <nav class="nav-bar">
         <button class="nav-item active" onclick="switchView('shop')">
-            <span class="icon">🛍️</span>
+            <span class="icon">🏪</span>
             <span>Shop</span>
         </button>
         <button class="nav-item" onclick="switchView('links')">
@@ -1208,82 +1251,118 @@
             lang: 'en',
             cart: JSON.parse(localStorage.getItem('shadeplug_cart')) || [],
             shipping: 'eu',
-            payment: 'crypto'
+            payment: 'crypto',
+            currentProduct: null
         };
 
         // Translations
         const i18n = {
-            en: { cart_title: "Your Cart", subtotal: "Subtotal", shipping: "Shipping", total: "Total", fee: "Fee", checkout: "Checkout", add_to_cart: "Add to Cart", select_quantity: "Select Quantity" },
-            it: { cart_title: "Il Tuo Carrello", subtotal: "Subtotale", shipping: "Spedizione", total: "Totale", fee: "Commissione", checkout: "Checkout", add_to_cart: "Aggiungi", select_quantity: "Seleziona Quantità" },
-            fr: { cart_title: "Votre Panier", subtotal: "Sous-total", shipping: "Livraison", total: "Total", fee: "Frais", checkout: "Commander", add_to_cart: "Ajouter", select_quantity: "Quantité" },
-            es: { cart_title: "Tu Carrito", subtotal: "Subtotal", shipping: "Envío", total: "Total", fee: "Comisión", checkout: "Pagar", add_to_cart: "Añadir", select_quantity: "Cantidad" },
-            de: { cart_title: "Warenkorb", subtotal: "Zwischensumme", shipping: "Versand", total: "Gesamt", fee: "Gebühr", checkout: "Kasse", add_to_cart: "Hinzufügen", select_quantity: "Menge" },
-            cs: { cart_title: "Košík", subtotal: "Mezisoučet", shipping: "Doprava", total: "Celkem", fee: "Poplatek", checkout: "Objednat", add_to_cart: "Přidat", select_quantity: "Množství" },
-            ru: { cart_title: "Корзина", subtotal: "Подытог", shipping: "Доставка", total: "Итого", fee: "Комиссия", checkout: "Оформить", add_to_cart: "Добавить", select_quantity: "Количество" }
+            en: {
+                cart_title: "Your Cart", subtotal: "Subtotal", shipping: "Shipping", fee: "Fee", total: "Total",
+                label_name: "Full Name", label_address: "Address", label_locker: "Locker / Tabaccheria",
+                label_city: "City", label_postal: "Postal Code", label_phone: "Phone", label_notes: "Notes",
+                select_quantity: "Select Quantity", add_to_cart: "Add to Cart", view_details: "View Details",
+                europe_express: "Europe Express (24-48h)", worldwide: "Worldwide (72h)",
+                payment_crypto: "Crypto (BTC/LTC)", payment_revolut: "Revolut", payment_paypal: "PayPal", payment_escrow: "Verified Escrow",
+                fee_free: "0% Fee", fee_10: "+10% Fee", from: "from"
+            },
+            it: {
+                cart_title: "Il Tuo Carrello", subtotal: "Subtotale", shipping: "Spedizione", fee: "Commissione", total: "Totale",
+                label_name: "Nome Completo", label_address: "Indirizzo", label_locker: "Locker / Tabaccheria",
+                label_city: "Città", label_postal: "CAP", label_phone: "Telefono", label_notes: "Note",
+                select_quantity: "Seleziona Quantità", add_to_cart: "Aggiungi", view_details: "Dettagli",
+                europe_express: "Europa Express (24-48h)", worldwide: "Mondiale (72h)",
+                payment_crypto: "Crypto (BTC/LTC)", payment_revolut: "Revolut", payment_paypal: "PayPal", payment_escrow: "Escrow Verificato",
+                fee_free: "0% Commissione", fee_10: "+10% Commissione", from: "da"
+            },
+            fr: {
+                cart_title: "Votre Panier", subtotal: "Sous-total", shipping: "Livraison", fee: "Frais", total: "Total",
+                label_name: "Nom Complet", label_address: "Adresse", label_city: "Ville", label_postal: "Code Postal",
+                label_phone: "Téléphone", europe_express: "Europe Express (24-48h)", worldwide: "International (72h)"
+            },
+            es: {
+                cart_title: "Tu Carrito", subtotal: "Subtotal", shipping: "Envío", fee: "Comisión", total: "Total",
+                label_name: "Nombre Completo", label_address: "Dirección", label_city: "Ciudad", label_postal: "Código Postal",
+                label_phone: "Teléfono", europe_express: "Europa Express (24-48h)", worldwide: "Internacional (72h)"
+            },
+            de: {
+                cart_title: "Warenkorb", subtotal: "Zwischensumme", shipping: "Versand", fee: "Gebühr", total: "Gesamt",
+                label_name: "Vollständiger Name", label_address: "Adresse", label_city: "Stadt", label_postal: "PLZ",
+                label_phone: "Telefon", europe_express: "Europa Express (24-48h)", worldwide: "International (72h)"
+            },
+            cs: {
+                cart_title: "Košík", subtotal: "Mezisoučet", shipping: "Doprava", fee: "Poplatek", total: "Celkem",
+                label_name: "Celé Jméno", label_address: "Adresa", label_city: "Město", label_postal: "PSČ",
+                label_phone: "Telefon", europe_express: "Evropa Express (24-48h)", worldwide: "Celosvětově (72h)"
+            },
+            ru: {
+                cart_title: "Корзина", subtotal: "Подытог", shipping: "Доставка", fee: "Комиссия", total: "Итого",
+                label_name: "Полное Имя", label_address: "Адрес", label_city: "Город", label_postal: "Индекс",
+                label_phone: "Телефон", europe_express: "Европа Экспресс (24-48ч)", worldwide: "Международная (72ч)"
+            }
         };
 
-        // Products with 20% markup
+        // Products with 20% markup and multiple image fallbacks
         const products = [
-            { id: 1, name: "Cali Cryo 🌿", origin: "CZ", shipping: 30, safe: true, image: "https://i.imgur.com/XZHzDvT.jpg", tiers: [{amount: "500g", price: 2100}, {amount: "1000g", price: 3600}, {amount: "5000g", price: 15600}] },
-            { id: 2, name: "Cali Sour Lifter 🌿", origin: "CZ", shipping: 24, safe: true, tiers: [{amount: "100g", price: 420}, {amount: "200g", price: 720}, {amount: "500g", price: 1320}, {amount: "1000g", price: 2400}] },
-            { id: 3, name: "Cali Sweet Burger 🌿", origin: "CZ", shipping: 24, safe: true, tiers: [{amount: "100g", price: 480}, {amount: "300g", price: 1380}, {amount: "500g", price: 1680}, {amount: "1000g", price: 3600}] },
-            { id: 4, name: "Cali Gelato 🌿", origin: "CZ", shipping: 30, safe: true, tiers: [{amount: "1000g", price: 2400}] },
-            { id: 5, name: "Dry Frozen Sift Top 🍫", origin: "ITA", shipping: 12, image: "https://i.imgur.com/rxOoCaf.jpg", tiers: [{amount: "50g", price: 420}, {amount: "100g", price: 720}, {amount: "250g", price: 1650}, {amount: "500g", price: 3000}, {amount: "1000g", price: 4800}] },
-            { id: 6, name: "Cali Lemon Pop 🌿", origin: "ITA", shipping: 12, tiers: [{amount: "25g", price: 150}, {amount: "50g", price: 240}, {amount: "100g", price: 396}, {amount: "250g", price: 930}, {amount: "500g", price: 1800}, {amount: "1000g", price: 3360}] },
-            { id: 7, name: "Cali Spain Amnesia 🌿", origin: "ITA", shipping: 12, image: "https://i.imgur.com/lpcEt39.jpg", tiers: [{amount: "25g", price: 180}, {amount: "50g", price: 300}, {amount: "100g", price: 480}, {amount: "250g", price: 1140}, {amount: "500g", price: 2040}, {amount: "1000g", price: 3720}] },
-            { id: 8, name: "MC Kennaiii 🍄", origin: "ITA", shipping: 12, image: "https://i.imgur.com/fq1uFFm.jpg", tiers: [{amount: "5g", price: 72}, {amount: "10g", price: 108}] },
-            { id: 9, name: "Dry Mimosa 🍫", origin: "CZ", shipping: 24, safe: true, image: "https://i.imgur.com/xQoPEbC.jpg", tiers: [{amount: "100g", price: 456}, {amount: "200g", price: 864}, {amount: "500g", price: 1800}, {amount: "1000g", price: 3120}] },
-            { id: 10, name: "Vape THC 🚬", origin: "CZ", shipping: 30, safe: true, tiers: [{amount: "10pcs", price: 300}, {amount: "50pcs", price: 1200}, {amount: "100pcs", price: 1920}] },
-            { id: 11, name: "Cali Purple USA 🌿", origin: "ITA", shipping: 12, tiers: [{amount: "25g", price: 224.40}, {amount: "50g", price: 420}, {amount: "100g", price: 720}, {amount: "250g", price: 1650}, {amount: "500g", price: 3000}, {amount: "1000g", price: 4800}] },
-            { id: 12, name: "Cali Critical Berry 🌿", origin: "ITA", shipping: 12, tiers: [{amount: "25g", price: 150}, {amount: "50g", price: 240}, {amount: "100g", price: 396}, {amount: "250g", price: 930}, {amount: "500g", price: 1800}, {amount: "1000g", price: 3360}] },
-            { id: 13, name: "Cali Cherry 🌿", origin: "CZ", shipping: 30, safe: true, tiers: [{amount: "500g", price: 1440}, {amount: "1000g", price: 2400}, {amount: "5000g", price: 10800}] },
-            { id: 14, name: "Dry 🍫", origin: "CZ", shipping: 30, safe: true, tiers: [{amount: "1000g", price: 3480}] },
-            { id: 15, name: "Cali Fruit Joy 🌿", origin: "CZ", shipping: 30, safe: true, tiers: [{amount: "500g", price: 1800}, {amount: "1000g", price: 3000}, {amount: "5000g", price: 13200}] },
-            { id: 16, name: "Dry Frozen Top 🍫", origin: "CZ", shipping: 30, safe: true, image: "https://i.imgur.com/q3bnCcp.jpg", tiers: [{amount: "1000g", price: 3960}] },
-            { id: 17, name: "Cali Spain Mimosa 🌿", origin: "ITA", shipping: 12, tiers: [{amount: "25g", price: 194.40}, {amount: "50g", price: 360}, {amount: "100g", price: 600}, {amount: "250g", price: 1350}, {amount: "500g", price: 2520}, {amount: "1000g", price: 4560}] },
-            { id: 18, name: "Dry Biscotti Spagna 🍫", origin: "ITA", shipping: 12, tiers: [{amount: "25g", price: 150}, {amount: "50g", price: 276}, {amount: "100g", price: 480}, {amount: "250g", price: 1140}, {amount: "500g", price: 2160}, {amount: "1000g", price: 3960}] }
+            { id: 1, name: "Cali Cryo 🌿", category: "weed", origin: "CZ", shipping: 25, safe: true, description: "Shipped from Czech Republic. 100% safe with reship guarantee. Recommended for high volume sellers. Carriers: GLS/UPS/BRT.", images: ["https://i.imgur.com/XZHzDvT.jpg"], tiers: [{amount: "500g", price: 2100}, {amount: "1000g", price: 3600}, {amount: "5000g", price: 15600}] },
+            { id: 2, name: "Cali Sour Lifter 🌿", category: "weed", origin: "CZ", shipping: 20, safe: true, description: "Shipped from Czech Republic. 100% safe with reship guarantee. Ships within 48 hours.", images: ["https://i.imgur.com/bxeYk0K.jpg", "https://i.imgur.com/DrRBUlb.jpg"], tiers: [{amount: "100g", price: 420}, {amount: "200g", price: 720}, {amount: "500g", price: 1320}, {amount: "1000g", price: 2400}] },
+            { id: 3, name: "Cali Sweet Burger 🌿", category: "weed", origin: "CZ", shipping: 20, safe: true, description: "Shipped from Czech Republic. 100% safe with reship guarantee. Ships within 48 hours.", images: [], tiers: [{amount: "100g", price: 480}, {amount: "300g", price: 1380}, {amount: "500g", price: 1680}, {amount: "1000g", price: 3600}] },
+            { id: 4, name: "Cali Gelato 🌿", category: "weed", origin: "CZ", shipping: 25, safe: true, description: "Shipped from Czech Republic. 100% safe with reship guarantee. Top bulk choice. Carriers: GLS/UPS/BRT.", images: ["https://i.imgur.com/boYbhV4.jpg", "https://i.imgur.com/2syH6aY.jpg"], tiers: [{amount: "1000g", price: 2400}] },
+            { id: 5, name: "Dry Frozen Sift Top 🍫", category: "hash", origin: "ITA", shipping: 10, description: "Shipped from Italy. Premium dry sift hash.", images: ["https://i.imgur.com/rxOoCaf.jpg", "https://i.imgur.com/fxzTmBs.jpg"], tiers: [{amount: "50g", price: 420}, {amount: "100g", price: 720}, {amount: "250g", price: 1650}, {amount: "500g", price: 3000}, {amount: "1000g", price: 4800}] },
+            { id: 6, name: "Cali Lemon Pop 🌿", category: "weed", origin: "ITA", shipping: 10, description: "Shipped from Italy. Fresh citrus terpenes.", images: ["https://i.imgur.com/jTjCkgf.jpg"], tiers: [{amount: "25g", price: 150}, {amount: "50g", price: 240}, {amount: "100g", price: 396}, {amount: "250g", price: 930}, {amount: "500g", price: 1800}, {amount: "1000g", price: 3360}] },
+            { id: 7, name: "Cali Spain Amnesia 🌿", category: "weed", origin: "ITA", shipping: 10, description: "Shipped from Italy. Classic Amnesia strain.", images: ["https://i.imgur.com/lpcEt39.jpg"], tiers: [{amount: "25g", price: 180}, {amount: "50g", price: 300}, {amount: "100g", price: 480}, {amount: "250g", price: 1140}, {amount: "500g", price: 2040}, {amount: "1000g", price: 3720}] },
+            { id: 8, name: "MC Kennaiii 🍄", category: "mushrooms", origin: "ITA", shipping: 10, description: "Premium mushrooms shipped from Italy.", images: ["https://i.imgur.com/fq1uFFm.jpg"], tiers: [{amount: "5g", price: 72}, {amount: "10g", price: 108}] },
+            { id: 9, name: "Dry Mimosa 🍫", category: "hash", origin: "CZ", shipping: 20, safe: true, description: "Shipped from Czech Republic. 100% safe with reship guarantee. Ships within 48 hours.", images: ["https://i.imgur.com/xQoPEbC.jpg", "https://i.imgur.com/fh7Gz8d.jpg"], tiers: [{amount: "100g", price: 456}, {amount: "200g", price: 864}, {amount: "500g", price: 1800}, {amount: "1000g", price: 3120}] },
+            { id: 10, name: "Vape THC 🚬", category: "vapes", origin: "CZ", shipping: 25, safe: true, description: "Shipped from Czech Republic. Can be combined with weed/hash orders. Edibles available with this product.", images: ["https://i.imgur.com/nfpUHWp.jpg", "https://i.imgur.com/NYg3JQo.jpg", "https://i.imgur.com/qvXqAjg.jpg"], tiers: [{amount: "10pcs", price: 300}, {amount: "50pcs", price: 1200}, {amount: "100pcs", price: 1920}] },
+            { id: 11, name: "Cali Purple USA 🌿", category: "weed", origin: "ITA", shipping: 10, description: "Shipped from Italy. Purple USA genetics.", images: ["https://i.imgur.com/nb7hHCQ.jpg"], tiers: [{amount: "25g", price: 224.40}, {amount: "50g", price: 420}, {amount: "100g", price: 720}, {amount: "250g", price: 1650}, {amount: "500g", price: 3000}, {amount: "1000g", price: 4800}] },
+            { id: 12, name: "Cali Critical Berry 🌿", category: "weed", origin: "ITA", shipping: 10, description: "Shipped from Italy. Berry terpenes.", images: ["https://i.imgur.com/rqfIr8q.jpg"], tiers: [{amount: "25g", price: 150}, {amount: "50g", price: 240}, {amount: "100g", price: 396}, {amount: "250g", price: 930}, {amount: "500g", price: 1800}, {amount: "1000g", price: 3360}] },
+            { id: 13, name: "Cali Cherry 🌿", category: "weed", origin: "CZ", shipping: 25, safe: true, description: "Shipped from Czech Republic. 100% safe with reship guarantee. Carriers: GLS/UPS/BRT.", images: ["https://i.imgur.com/rEhVlF6.jpg", "https://i.imgur.com/WRuu6ma.jpg"], tiers: [{amount: "500g", price: 1440}, {amount: "1000g", price: 2400}, {amount: "5000g", price: 10800}] },
+            { id: 14, name: "Dry 🍫", category: "hash", origin: "CZ", shipping: 25, safe: true, description: "Shipped from Czech Republic. 100% safe with reship guarantee.", images: [], tiers: [{amount: "1000g", price: 3480}] },
+            { id: 15, name: "Cali Fruit Joy 🌿", category: "weed", origin: "CZ", shipping: 25, safe: true, description: "Shipped from Czech Republic. 100% safe with reship guarantee. Carriers: GLS/UPS/BRT.", images: ["https://i.imgur.com/9Pqzkie.jpg"], tiers: [{amount: "500g", price: 1800}, {amount: "1000g", price: 3000}, {amount: "5000g", price: 13200}] },
+            { id: 16, name: "Dry Frozen Top 🍫", category: "hash", origin: "CZ", shipping: 25, safe: true, description: "Shipped from Czech Republic. 100% safe with reship guarantee. Carriers: GLS/UPS/BRT.", images: ["https://i.imgur.com/q3bnCcp.jpg"], tiers: [{amount: "1000g", price: 3960}] },
+            { id: 17, name: "Cali Spain Mimosa 🌿", category: "weed", origin: "ITA", shipping: 10, description: "Shipped from Italy. Mimosa genetics.", images: [], tiers: [{amount: "25g", price: 194.40}, {amount: "50g", price: 360}, {amount: "100g", price: 600}, {amount: "250g", price: 1350}, {amount: "500g", price: 2520}, {amount: "1000g", price: 4560}] },
+            { id: 18, name: "Dry Biscotti Spagna 🍫", category: "hash", origin: "ITA", shipping: 10, description: "Shipped from Italy. For more photos/videos contact privately.", images: ["https://i.imgur.com/lpcEt39.jpg", "https://i.imgur.com/Cz4uHG8.jpg", "https://i.imgur.com/LOrG8Lc.jpg"], tiers: [{amount: "25g", price: 150}, {amount: "50g", price: 276}, {amount: "100g", price: 480}, {amount: "250g", price: 1140}, {amount: "500g", price: 2160}, {amount: "1000g", price: 3960}] }
         ];
 
-        // Initialize
+        function t(key) {
+            return i18n[state.lang]?.[key] || i18n.en[key] || key;
+        }
+
         function init() {
             createBackgroundLeaves();
             renderLanguages();
             renderProducts();
             updateCartUI();
-            updateCheckoutUI();
-        }
-
-        function t(key) {
-            return i18n[state.lang]?.[key] || i18n.en[key];
         }
 
         function createBackgroundLeaves() {
             const container = document.getElementById('bgAnimation');
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 8; i++) {
                 const leaf = document.createElement('div');
                 leaf.className = 'leaf';
+                leaf.innerHTML = '🍃';
                 leaf.style.left = Math.random() * 100 + '%';
                 leaf.style.animationDuration = (15 + Math.random() * 10) + 's';
                 leaf.style.animationDelay = Math.random() * 5 + 's';
-                leaf.innerHTML = '🍃';
                 container.appendChild(leaf);
             }
         }
 
         function renderLanguages() {
             const langs = [
-                {code: 'en', name: '🇬🇧 English'},
-                {code: 'it', name: '🇮🇹 Italiano'},
-                {code: 'fr', name: '🇫🇷 Français'},
-                {code: 'es', name: '🇪🇸 Español'},
-                {code: 'de', name: '🇩🇪 Deutsch'},
-                {code: 'cs', name: '🇨🇿 Čeština'},
-                {code: 'ru', name: '🇷🇺 Русский'}
+                {code: 'en', flag: '🇬🇧', name: 'English'},
+                {code: 'it', flag: '🇮🇹', name: 'Italiano'},
+                {code: 'fr', flag: '🇫🇷', name: 'Français'},
+                {code: 'es', flag: '🇪🇸', name: 'Español'},
+                {code: 'de', flag: '🇩🇪', name: 'Deutsch'},
+                {code: 'cs', flag: '🇨🇿', name: 'Čeština'},
+                {code: 'ru', flag: '🇷🇺', name: 'Русский'}
             ];
             
             document.getElementById('langGrid').innerHTML = langs.map(l => `
                 <button class="lang-btn ${state.lang === l.code ? 'active' : ''}" onclick="setLanguage('${l.code}')">
-                    ${l.name}
+                    <span class="lang-flag">${l.flag}</span>
+                    <div>${l.name}</div>
                 </button>
             `).join('');
         }
@@ -1292,9 +1371,12 @@
             state.lang = code;
             localStorage.setItem('shadeplug_lang', code);
             renderLanguages();
-            renderProducts();
-            updateCartUI();
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[code]?.[key]) el.textContent = i18n[code][key];
+            });
             closeLangModal();
+            renderProducts();
         }
 
         function openLangModal() {
@@ -1312,77 +1394,96 @@
             document.getElementById(view + 'View').classList.add('active');
             event.currentTarget.classList.add('active');
             
-            if (view === 'checkout') updateCheckoutUI();
+            if (view === 'checkout') renderCheckout();
         }
 
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = products.map(p => {
-                const originClass = p.origin === 'CZ' ? 'badge-origin-cz' : 'badge-origin-ita';
-                const safeBadge = p.safe ? `<div class="badge badge-safe">✓ 100% Safe</div>` : '';
+                const minPrice = Math.min(...p.tiers.map(t => t.price));
+                const imgUrl = p.images[0] || '';
                 
-                const tiers = p.tiers.map((tier, idx) => `
-                    <button class="tier-btn" onclick="selectTier(${p.id}, ${idx}, this)">
-                        ${tier.amount}
-                        <span class="tier-price">€${tier.price.toLocaleString()}</span>
-                    </button>
-                `).join('');
-
-                const imgUrl = p.image ? p.image.replace(/\.jpg$/, '') + '.jpg' : '';
-
                 return `
-                    <div class="product-card">
-                        <div class="product-image" onclick="openLightbox('${imgUrl}')">
+                    <div class="product-card" onclick="openProductModal(${p.id})">
+                        <div class="product-image">
                             ${imgUrl ? `
                                 <img src="${imgUrl}" alt="${p.name}" 
-                                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:var(--text-muted);\'>🌿 ${p.name}</div>'">
-                            ` : `<div style="padding:40px; text-align:center; color:var(--text-muted);">🌿 ${p.name}</div>`}
+                                     onerror="this.src='${p.images[1] || ''}'; this.onerror=function(){this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);font-size:40px;\'>${p.category === 'weed' ? '🌿' : p.category === 'hash' ? '🍫' : p.category === 'mushrooms' ? '🍄' : '🚬'}</div>'}">
+                            ` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);font-size:40px;">${p.category === 'weed' ? '🌿' : p.category === 'hash' ? '🍫' : p.category === 'mushrooms' ? '🍄' : '🚬'}</div>`}
                             <div class="product-badges">
-                                <span class="badge ${originClass}">${p.origin}</span>
-                                ${safeBadge}
+                                <span class="badge-origin badge-${p.origin.toLowerCase()}">${p.origin}</span>
+                                ${p.safe ? '<span class="badge-safe">✓ SAFE</span>' : ''}
                             </div>
                         </div>
                         <div class="product-info">
                             <div class="product-name">${p.name}</div>
                             <div class="product-meta">
                                 <div class="meta-item">🚚 €${p.shipping}</div>
-                                ${p.safe ? '<div class="meta-item">✓ Reship</div>' : ''}
+                                ${p.safe ? '<div class="meta-item">🛡️ Reship</div>' : ''}
                             </div>
-                            <div class="tier-label">${t('select_quantity')}</div>
-                            <div class="tier-grid">${tiers}</div>
-                            <button class="add-cart-btn" id="btn-${p.id}" onclick="addToCart(${p.id})" disabled>
-                                ${t('add_to_cart')}
-                            </button>
+                            <div class="product-price-from">${t('from')} €${minPrice.toLocaleString()}</div>
+                            <button class="view-details-btn" onclick="event.stopPropagation(); openProductModal(${p.id})">${t('view_details')}</button>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
-        function selectTier(pid, idx, btn) {
-            document.querySelectorAll(`#btn-${pid}`).forEach(b => {
-                b.dataset.tier = idx;
-                b.disabled = false;
-            });
+        function openProductModal(id) {
+            const p = products.find(x => x.id === id);
+            state.currentProduct = p;
+            const imgUrl = p.images[0] || '';
             
-            const parent = btn.parentElement;
-            parent.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
+            document.getElementById('modalContent').innerHTML = `
+                <img src="${imgUrl}" class="modal-image" alt="${p.name}" onerror="this.onerror=null; this.src='${p.images[1] || ''}'; this.onerror=function(){this.style.display='none'}">
+                <h2 class="modal-title">${p.name}</h2>
+                <p class="modal-desc">${p.description}</p>
+                <div class="product-meta" style="margin-bottom: 20px;">
+                    <div class="meta-item">📍 ${p.origin}</div>
+                    <div class="meta-item">🚚 €${p.shipping} shipping</div>
+                    ${p.safe ? '<div class="meta-item">🛡️ 100% Safe</div>' : ''}
+                </div>
+                <div class="tier-grid">
+                    ${p.tiers.map((t, i) => `
+                        <button class="tier-btn" onclick="selectTier(${i}, this)">
+                            <span class="tier-amount">${t.amount}</span>
+                            <span class="tier-price">€${t.price.toLocaleString()}</span>
+                        </button>
+                    `).join('')}
+                </div>
+                <button class="add-cart-btn" id="modalAddBtn" onclick="addToCartFromModal()" disabled>${t('add_to_cart')}</button>
+            `;
+            
+            document.getElementById('productModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
-        function addToCart(pid) {
-            const btn = document.getElementById(`btn-${pid}`);
-            const tierIdx = parseInt(btn.dataset.tier || 0);
-            const p = products.find(x => x.id === pid);
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function selectTier(idx, btn) {
+            document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            document.getElementById('modalAddBtn').disabled = false;
+            document.getElementById('modalAddBtn').dataset.tier = idx;
+        }
+
+        function addToCartFromModal() {
+            const btn = document.getElementById('modalAddBtn');
+            const tierIdx = parseInt(btn.dataset.tier);
+            const p = state.currentProduct;
             const tier = p.tiers[tierIdx];
             
-            const existing = state.cart.find(i => i.id === pid && i.tierIdx === tierIdx);
+            const existing = state.cart.find(i => i.id === p.id && i.tierIdx === tierIdx);
             if (existing) {
                 existing.qty++;
             } else {
                 state.cart.push({
-                    id: pid,
+                    id: p.id,
                     name: p.name,
+                    category: p.category,
                     tierIdx: tierIdx,
                     amount: tier.amount,
                     price: tier.price,
@@ -1393,15 +1494,13 @@
             }
             
             saveCart();
+            updateCartUI();
             
-            btn.textContent = '✓ Added';
-            btn.classList.add('added');
+            btn.textContent = '✓ Added!';
             setTimeout(() => {
                 btn.textContent = t('add_to_cart');
-                btn.classList.remove('added');
-            }, 1000);
-            
-            updateCartUI();
+                closeProductModal();
+            }, 800);
         }
 
         function saveCart() {
@@ -1410,27 +1509,22 @@
 
         function updateCartUI() {
             const total = state.cart.reduce((s, i) => s + i.qty, 0);
-            document.getElementById('headerCartCount').style.display = total > 0 ? 'flex' : 'none';
-            document.getElementById('headerCartCount').textContent = total;
+            document.getElementById('cartBadge').style.display = total > 0 ? 'flex' : 'none';
+            document.getElementById('cartBadge').textContent = total;
             
             const content = document.getElementById('cartDrawerContent');
             const footer = document.getElementById('cartDrawerFooter');
             
             if (state.cart.length === 0) {
-                content.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">🛒</div>
-                        <p>Your cart is empty</p>
-                    </div>
-                `;
+                content.innerHTML = `<div class="empty-state"><div class="empty-icon">🛒</div><p>Your cart is empty</p></div>`;
                 footer.style.display = 'none';
                 return;
             }
             
             content.innerHTML = state.cart.map((item, idx) => `
                 <div class="cart-item">
-                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #1a1f2e, #0f1419); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px;">
-                        ${item.name.includes('🍄') ? '🍄' : item.name.includes('🍫') ? '🍫' : item.name.includes('🚬') ? '🚬' : '🌿'}
+                    <div class="cart-item-img" style="display:flex;align-items:center;justify-content:center;font-size:28px;background:var(--bg-primary);">
+                        ${item.category === 'weed' ? '🌿' : item.category === 'hash' ? '🍫' : item.category === 'mushrooms' ? '🍄' : '🚬'}
                     </div>
                     <div class="cart-item-info">
                         <div class="cart-item-name">${item.name}</div>
@@ -1447,7 +1541,7 @@
             `).join('');
             
             footer.style.display = 'block';
-            updateCartTotals();
+            updateTotals();
         }
 
         function updateQty(idx, delta) {
@@ -1463,7 +1557,7 @@
             updateCartUI();
         }
 
-        function updateCartTotals() {
+        function updateTotals() {
             const sub = state.cart.reduce((s, i) => s + (i.price * i.qty), 0);
             const ship = calculateShipping();
             const fee = calculateFee(sub);
@@ -1477,11 +1571,10 @@
 
         function calculateShipping() {
             if (state.cart.length === 0) return 0;
-            const baseCosts = state.cart.map(i => {
+            return Math.max(...state.cart.map(i => {
                 if (state.shipping === 'eu') return i.shipping;
                 return i.origin === 'CZ' ? i.shipping * 1.5 : i.shipping * 2;
-            });
-            return Math.max(...baseCosts);
+            }));
         }
 
         function calculateFee(subtotal) {
@@ -1502,78 +1595,74 @@
         function goToCheckout() {
             closeCart();
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById('checkoutView').classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            updateCheckoutUI();
+            document.getElementById('checkoutView').classList.add('active');
+            renderCheckout();
         }
 
-        function updateCheckoutUI() {
-            // Items
-            document.getElementById('checkoutItems').innerHTML = state.cart.map(item => `
-                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
-                    <div>
-                        <div style="font-weight: 600;">${item.name}</div>
-                        <div style="font-size: 13px; color: var(--text-muted);">${item.amount} × ${item.qty}</div>
-                    </div>
-                    <div style="font-weight: 700; color: var(--accent-gold);">€${(item.price * item.qty).toLocaleString()}</div>
-                </div>
-            `).join('') || '<p style="color: var(--text-muted);">No items</p>';
+        function renderCheckout() {
+            const sub = state.cart.reduce((s, i) => s + (i.price * i.qty), 0);
             
-            // Shipping options
+            document.getElementById('checkoutItems').innerHTML = state.cart.map(item => `
+                <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);">
+                    <div>
+                        <div style="font-weight:600;">${item.name}</div>
+                        <div style="font-size:13px;color:var(--text-muted);">${item.amount} × ${item.qty}</div>
+                    </div>
+                    <div style="font-weight:700;color:var(--accent-gold);">€${(item.price * item.qty).toLocaleString()}</div>
+                </div>
+            `).join('');
+            
             const shipCost = calculateShipping();
+            const fee = calculateFee(sub);
+            const total = sub + shipCost + fee;
+            
+            document.getElementById('checkoutSubtotal').textContent = '€' + sub.toLocaleString();
+            document.getElementById('checkoutShipping').textContent = '€' + shipCost.toLocaleString();
+            document.getElementById('checkoutFee').textContent = '€' + fee.toLocaleString();
+            document.getElementById('checkoutTotal').textContent = '€' + total.toLocaleString();
+            
             document.getElementById('shippingOptions').innerHTML = `
                 <div class="option-card ${state.shipping === 'eu' ? 'selected' : ''}" onclick="setShipping('eu')">
                     <div class="option-info">
-                        <h4>Europe Express (24-48h)</h4>
-                        <p>Fast delivery within EU</p>
+                        <h4>${t('europe_express')}</h4>
+                        <p>Fast EU delivery</p>
                     </div>
-                    <div class="option-price">€${shipCost}</div>
+                    <div class="option-price">€${Math.max(...state.cart.map(i => i.shipping))}</div>
                 </div>
                 <div class="option-card ${state.shipping === 'ww' ? 'selected' : ''}" onclick="setShipping('ww')">
                     <div class="option-info">
-                        <h4>International (72h)</h4>
-                        <p>Worldwide shipping</p>
+                        <h4>${t('worldwide')}</h4>
+                        <p>International delivery</p>
                     </div>
-                    <div class="option-price">€${Math.round(shipCost * 1.5)}</div>
+                    <div class="option-price">€${Math.max(...state.cart.map(i => i.origin === 'CZ' ? i.shipping * 1.5 : i.shipping * 2))}</div>
                 </div>
             `;
             
-            // Payment options
-            const sub = state.cart.reduce((s, i) => s + (i.price * i.qty), 0);
             document.getElementById('paymentOptions').innerHTML = [
-                {id: 'crypto', name: 'Crypto (BTC/LTC)', fee: '0%', free: true},
-                {id: 'revolut', name: 'Revolut', fee: '+10%', free: false},
-                {id: 'paypal', name: 'PayPal', fee: '+10%', free: false},
-                {id: 'escrow', name: 'Verified Escrow', fee: '+10%', free: false}
+                {id: 'crypto', name: t('payment_crypto'), fee: t('fee_free'), free: true},
+                {id: 'revolut', name: t('payment_revolut'), fee: t('fee_10'), free: false},
+                {id: 'paypal', name: t('payment_paypal'), fee: t('fee_10'), free: false},
+                {id: 'escrow', name: t('payment_escrow'), fee: t('fee_10'), free: false}
             ].map(p => `
                 <div class="option-card ${state.payment === p.id ? 'selected' : ''}" onclick="setPayment('${p.id}')">
                     <div class="option-info">
                         <h4>${p.name}</h4>
                         <p>${p.free ? 'No additional fees' : '10% service fee'}</p>
                     </div>
-                    <span class="fee-tag ${p.free ? 'free' : 'charge'}">${p.fee}</span>
+                    <span class="fee-tag ${p.free ? 'fee-free' : 'fee-charge'}">${p.fee}</span>
                 </div>
             `).join('');
-            
-            // Totals
-            const shipping = calculateShipping();
-            const fee = calculateFee(sub);
-            const total = sub + shipping + fee;
-            
-            document.getElementById('checkoutSubtotal').textContent = '€' + sub.toLocaleString();
-            document.getElementById('checkoutShipping').textContent = '€' + shipping.toLocaleString();
-            document.getElementById('checkoutFee').textContent = '€' + fee.toLocaleString();
-            document.getElementById('checkoutTotal').textContent = '€' + total.toLocaleString();
         }
 
         function setShipping(type) {
             state.shipping = type;
-            updateCheckoutUI();
+            renderCheckout();
         }
 
         function setPayment(method) {
             state.payment = method;
-            updateCheckoutUI();
+            renderCheckout();
         }
 
         function toggleTOS() {
@@ -1583,8 +1672,8 @@
         }
 
         function submitOrder() {
-            const fields = ['shipName', 'shipAddress', 'shipCity', 'shipPostal', 'shipPhone'];
-            const empty = fields.filter(f => !document.getElementById(f).value.trim());
+            const required = ['shipName', 'shipAddress', 'shipCity', 'shipPostal', 'shipPhone'];
+            const empty = required.filter(id => !document.getElementById(id).value.trim());
             if (empty.length) {
                 alert('Please fill all required fields');
                 return;
@@ -1600,7 +1689,7 @@
             state.cart.forEach(i => {
                 text += `• ${i.name} - ${i.amount} × ${i.qty} = €${(i.price * i.qty).toLocaleString()}\n`;
             });
-            text += `\n*Shipping:* ${state.shipping === 'eu' ? 'EU Express (24-48h)' : 'International (72h)'}\n`;
+            text += `\n*Shipping:* ${state.shipping === 'eu' ? 'EU Express (24-48h)' : 'Worldwide (72h)'}\n`;
             text += `*Payment:* ${state.payment.toUpperCase()}\n`;
             text += `*Subtotal:* €${sub.toLocaleString()}\n`;
             text += `*Shipping:* €${ship.toLocaleString()}\n`;
@@ -1613,7 +1702,8 @@
             text += `City: ${document.getElementById('shipCity').value}\n`;
             text += `Postal: ${document.getElementById('shipPostal').value}\n`;
             text += `Phone: ${document.getElementById('shipPhone').value}\n`;
-            text += `Notes: ${document.getElementById('shipNotes').value || 'N/A'}\n\n`;
+            text += `Notes: ${document.getElementById('shipNotes').value || 'N/A'}\n`;
+            text += `Screenshot: ${document.getElementById('shipScreenshot').value || 'N/A'}\n\n`;
             text += `📱 @shadeplug`;
             
             navigator.clipboard.writeText(text).then(() => {
@@ -1623,28 +1713,22 @@
             });
         }
 
-        function openLightbox(url) {
-            if (!url) return;
-            document.getElementById('lightboxImg').src = url;
-            document.getElementById('lightbox').classList.add('active');
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-        }
-
         function trackOrder() {
             const code = document.getElementById('trackCode').value.trim();
             if (!code) return alert('Enter tracking code');
-            window.open(`https://t.me/shadeplug?text=Track: ${encodeURIComponent(code)}`, '_blank');
+            window.open(`https://t.me/shadeplug?text=Track my order: ${encodeURIComponent(code)}`, '_blank');
         }
 
         function findLocker() {
-            window.open('https://inpost.it/', '_blank');
+            window.open('https://inpost.it/trova-un-locker', '_blank');
         }
 
         // Init
         init();
+        
+        // Load saved language
+        const savedLang = localStorage.getItem('shadeplug_lang');
+        if (savedLang) setLanguage(savedLang);
     </script>
 </body>
 </html>
