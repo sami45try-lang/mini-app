@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SHADE PLUG</title>
+    <title>SHADE PLUG - Premium Cannabis</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -18,7 +18,11 @@
             --bg-secondary: #141414;
             --bg-card: #1e1e1e;
             --accent-gold: #d4af37;
+            --accent-gold-light: #f4d03f;
             --cannabis-green: #4caf50;
+            --cannabis-dark: #2e7d32;
+            --purple-haze: #9c27b0;
+            --orange-kush: #ff9800;
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
         }
@@ -29,83 +33,357 @@
             color: var(--text-primary);
             min-height: 100vh;
             padding-bottom: 100px;
+            overflow-x: hidden;
         }
         
+        /* Animated Background Particles */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float-particle 20s infinite linear;
+        }
+        
+        .particle.gold {
+            background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+            box-shadow: 0 0 10px var(--accent-gold);
+        }
+        
+        .particle.green {
+            background: radial-gradient(circle, var(--cannabis-green) 0%, transparent 70%);
+            box-shadow: 0 0 10px var(--cannabis-green);
+        }
+        
+        .particle.purple {
+            background: radial-gradient(circle, var(--purple-haze) 0%, transparent 70%);
+        }
+        
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        /* Smoke Effect */
+        .smoke-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100vh;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><filter id="smoke"><feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="20"/></filter></svg>');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1;
+            animation: smoke-move 30s infinite linear;
+        }
+        
+        @keyframes smoke-move {
+            0% { transform: translateX(-10%); }
+            100% { transform: translateX(10%); }
+        }
+        
+        /* Enhanced Header */
         .header {
             background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-            padding: 30px 20px;
+            padding: 20px;
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 3px solid var(--accent-gold);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
+        }
+        
+        /* New Arrivals Banner */
+        .new-arrivals-banner {
+            background: linear-gradient(90deg, var(--cannabis-green), var(--cannabis-dark), var(--cannabis-green));
+            background-size: 200% 100%;
+            padding: 12px 20px;
+            margin: -20px -20px 20px -20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: shimmer 3s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             border-bottom: 2px solid var(--accent-gold);
         }
         
-        .logo {
-            width: 150px;
-            height: 150px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.3));
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
         
-        .instagram-badge {
+        .new-badge {
+            background: var(--accent-gold);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            animation: pulse-badge 1.5s infinite;
+        }
+        
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+        }
+        
+        /* Logo Container with Effects */
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            padding: 20px;
+        }
+        
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: glow-pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+        
+        .logo-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            animation: ring-spin 10s linear infinite;
+        }
+        
+        .logo-ring:nth-child(2) {
+            width: 220px;
+            height: 220px;
+            border-color: rgba(76, 175, 80, 0.2);
+            animation-duration: 15s;
+            animation-direction: reverse;
+        }
+        
+        @keyframes ring-spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .logo {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            position: relative;
+            z-index: 10;
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.5));
+            animation: logo-float 4s ease-in-out infinite;
+        }
+        
+        @keyframes logo-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Floating Icons Around Logo */
+        .floating-icon {
+            position: absolute;
+            font-size: 24px;
+            animation: orbit 8s linear infinite;
+            opacity: 0.6;
+        }
+        
+        .floating-icon:nth-child(4) { top: 10%; left: 20%; animation-delay: 0s; }
+        .floating-icon:nth-child(5) { top: 20%; right: 20%; animation-delay: 2s; }
+        .floating-icon:nth-child(6) { bottom: 20%; left: 15%; animation-delay: 4s; }
+        .floating-icon:nth-child(7) { bottom: 10%; right: 15%; animation-delay: 6s; }
+        
+        @keyframes orbit {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(10px, -10px) rotate(90deg); }
+            50% { transform: translate(0, -20px) rotate(180deg); }
+            75% { transform: translate(-10px, -10px) rotate(270deg); }
+        }
+        
+        /* Premium Badge */
+        .premium-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 15px;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            animation: badge-shine 3s infinite;
+        }
+        
+        @keyframes badge-shine {
+            0%, 100% { box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4); }
+            50% { box-shadow: 0 5px 30px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.6); }
+        }
+        
+        /* Instagram Badge Enhanced */
+        .instagram-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            padding: 12px 24px;
+            padding: 12px 25px;
             border-radius: 30px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             margin-top: 20px;
             text-decoration: none;
             color: white;
+            box-shadow: 0 5px 20px rgba(225, 48, 108, 0.4);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .instagram-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        .instagram-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(225, 48, 108, 0.6);
         }
         
         .verified-icon {
             background: white;
             color: #e1306c;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 12px;
+            font-weight: 900;
         }
         
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent-gold);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Welcome Section */
         .welcome {
             text-align: center;
             padding: 40px 20px;
             background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, transparent 100%);
             border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+            position: relative;
+            z-index: 5;
         }
         
         .welcome h1 {
-            font-size: 26px;
+            font-size: 28px;
             color: var(--accent-gold);
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
         
         .welcome p {
             color: var(--text-secondary);
-            font-size: 15px;
+            font-size: 16px;
         }
         
+        /* Category Filter */
         .category-filter {
             display: flex;
             gap: 12px;
             overflow-x: auto;
             padding: 25px 20px;
             scrollbar-width: none;
+            position: relative;
+            z-index: 5;
         }
         
         .category-filter::-webkit-scrollbar { display: none; }
         
         .category-btn {
             flex-shrink: 0;
-            padding: 14px 28px;
+            padding: 15px 30px;
             background: var(--bg-card);
             border: 2px solid transparent;
             border-radius: 30px;
@@ -113,20 +391,49 @@
             cursor: pointer;
             transition: all 0.3s;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            opacity: 0.2;
+        }
+        
+        .category-btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
         
         .category-btn.active {
             background: var(--accent-gold);
             color: #000;
             border-color: var(--accent-gold);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            transform: scale(1.05);
         }
         
+        /* Products Grid */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             padding: 0 15px 30px;
+            position: relative;
+            z-index: 5;
         }
         
         @media (min-width: 768px) {
@@ -142,13 +449,15 @@
             border-radius: 20px;
             overflow: hidden;
             border: 1px solid #2a2a2a;
-            transition: all 0.3s;
+            transition: all 0.4s;
             cursor: pointer;
+            position: relative;
         }
         
         .product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: var(--accent-gold);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(212, 175, 55, 0.2);
         }
         
         .product-image-wrapper {
@@ -164,6 +473,11 @@
             height: 100%;
             object-fit: cover;
             pointer-events: none;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.1);
         }
         
         .reship-badge {
@@ -175,7 +489,34 @@
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 10px;
-            font-weight: 700;
+            font-weight: 800;
+            text-transform: uppercase;
+            animation: pulse-green 2s infinite;
+            box-shadow: 0 2px 10px rgba(76, 175, 80, 0.4);
+        }
+        
+        @keyframes pulse-green {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .new-product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--purple-haze);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            animation: pulse-purple 2s infinite;
+        }
+        
+        @keyframes pulse-purple {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(156, 39, 176, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(156, 39, 176, 0); }
         }
         
         .product-info { padding: 18px; }
@@ -200,6 +541,7 @@
             font-size: 12px;
         }
         
+        /* Modal Styles */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -219,6 +561,12 @@
             min-height: 100vh;
             max-width: 600px;
             margin: 0 auto;
+            animation: slide-up 0.4s ease;
+        }
+        
+        @keyframes slide-up {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         
         .modal-close {
@@ -283,7 +631,11 @@
             color: var(--cannabis-green);
         }
         
-        .quantity-options { display: grid; gap: 12px; margin: 20px 0; }
+        .quantity-options {
+            display: grid;
+            gap: 12px;
+            margin: 20px 0;
+        }
         
         .quantity-option {
             display: flex;
@@ -294,6 +646,7 @@
             border-radius: 15px;
             border: 2px solid transparent;
             cursor: pointer;
+            transition: all 0.3s;
         }
         
         .quantity-option.selected {
@@ -319,6 +672,7 @@
             cursor: pointer;
         }
         
+        /* Lightbox */
         .lightbox {
             display: none;
             position: fixed;
@@ -356,11 +710,14 @@
             color: white;
         }
         
+        /* Sections */
         .section {
             display: none;
             padding: 25px;
             max-width: 700px;
             margin: 0 auto;
+            position: relative;
+            z-index: 5;
         }
         
         .section.active { display: block; }
@@ -373,6 +730,7 @@
             margin-bottom: 25px;
         }
         
+        /* Cart Styles */
         .cart-empty {
             text-align: center;
             padding: 80px 20px;
@@ -437,7 +795,11 @@
             padding-top: 20px;
         }
         
-        .payment-methods { display: grid; gap: 15px; margin: 20px 0; }
+        .payment-methods {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
         
         .payment-method {
             padding: 22px;
@@ -470,7 +832,7 @@
         
         .payment-fee.charge {
             background: rgba(255, 152, 0, 0.2);
-            color: #ff9800;
+            color: var(--orange-kush);
         }
         
         .checkout-form {
@@ -515,15 +877,14 @@
             font-size: 20px;
             font-weight: 800;
             cursor: pointer;
-            margin-top: 10px;
         }
         
+        /* TOS */
         .tos-content {
             background: var(--bg-card);
             padding: 30px;
             border-radius: 25px;
             line-height: 1.9;
-            font-size: 15px;
         }
         
         .tos-content h3 {
@@ -575,7 +936,7 @@
         .tracking-btn {
             width: 100%;
             padding: 22px;
-            background: #2196f3;
+            background: var(--info-blue);
             color: white;
             border: none;
             border-radius: 20px;
@@ -606,6 +967,7 @@
         
         .lang-flag { font-size: 40px; margin-bottom: 10px; }
         
+        /* Telegram Float Button */
         .telegram-float {
             position: fixed;
             bottom: 100px;
@@ -619,11 +981,18 @@
             justify-content: center;
             z-index: 98;
             text-decoration: none;
-            box-shadow: 0 4px 20px rgba(0, 136, 204, 0.4);
+            box-shadow: 0 5px 25px rgba(0, 136, 204, 0.5);
+            animation: telegram-pulse 2s infinite;
+        }
+        
+        @keyframes telegram-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 136, 204, 0.5); }
+            50% { box-shadow: 0 0 0 15px rgba(0, 136, 204, 0); }
         }
         
         .telegram-float svg { width: 32px; height: 32px; fill: white; }
         
+        /* Navigation */
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -648,6 +1017,7 @@
             border: none;
             cursor: pointer;
             font-size: 12px;
+            position: relative;
         }
         
         .nav-item.active { color: var(--accent-gold); }
@@ -688,13 +1058,66 @@
     </style>
 </head>
 <body>
+    <!-- Animated Particles Background -->
+    <div class="particles-container" id="particles"></div>
+    <div class="smoke-layer"></div>
+    
     <!-- Toast -->
     <div class="toast" id="toast">✓ Added to cart</div>
     
-    <!-- Header -->
+    <!-- Enhanced Header -->
     <header class="header">
-        <img src="https://i.imgur.com/jNug6cl.jpeg" alt="SHADE PLUG" class="logo" onerror="this.style.display='none'">
-        <br>
+        <!-- New Arrivals Banner -->
+        <div class="new-arrivals-banner">
+            <span>🔥</span>
+            <span>Nuovi Arrivi / New Arrivals / Nouveautés</span>
+            <span class="new-badge">NEW</span>
+            <span>🔥</span>
+        </div>
+        
+        <!-- Logo Section with Effects -->
+        <div class="logo-container">
+            <!-- Glow Effect -->
+            <div class="logo-glow"></div>
+            
+            <!-- Rotating Rings -->
+            <div class="logo-ring"></div>
+            <div class="logo-ring"></div>
+            
+            <!-- Floating Icons -->
+            <div class="floating-icon">🌿</div>
+            <div class="floating-icon">✨</div>
+            <div class="floating-icon">💨</div>
+            <div class="floating-icon">⭐</div>
+            
+            <!-- Logo -->
+            <img src="https://i.imgur.com/jNug6cl.jpeg" alt="SHADE PLUG" class="logo" onerror="this.style.display='none'">
+        </div>
+        
+        <!-- Premium Badge -->
+        <div class="premium-badge">
+            <span>👑</span>
+            <span>Premium Quality</span>
+            <span>👑</span>
+        </div>
+        
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-number">18+</span>
+                <span class="stat-label">Products</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24h</span>
+                <span class="stat-label">Shipping</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Safe</span>
+            </div>
+        </div>
+        
+        <!-- Instagram Badge -->
         <a href="https://www.instagram.com/shade.plug" target="_blank" class="instagram-badge">
             <span>📷</span>
             <span>@shade.plug</span>
@@ -702,22 +1125,22 @@
         </a>
     </header>
     
-    <!-- Welcome -->
+    <!-- Welcome Section -->
     <div class="welcome" id="welcome-section">
         <h1 id="welcome-title">Welcome to SHADE PLUG</h1>
-        <p id="welcome-subtitle">Premium Cannabis Shop</p>
+        <p id="welcome-subtitle">Premium Cannabis Shop - Quality Guaranteed</p>
     </div>
     
     <!-- Categories -->
     <div class="category-filter">
-        <button class="category-btn active" data-category="all">All</button>
+        <button class="category-btn active" data-category="all">🏠 All</button>
         <button class="category-btn" data-category="flower">🌿 Flowers</button>
         <button class="category-btn" data-category="hash">🍫 Hash</button>
         <button class="category-btn" data-category="mushroom">🍄 Mushrooms</button>
         <button class="category-btn" data-category="vape">🚬 Vapes</button>
     </div>
     
-    <!-- Products -->
+    <!-- Products Grid -->
     <div class="products-grid" id="products-container"></div>
     
     <!-- Product Modal -->
@@ -763,7 +1186,7 @@
             <div class="community-icon">⭐</div>
             <div>
                 <h3>Reviews Channel</h3>
-                <p style="color: var(--text-secondary);">Customer reviews</p>
+                <p style="color: var(--text-secondary);">Customer reviews and feedback</p>
             </div>
             <span class="community-arrow">→</span>
         </a>
@@ -771,7 +1194,7 @@
             <div class="community-icon">💬</div>
             <div>
                 <h3>Community Talk</h3>
-                <p style="color: var(--text-secondary);">Join discussion</p>
+                <p style="color: var(--text-secondary);">Join the discussion</p>
             </div>
             <span class="community-arrow">→</span>
         </a>
@@ -855,6 +1278,24 @@
     </nav>
     
     <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const colors = ['gold', 'green', 'purple'];
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = `particle ${colors[Math.floor(Math.random() * colors.length)]}`;
+                particle.style.width = Math.random() * 100 + 50 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = Math.random() * 10 + 15 + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+        
         // Telegram WebApp
         const tg = window.Telegram.WebApp;
         tg.ready();
@@ -864,7 +1305,7 @@
         const translations = {
             en: {
                 welcome: "Welcome to SHADE PLUG",
-                subtitle: "Premium Cannabis Shop",
+                subtitle: "Premium Cannabis Shop - Quality Guaranteed",
                 add_to_cart: "Add to Cart",
                 cart_title: "Shopping Cart",
                 cart_empty: "Your cart is empty",
@@ -893,11 +1334,12 @@
                 from: "From",
                 origin_cz: "🇨🇿 Czech Republic",
                 origin_it: "🇮🇹 Italy",
-                reship: "100% Reship"
+                reship: "100% Reship",
+                new: "NEW"
             },
             it: {
                 welcome: "Benvenuti in SHADE PLUG",
-                subtitle: "Shop Cannabis Premium",
+                subtitle: "Shop Cannabis Premium - Qualità Garantita",
                 add_to_cart: "Aggiungi al Carrello",
                 cart_title: "Carrello",
                 cart_empty: "Il tuo carrello è vuoto",
@@ -926,11 +1368,12 @@
                 from: "Da",
                 origin_cz: "🇨🇿 Repubblica Ceca",
                 origin_it: "🇮🇹 Italia",
-                reship: "100% Reship"
+                reship: "100% Reship",
+                new: "NUOVO"
             },
             fr: {
                 welcome: "Bienvenue chez SHADE PLUG",
-                subtitle: "Boutique Cannabis Premium",
+                subtitle: "Boutique Cannabis Premium - Qualité Garantie",
                 add_to_cart: "Ajouter au Panier",
                 cart_title: "Panier",
                 cart_empty: "Votre panier est vide",
@@ -959,11 +1402,12 @@
                 from: "À partir de",
                 origin_cz: "🇨🇿 République Tchèque",
                 origin_it: "🇮🇹 Italie",
-                reship: "100% Reship"
+                reship: "100% Reship",
+                new: "NOUVEAU"
             },
             es: {
                 welcome: "Bienvenido a SHADE PLUG",
-                subtitle: "Tienda Cannabis Premium",
+                subtitle: "Tienda Cannabis Premium - Calidad Garantizada",
                 add_to_cart: "Añadir al Carrito",
                 cart_title: "Carrito",
                 cart_empty: "Tu carrito está vacío",
@@ -992,11 +1436,12 @@
                 from: "Desde",
                 origin_cz: "🇨🇿 República Checa",
                 origin_it: "🇮🇹 Italia",
-                reship: "100% Reship"
+                reship: "100% Reship",
+                new: "NUEVO"
             },
             de: {
                 welcome: "Willkommen bei SHADE PLUG",
-                subtitle: "Premium Cannabis Shop",
+                subtitle: "Premium Cannabis Shop - Qualität Garantiert",
                 add_to_cart: "In den Warenkorb",
                 cart_title: "Warenkorb",
                 cart_empty: "Ihr Warenkorb ist leer",
@@ -1025,11 +1470,12 @@
                 from: "Ab",
                 origin_cz: "🇨🇿 Tschechische Republik",
                 origin_it: "🇮🇹 Italien",
-                reship: "100% Reship"
+                reship: "100% Reship",
+                new: "NEU"
             },
             cs: {
                 welcome: "Vítejte v SHADE PLUG",
-                subtitle: "Prémiový Cannabis Obchod",
+                subtitle: "Prémiový Cannabis Obchod - Kvalita Zaručena",
                 add_to_cart: "Přidat do Košíku",
                 cart_title: "Košík",
                 cart_empty: "Váš košík je prázdný",
@@ -1058,11 +1504,12 @@
                 from: "Od",
                 origin_cz: "🇨🇿 Česká Republika",
                 origin_it: "🇮🇹 Itálie",
-                reship: "100% Reship"
+                reship: "100% Reship",
+                new: "NOVÉ"
             },
             ru: {
                 welcome: "Добро пожаловать в SHADE PLUG",
-                subtitle: "Премиум Магазин Каннабиса",
+                subtitle: "Премиум Магазин Каннабиса - Качество Гарантировано",
                 add_to_cart: "Добавить в Корзину",
                 cart_title: "Корзина",
                 cart_empty: "Ваша корзина пуста",
@@ -1091,7 +1538,8 @@
                 from: "От",
                 origin_cz: "🇨🇿 Чехия",
                 origin_it: "🇮🇹 Италия",
-                reship: "100% Reship"
+                reship: "100% Reship",
+                new: "НОВИНКА"
             }
         };
         
@@ -1099,7 +1547,7 @@
         const products = [
             {
                 id: 1, name: "Cali Cryo", category: "flower", emoji: "🌿",
-                origin: "cz", shipping: 25, reship: true,
+                origin: "cz", shipping: 25, reship: true, isNew: true,
                 images: ["https://i.imgur.com/XZHzDvT.jpeg"],
                 description: "100% safe with reship guarantee. Recommended for bulk sellers. Ships via GLS/UPS/BRT within 48h.",
                 quantities: [
@@ -1110,7 +1558,7 @@
             },
             {
                 id: 2, name: "Cali Sour Lifter", category: "flower", emoji: "🌿",
-                origin: "cz", shipping: 20, reship: true,
+                origin: "cz", shipping: 20, reship: true, isNew: false,
                 images: ["https://i.imgur.com/bxeYk0K.jpeg", "https://i.imgur.com/DrRBUlb.jpeg"],
                 description: "100% safe with reship guarantee. Ships within 48 hours.",
                 quantities: [
@@ -1122,7 +1570,7 @@
             },
             {
                 id: 3, name: "Cali Sweet Burger", category: "flower", emoji: "🌿",
-                origin: "cz", shipping: 20, reship: true,
+                origin: "cz", shipping: 20, reship: true, isNew: true,
                 images: ["https://i.imgur.com/boYbhV4.jpeg"],
                 description: "100% safe with reship guarantee. Ships within 48 hours.",
                 quantities: [
@@ -1134,14 +1582,14 @@
             },
             {
                 id: 4, name: "Cali Gelato", category: "flower", emoji: "🌿",
-                origin: "cz", shipping: 25, reship: true,
+                origin: "cz", shipping: 25, reship: true, isNew: false,
                 images: ["https://i.imgur.com/boYbhV4.jpeg", "https://i.imgur.com/2syH6aY.jpeg"],
                 description: "Premium Cali Gelato. 100% reship guarantee.",
                 quantities: [{ amount: "1000g", price: 2400, perUnit: 2.40 }]
             },
             {
                 id: 5, name: "Dry Frozen Sift Top", category: "hash", emoji: "🍫",
-                origin: "it", shipping: 10, reship: false,
+                origin: "it", shipping: 10, reship: false, isNew: true,
                 images: ["https://i.imgur.com/rxOoCaf.jpeg", "https://i.imgur.com/fxzTmBs.jpeg"],
                 description: "Premium dry sift hash. Ships from Italy.",
                 quantities: [
@@ -1154,7 +1602,7 @@
             },
             {
                 id: 6, name: "Cali Lemon Pop", category: "flower", emoji: "🌿",
-                origin: "it", shipping: 10, reship: false,
+                origin: "it", shipping: 10, reship: false, isNew: false,
                 images: ["https://i.imgur.com/jTjCkgf.jpeg"],
                 description: "Fresh Cali Lemon Pop. Ships from Italy.",
                 quantities: [
@@ -1168,7 +1616,7 @@
             },
             {
                 id: 7, name: "Cali Spain Amnesia", category: "flower", emoji: "🌿",
-                origin: "it", shipping: 10, reship: false,
+                origin: "it", shipping: 10, reship: false, isNew: false,
                 images: ["https://i.imgur.com/z4v3zJ2.jpeg"],
                 description: "Spanish Amnesia strain. Ships from Italy.",
                 quantities: [
@@ -1182,14 +1630,14 @@
             },
             {
                 id: 8, name: "MC Kennaiii", category: "mushroom", emoji: "🍄",
-                origin: "it", shipping: 10, reship: false,
+                origin: "it", shipping: 10, reship: false, isNew: true,
                 images: ["https://i.imgur.com/fq1uFFm.jpeg"],
                 description: "Premium quality mushrooms. Ships from Italy.",
                 quantities: [{ amount: "5g", price: 72 }, { amount: "10g", price: 108 }]
             },
             {
                 id: 9, name: "Dry Mimosa", category: "hash", emoji: "🍫",
-                origin: "cz", shipping: 20, reship: true,
+                origin: "cz", shipping: 20, reship: true, isNew: false,
                 images: ["https://i.imgur.com/xQoPEbC.jpeg", "https://i.imgur.com/fh7Gz8d.jpeg"],
                 description: "100% safe with reship guarantee. Ships within 48 hours.",
                 quantities: [
@@ -1201,7 +1649,7 @@
             },
             {
                 id: 10, name: "Vape THC", category: "vape", emoji: "🚬",
-                origin: "cz", shipping: 25, reship: true,
+                origin: "cz", shipping: 25, reship: true, isNew: true,
                 images: ["https://i.imgur.com/nfpUHWp.jpeg", "https://i.imgur.com/NYg3JQo.jpeg", "https://i.imgur.com/qvXqAjg.jpeg"],
                 description: "THC Vapes. Can combine with weed/hash orders.",
                 quantities: [
@@ -1212,7 +1660,7 @@
             },
             {
                 id: 11, name: "Cali Purple USA", category: "flower", emoji: "🌿",
-                origin: "it", shipping: 10, reship: false,
+                origin: "it", shipping: 10, reship: false, isNew: false,
                 images: ["https://i.imgur.com/nb7hHCQ.jpeg"],
                 description: "Premium Cali Purple. Ships from Italy.",
                 quantities: [
@@ -1226,7 +1674,7 @@
             },
             {
                 id: 12, name: "Cali Critical Berry", category: "flower", emoji: "🌿",
-                origin: "it", shipping: 10, reship: false,
+                origin: "it", shipping: 10, reship: false, isNew: false,
                 images: ["https://i.imgur.com/rqfIr8q.jpeg"],
                 description: "Sweet berry flavor. Ships from Italy.",
                 quantities: [
@@ -1240,7 +1688,7 @@
             },
             {
                 id: 13, name: "Cali Cherry", category: "flower", emoji: "🌿",
-                origin: "cz", shipping: 25, reship: true,
+                origin: "cz", shipping: 25, reship: true, isNew: false,
                 images: ["https://i.imgur.com/rEhVlF6.jpeg", "https://i.imgur.com/WRuu6ma.jpeg"],
                 description: "100% safe with reship guarantee. Recommended for bulk sellers.",
                 quantities: [
@@ -1251,14 +1699,14 @@
             },
             {
                 id: 14, name: "Dry Space", category: "hash", emoji: "🍫",
-                origin: "cz", shipping: 25, reship: true,
+                origin: "cz", shipping: 25, reship: true, isNew: false,
                 images: ["https://i.imgur.com/ilGU1NS.jpeg", "https://i.imgur.com/1CX1ONF.jpeg"],
                 description: "Premium dry hash. 100% reship guarantee.",
                 quantities: [{ amount: "1000g", price: 3480, perUnit: 3.48 }]
             },
             {
                 id: 15, name: "Cali Fruit Joy", category: "flower", emoji: "🌿",
-                origin: "cz", shipping: 25, reship: true,
+                origin: "cz", shipping: 25, reship: true, isNew: true,
                 images: ["https://i.imgur.com/9Pqzkie.jpeg"],
                 description: "100% safe with reship guarantee. Recommended for bulk sellers.",
                 quantities: [
@@ -1269,14 +1717,14 @@
             },
             {
                 id: 16, name: "Dry Frozen Top", category: "hash", emoji: "🍫",
-                origin: "cz", shipping: 25, reship: true,
+                origin: "cz", shipping: 25, reship: true, isNew: false,
                 images: ["https://i.imgur.com/q3bnCcp.jpeg"],
                 description: "Premium frozen top hash. 100% reship guarantee.",
                 quantities: [{ amount: "1000g", price: 3960, perUnit: 3.96 }]
             },
             {
                 id: 17, name: "Cali Spain Mimosa", category: "flower", emoji: "🌿",
-                origin: "it", shipping: 10, reship: false,
+                origin: "it", shipping: 10, reship: false, isNew: false,
                 images: ["https://i.imgur.com/z4v3zJ2.jpeg"],
                 description: "Spanish Mimosa strain. Ships from Italy.",
                 quantities: [
@@ -1290,7 +1738,7 @@
             },
             {
                 id: 18, name: "Dry Biscotti Spain", category: "hash", emoji: "🍫",
-                origin: "it", shipping: 10, reship: false,
+                origin: "it", shipping: 10, reship: false, isNew: true,
                 images: ["https://i.imgur.com/lpcEt39.jpeg", "https://i.imgur.com/Cz4uHG8.jpeg", "https://i.imgur.com/LOrG8Lc.jpeg"],
                 description: "Spanish Biscotti hash. Additional photos/videos available via private message.",
                 quantities: [
@@ -1362,6 +1810,7 @@
                         <img class="product-image" src="${product.images[0]}" alt="${product.name}" 
                              onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:60px;background:#1a1a1a;\'>${product.emoji}</div>'">
                         ${product.reship ? `<div class="reship-badge">${t.reship}</div>` : ''}
+                        ${product.isNew ? `<div class="new-product-badge">${t.new}</div>` : ''}
                     </div>
                     <div class="product-info">
                         <div class="product-name">${product.emoji} ${product.name}</div>
@@ -1395,12 +1844,14 @@
             document.getElementById('modal-title').textContent = `${product.emoji} ${product.name}`;
             
             const originText = product.origin === 'cz' ? t.origin_cz : t.origin_it;
-            document.getElementById('modal-meta').innerHTML = `
+            let metaHtml = `
                 <span class="meta-tag">${originText}</span>
-                <span class="meta-tag shipping">📦 Shipping: €${product.shipping}</span>
-                ${product.reship ? `<span class="meta-tag reship">✓ ${t.reship}</span>` : ''}
+                <span class="meta-tag">📦 Shipping: €${product.shipping}</span>
             `;
+            if (product.reship) metaHtml += `<span class="meta-tag reship">✓ ${t.reship}</span>`;
+            if (product.isNew) metaHtml += `<span class="meta-tag" style="background: rgba(156, 39, 176, 0.15); border-color: #9c27b0; color: #9c27b0;">🆕 ${t.new}</span>`;
             
+            document.getElementById('modal-meta').innerHTML = metaHtml;
             document.getElementById('modal-description').textContent = product.description;
             
             const qtyContainer = document.getElementById('modal-quantities');
@@ -1416,13 +1867,11 @@
                 };
                 
                 div.innerHTML = `
-                    <div class="qty-info">
+                    <div>
                         <div class="qty-amount">${qty.amount}</div>
-                        <div class="qty-per-unit">${qty.perUnit ? '€' + qty.perUnit.toFixed(2) + '/g' : ''}</div>
+                        <div style="color: #666; font-size: 12px;">${qty.perUnit ? '€' + qty.perUnit.toFixed(2) + '/g' : ''}</div>
                     </div>
-                    <div class="qty-price">
-                        <div class="qty-total">€${qty.price.toLocaleString()}</div>
-                    </div>
+                    <div class="qty-total">€${qty.price.toLocaleString()}</div>
                 `;
                 qtyContainer.appendChild(div);
             });
@@ -1471,8 +1920,9 @@
             if (cart.length === 0) {
                 cartItems.innerHTML = `
                     <div class="cart-empty">
-                        <div class="cart-empty-icon">🛒</div>
+                        <div style="font-size: 80px; margin-bottom: 25px;">🛒</div>
                         <h3>${t.cart_empty}</h3>
+                        <p style="color: var(--text-secondary); margin-top: 10px;">Discover our premium products</p>
                     </div>
                 `;
                 cartSummary.innerHTML = '';
@@ -1493,7 +1943,7 @@
                     <img class="cart-item-image" src="${item.images[0]}" onerror="this.style.display='none'">
                     <div class="cart-item-details">
                         <div class="cart-item-name">${item.emoji} ${item.name}</div>
-                        <div class="cart-item-qty">${item.selectedQty.amount}</div>
+                        <div style="color: var(--text-secondary); font-size: 14px; margin-bottom: 5px;">${item.selectedQty.amount}</div>
                         <div class="cart-item-price">€${item.selectedQty.price.toLocaleString()}</div>
                     </div>
                     <button class="remove-btn" onclick="removeFromCart(${idx})">✕</button>
@@ -1529,27 +1979,27 @@
             cartSummary.innerHTML = `
                 <div class="cart-summary">
                     <div class="summary-row">
-                        <span class="summary-label">🛒 ${t.subtotal}</span>
-                        <span class="summary-value">€${subtotal.toLocaleString()}</span>
+                        <span>🛒 ${t.subtotal}</span>
+                        <span>€${subtotal.toLocaleString()}</span>
                     </div>
                     <div class="summary-row">
-                        <span class="summary-label">🚚 ${t.shipping}</span>
-                        <span class="summary-value">€${maxShipping}</span>
+                        <span>🚚 ${t.shipping}</span>
+                        <span>€${maxShipping}</span>
                     </div>
                     ${selectedPaymentMethod ? `
                     <div class="summary-row">
-                        <span class="summary-label">💳 ${t.payment_fee}</span>
-                        <span class="summary-value">€${feeAmount.toFixed(2)}</span>
+                        <span>💳 ${t.payment_fee}</span>
+                        <span>€${feeAmount.toFixed(2)}</span>
                     </div>
                     ` : ''}
                     <div class="summary-row total">
-                        <span class="summary-label">🔥 ${t.total}</span>
-                        <span class="summary-value">€${total.toLocaleString()}</span>
+                        <span>🔥 ${t.total}</span>
+                        <span>€${total.toLocaleString()}</span>
                     </div>
                 </div>
                 
-                <div class="payment-section">
-                    <div class="section-label" style="margin-bottom: 20px; text-transform: uppercase; font-weight: 700;">
+                <div class="payment-section" style="margin-top: 30px;">
+                    <div style="margin-bottom: 20px; text-transform: uppercase; font-weight: 700; color: var(--text-secondary);">
                         💳 ${t.select_payment || 'Select Payment'}
                     </div>
                     <div class="payment-methods">${paymentHtml}</div>
@@ -1682,7 +2132,6 @@
         }
         
         function updateTOS() {
-            const t = translations[currentLanguage];
             const content = document.getElementById('tos-content');
             
             content.innerHTML = `
@@ -1763,5 +2212,4 @@
             }
         });
     </script>
-</body>
-</html>
+</body
